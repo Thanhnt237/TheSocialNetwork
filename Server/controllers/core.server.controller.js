@@ -8,7 +8,10 @@ const jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 
 module.exports = {
-  renderHomePage: renderHomePage
+  renderHomePage: renderHomePage,
+  verifyToken: verifyToken,
+  UserLogin: UserLogin,
+  UserRegister: UserRegister
 };
 
 /**
