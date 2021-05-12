@@ -4,26 +4,25 @@ const path = require('path')
 const UserCoverBasePath = 'upload/UserCover'
 const UserAvatarBasePath = 'upload/UserAvatar'
 const InformationsSchema = new mongoose.Schema({
-    Parent_id:{
+    User_ID:{
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'User'
+        required: true
     },
     cover:{
         type:String,
-        required:true
+        default: "NULL"
     },
     avatar:{
         type:String,
-        required:true
+        default: "NULL"
     },
     name:{
         type:String,
-        required:true
+        default: "NULL"
     },
     address:{
         type:String,
-        required:true
+        default: "NULL"
     },
     DoB:{
         type:Date,
@@ -32,11 +31,11 @@ const InformationsSchema = new mongoose.Schema({
     },
     description:{
         type:String,
-        required:true
+        default: "NULL"
     },
     gender:{
         type:String,
-        required:true
+        default: "NULL"
     }
 })
 InformationsSchema.virtual('coverPath').get(function(){

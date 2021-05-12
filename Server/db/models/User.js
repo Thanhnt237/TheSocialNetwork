@@ -2,11 +2,11 @@ const mongoose = require('mongoose')
 
 const UserSchema = new mongoose.Schema({
     SpeacialActionsCategory_id:{
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         default:"NULL"
     },
     FavoritesCategory_id:{
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         default: "NULL"
     }
 })

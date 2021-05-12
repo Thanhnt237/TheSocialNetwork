@@ -8,15 +8,19 @@ const jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 const { v4 } = require('uuid');
 const mailer = require('./mailer');
+
 const Authentication = require('../db/models/Authentication');
 const User = require('../db/models/User');
 const PasswordReset = require('../db/models/ResetPassword');
+const Informations = require('../db/models/Informations');
 
 module.exports = {
   renderHomePage: renderHomePage,
   verifyToken: verifyToken,
   UserLogin: UserLogin,
   UserRegister: UserRegister,
+  GetUserProfile: GetUserProfile,
+  EditProfile: EditProfile,
   ResetPassword: ResetPassword,
   GetResetConfirm: GetResetConfirm,
   PostResetConfirm: PostResetConfirm,
@@ -69,7 +73,12 @@ function UserRegister(req, res) {
   let userData = req.body;
   let hash_password = bcrypt.hashSync(userData.password, 10);
 
+  let createUser = new User();
+  let createInformation = new Informations({
+    User_ID: createUser._id
+  });
   let user = new Authentication({
+    User_ID: createUser._id,
     email: userData.email,
     password: hash_password
   });
@@ -87,6 +96,8 @@ function UserRegister(req, res) {
           res.status(200).send({token});
         }
       })
+      createUser.save();
+      createInformation.save();
     }
   });
 }
@@ -128,8 +139,8 @@ if(userData.email === '' || userData.password === ''){
 */
 async function GetUserProfile(req,res) {
   try{
-    const userInfor = Informations.findOne({Parent_id: req.userId})
-    const userAuth = Authentication.findOne({User_id: req.userId})
+    const userInfor = Informations.findOne({User_ID: req.params.userid})
+    const userAuth = Authentication.findOne({User_ID: req.params.userid})
     res.status(200).send({
       email: userAuth.email,
       name: userInfor.name,
@@ -143,6 +154,7 @@ async function GetUserProfile(req,res) {
     console.log(err)
   }
 }
+
 /**
 * @name EditProfile
 * @param  {object} req HTTP request
@@ -152,8 +164,8 @@ async function EditProfile(req,res) {
   let userInfor
   let userAuth
   try{
-    userInfor = Informations.findOne({Parent_id: req.userId})
-    userAuth = Authentication.findOne({User_id: req.userId})
+    userInfor = Informations.findOne({User_ID: req.userId})
+    userAuth = Authentication.findOne({User_ID: req.userId})
     userAuth = req.body.email
     userInfor.name = req.body.name
     userAuth.password = req.body.password

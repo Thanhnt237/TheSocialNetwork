@@ -16,6 +16,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatBadgeModule } from '@angular/material/badge';
+import {MatMenuModule} from '@angular/material/menu';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToolbarComponent } from './Blocks/toolbar/toolbar.component';
 
 import { ReactiveFormsModule } from "@angular/forms";
+
 
 let angularMaterialModule = [
   MatSidenavModule,
@@ -34,7 +36,8 @@ let angularMaterialModule = [
   MatInputModule,
   MatFormFieldModule,
   MatBadgeModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  MatMenuModule
 ];
 
 @NgModule({

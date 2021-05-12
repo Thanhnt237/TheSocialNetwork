@@ -24,4 +24,10 @@ box-shadow: 0 1px 0 0 #f48fb1;
 
 .center{
   padding: center;
+  color: #f48fb1
+}
+
+.searchBox{
+  background-color: none;
+  
 }
