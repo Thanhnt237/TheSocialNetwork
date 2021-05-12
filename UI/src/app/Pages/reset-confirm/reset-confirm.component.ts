@@ -3,6 +3,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormGroup, FormBuilder, FormControl, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 
+import { ActivatedRoute } from '@angular/router';
 import {ResetConfirmService} from '../../Services/reset-confirm.service';
 
 @Component({
@@ -13,7 +14,7 @@ import {ResetConfirmService} from '../../Services/reset-confirm.service';
 export class ResetConfirmComponent implements OnInit {
   alertError: boolean = false;
   errCatching = '';
-
+  token:any;
   userData = {
   'email': ''
   };
@@ -21,6 +22,7 @@ export class ResetConfirmComponent implements OnInit {
   constructor(
     private _rsCf: ResetConfirmService,
     private _router: Router,
+    private _activatedRoute: ActivatedRoute,
     private _formBuilder: FormBuilder
   ) { }
 
@@ -28,9 +30,23 @@ export class ResetConfirmComponent implements OnInit {
       password: new FormControl('', [Validators.required, Validators.minLength(6)])
     });
 
-  ngOnInit(): void {
+    ngOnInit() {
+      this._activatedRoute.paramMap.subscribe(params => {
+      this.token = params.get('token');
+      console.log(this.token);
 
-  }
+       this._rsCf.getResetConfirm(this.token)
+        .subscribe(
+          res => {
+          console.log(res);
+        },
+          err => {
+            console.log(err);
+          }
+        )
+      });
+
+    }
 
   onResetPassword() {
     if (!this.ResetPasswordForm.valid) {
@@ -41,7 +57,7 @@ export class ResetConfirmComponent implements OnInit {
 
   ResetMyPassword(){
     this.userData = this.ResetPasswordForm.value;
-    this._rsCf.PostNewPassword(this.userData)
+    this._rsCf.PostNewPassword(this.token, this.userData)
     .subscribe(
       res => {
         console.log(res);

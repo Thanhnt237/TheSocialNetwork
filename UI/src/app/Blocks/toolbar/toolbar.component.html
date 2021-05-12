@@ -15,12 +15,15 @@
   </div>
 
   <!-- Right -->
-  <mat-icon matBadge="15" matBadgeColor="warn">home</mat-icon>
-  <mat-icon matBadge="15" matBadgeColor="warn">home</mat-icon>
+  <mat-icon matBadge="15" matBadgeColor="warn" *ngIf="_authService.loggedIn()">home</mat-icon>
+  <mat-icon matBadge="15" matBadgeColor="warn" *ngIf="_authService.loggedIn()">home</mat-icon>
 
-  <span class="">
+  <span class="" *ngIf="_authService.loggedIn()">
   Avatar + DootDeet
   </span>
-  <a mat-button [routerLink]="['/login']" > Đăng nhập </a>
-  <a mat-button [routerLink]="['/register']" > Đăng ký </a>
+
+  <a mat-button [routerLink]="['/login']" *ngIf="!_authService.loggedIn()" > Đăng nhập </a>
+  <a mat-button [routerLink]="['/register']" *ngIf="!_authService.loggedIn()" > Đăng Ký </a>
+  <a mat-button (click)="_authService.logoutUser()" *ngIf="_authService.loggedIn()" > Đăng Xuất </a>
+
 </mat-toolbar>

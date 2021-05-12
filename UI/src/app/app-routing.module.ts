@@ -48,8 +48,8 @@ const routes: Routes = [
     component: ForgotPasswordComponent
   },
   {
-    path:'reset-confirm',
-    component: ForgotPasswordComponent
+    path:'reset-confirm/:token',
+    component: ResetConfirmComponent
   },
   {
     path:'**',

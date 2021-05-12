@@ -12,7 +12,6 @@ const Authentication = require('../db/models/Authentication');
 const User = require('../db/models/User');
 const PasswordReset = require('../db/models/ResetPassword');
 
-
 module.exports = {
   renderHomePage: renderHomePage,
   verifyToken: verifyToken,
@@ -240,6 +239,7 @@ async function ResetPassword(req,res) {
 async function GetResetConfirm(req,res){
   const token = req.params.token
   const passwordReset = await PasswordReset.findOne({ token })
+  res.status(200).send({token});
 }
 
 /**
@@ -250,10 +250,12 @@ async function GetResetConfirm(req,res){
 async function PostResetConfirm(req,res){
   const token = req.params.token
   const passwordReset = await PasswordReset.findOne({ token })
+  let hash_password = bcrypt.hashSync(req.body.password, 10);
 
   /* Update user */
   let user = await Authentication.findOne({ _id: passwordReset.user })
-  user.password = req.body.password
+  user.password = hash_password;
+
   user.save().then( async savedUser =>  {
     /* Delete password reset document in collection */
     await PasswordReset.deleteOne({ _id: passwordReset._id })

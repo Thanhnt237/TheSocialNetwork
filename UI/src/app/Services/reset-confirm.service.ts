@@ -12,12 +12,12 @@ export class ResetConfirmService {
     private http: HttpClient
   ) { }
 
-  token: any;
-  resetConfirm(){
-    return this.http.get<any>(this._baseResetConfirmUrl + this.token);
+
+  getResetConfirm(token:any){
+    return this.http.get<any>(this._baseResetConfirmUrl + token);
   }
-  PostNewPassword(user: any){
-    return this.http.post<any>(this._baseResetConfirmUrl + this.token, user);
+  PostNewPassword(token:any, user: any){
+    return this.http.post<any>(this._baseResetConfirmUrl + token, user);
   }
 
 }
