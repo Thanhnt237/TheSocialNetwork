@@ -13,8 +13,8 @@ const io = require('socket.io')(server, {
 var Database = require('./db/database');
 var routes = require('./routes/core.server.routes');
 
-app.use(bodyParser.json());
-//app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json({extended: true}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/public', express.static('public'));
 app.use(cors());

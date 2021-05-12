@@ -1,0 +1,27 @@
+.spacer{
+  flex: 1 1 auto;
+}
+
+.active-link {
+  background: white;
+  color: blue;
+}
+
+.mat-button:hover {
+  background: white;
+  color: blue;
+}
+
+.active-pink-2 input[type=text]:focus:not([readonly]) {
+border-bottom: 1px solid #f48fb1;
+box-shadow: 0 1px 0 0 #f48fb1;
+}
+
+.active-pink input[type=text] {
+border-bottom: 1px solid #f48fb1;
+box-shadow: 0 1px 0 0 #f48fb1;
+}
+
+.center{
+  padding: center;
+}
