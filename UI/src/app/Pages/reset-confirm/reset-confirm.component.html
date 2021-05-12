@@ -1,0 +1,27 @@
+<mat-card>
+    <mat-card-content>
+      <div class="header" header>
+        <!-- Alert login -->
+        <div class="alert alert-info alert-dismissable" *ngIf="alertError">
+          <a class="panel-close close" data-dismiss="alert">×</a>
+          <i class="fa fa-coffee"></i>
+          {{errCatching}}
+        </div>
+
+        <P>Lấy lại mật khẩu </P>
+      </div>
+      <form (ngSubmit)="onResetPassword()" name="ResetPasswordForm" [formGroup]="ResetPasswordForm">
+        <div>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input formControlName="password" matInput required />
+        <mat-error *ngIf="!ResetPasswordForm.controls['password'].valid">
+            Password is required
+          </mat-error>
+        </mat-form-field>
+        </div>
+
+        <button mat-flat-button color="primary">Xác nhận</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
