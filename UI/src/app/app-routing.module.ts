@@ -22,6 +22,8 @@ import { RegisterComponent } from './Pages/register/register.component';
 import { ForgotPasswordComponent } from './Pages/forgot-password/forgot-password.component';
 import { ResetConfirmComponent } from './Pages/reset-confirm/reset-confirm.component';
 import { ProfileComponent } from './Pages/profile/profile.component';
+import { AboutComponent } from './Pages/about/about.component';
+import { FriendComponent } from './Pages/friend/friend.component';
 
 let angularMaterialModule = [
   MatSidenavModule,
@@ -53,8 +55,16 @@ const routes: Routes = [
     component: ResetConfirmComponent
   },
   {
-    path:'profile/:userid',
-    component: ResetConfirmComponent
+    path:'profile/:userId',
+    component: ProfileComponent
+  },
+  {
+    path:'about',
+    component: AboutComponent
+  },
+  {
+    path:'friend',
+    component: FriendComponent
   },
   {
     path:'**',
@@ -69,7 +79,9 @@ const routes: Routes = [
     RegisterComponent,
     ForgotPasswordComponent,
     ResetConfirmComponent,
-    ProfileComponent
+    ProfileComponent,
+    AboutComponent,
+    FriendComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

@@ -10,8 +10,8 @@
   <!-- Center -->
   <div class="center">
     <a mat-button [routerLink]="['/']" > Trang chủ </a>
-    <a mat-button [routerLink]="['/']" > Tin tức </a>
-    <a mat-button [routerLink]="['/']" > Trò truyện </a>
+    <a mat-button [routerLink]="['/something']" > Tin tức </a>
+    <a mat-button [routerLink]="['/caidgiasd']" > Trò truyện </a>
   </div>
 
   <!-- Right -->
@@ -21,7 +21,7 @@
   <span class="" *ngIf="_authService.loggedIn()">
     <button mat-button [matMenuTriggerFor]="menu">{{userProfile.name}}</button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>Ảnh đại diện</button>
+      <a mat-menu-item [routerLink]="['/profile/',userProfile.userId]" >Ảnh đại diện</a>
       <button mat-menu-item>Cài đặt</button>
       <button mat-menu-item>Chỉnh sửa thông tin</button>
       <button mat-menu-item>Chủ đề yêu thích</button>

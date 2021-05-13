@@ -10,19 +10,19 @@ const InformationsSchema = new mongoose.Schema({
     },
     cover:{
         type:String,
-        default: "NULL"
+        default: "smt"
     },
     avatar:{
         type:String,
-        default: "NULL"
+        default: "NsL"
     },
     name:{
         type:String,
-        default: "NULL"
+        default: "NUSDL"
     },
     address:{
         type:String,
-        default: "NULL"
+        default: "NSDSDL"
     },
     DoB:{
         type:Date,
@@ -31,11 +31,11 @@ const InformationsSchema = new mongoose.Schema({
     },
     description:{
         type:String,
-        default: "NULL"
+        default: "NUSDA"
     },
     gender:{
         type:String,
-        default: "NULL"
+        default: "NUASDASDSA"
     }
 })
 InformationsSchema.virtual('coverPath').get(function(){

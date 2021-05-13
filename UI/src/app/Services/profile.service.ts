@@ -7,7 +7,8 @@ import { Router } from "@angular/router";
 })
 export class ProfileService {
 
-    readonly _baseProfileUrl = "http://localhost:8080/api/profile";
+    readonly _baseToolbarUrl = "http://localhost:8080/api/toolbar-profile";
+    readonly _baseProfileUrl = "http://localhost:8080/api/profile/";
     readonly _editProfileUrl = "http://localhost:8080/api/edit-profile";
 
     constructor(
@@ -19,8 +20,8 @@ export class ProfileService {
       return this.http.get<any>(this._baseProfileUrl + userid);
     }
 
-    getMyProfile(){
-      return this.http.get<any>(this._baseProfileUrl);
+    getToolbarProfile(){
+      return this.http.get<any>(this._baseToolbarUrl);
     }
 
     editUserProfile(user: any){

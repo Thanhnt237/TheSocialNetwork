@@ -25,7 +25,8 @@ module.exports = {
   GetResetConfirm: GetResetConfirm,
   PostResetConfirm: PostResetConfirm,
   SendMail: SendMail,
-  SendResetPasswordLink: SendResetPasswordLink
+  SendResetPasswordLink: SendResetPasswordLink,
+  ToolbarProfile: ToolbarProfile
 };
 
 /**
@@ -44,7 +45,7 @@ function renderHomePage(req, res) {
 * @param  {object} res HTTP response
 */
 
-function verifyToken(req,res,next) {
+async function verifyToken(req,res,next) {
   if(!req.headers.authorization){
     return res.status(401).send('Unauthorized request');
   }
@@ -91,7 +92,7 @@ function UserRegister(req, res) {
         if(err){
           console.log("err" + err);
         }else {
-          let payload = { subject: userRegisted._id, email: user.email };
+          let payload = { subject: userRegisted.User_ID};
           let token = jwt.sign(payload, 'secretKey');
           res.status(200).send({token});
         }
@@ -123,7 +124,7 @@ if(userData.email === '' || userData.password === ''){
       if(!user.comparePassword(userData.password)){
         res.status(401).send('Invalid Password');
       }else {
-        let payload = { subject:user._id, email: user.email }
+        let payload = { subject:user.User_ID, email: user.email }
         let token = jwt.sign(payload, 'secretKey')
         res.status(200).send({token});
       }
@@ -138,21 +139,44 @@ if(userData.email === '' || userData.password === ''){
 * @param  {object} res HTTP response
 */
 async function GetUserProfile(req,res) {
-  try{
-    const userInfor = Informations.findOne({User_ID: req.params.userid})
-    const userAuth = Authentication.findOne({User_ID: req.params.userid})
-    res.status(200).send({
-      email: userAuth.email,
-      name: userInfor.name,
-      password: userAuth.password,
-      userId: req.userId,
-      phone: userInfor.phone,
-      avatar: userInfor.avatar
-    })
-  }
-  catch(err){
-    console.log(err)
-  }
+  Informations.findOne({User_ID:req.params.userId}, (err,userInfor)=>{
+    if(err){
+      console.log(err);
+    }else{
+      Authentication.findOne({User_ID: req.params.userId},(err,userAuth)=>{
+        if(err){
+          console.log(err);
+        }else{
+          res.status(200).send({
+            email: userAuth.email,
+            name: userInfor.name,
+            userId: req.userId,
+            phone: userInfor.phone,
+            avatar: userInfor.avatar
+          })
+        }
+      })
+    }
+  })
+}
+
+/**
+* @name ToolbarProfile
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+async function ToolbarProfile(req,res) {
+  Informations.findOne({User_ID:req.userId},(err,userInfor)=>{
+    if(err){
+      console.log(err);
+    }else{
+      res.status(200).send({
+        name: userInfor.name,
+        userId: req.userId,
+        avatar: userInfor.avatar
+      })
+    }
+  });
 }
 
 /**

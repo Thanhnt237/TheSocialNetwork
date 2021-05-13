@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../../Services/auth.service";
 import { ProfileService } from "../../Services/profile.service";
 
+import { Router } from "@angular/router";
+
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
@@ -20,9 +22,14 @@ export class ToolbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this._getUserId.getMyProfile()
+    this.refreshToolbar();
+  }
+
+  refreshToolbar(){
+    this._getUserId.getToolbarProfile()
       .subscribe(
         res => {
+          console.log(res);
           this.userProfile.userId = res.userId;
           this.userProfile.name = res.name;
           console.log(this.userProfile);
