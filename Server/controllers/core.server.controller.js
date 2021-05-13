@@ -8,12 +8,17 @@ const jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 const { v4 } = require('uuid');
 const mailer = require('./mailer');
-const multer = require('./multer');
+const multerUpload = require('./multer');
+const multer = require('multer')
 
 const Authentication = require('../db/models/Authentication');
 const User = require('../db/models/User');
 const PasswordReset = require('../db/models/ResetPassword');
 const Informations = require('../db/models/Informations');
+const Posts = require('../db/models/Posts');
+const PostLayouts = require('../db/models/PostLayouts');
+const Comments = require('../db/models/Comments');
+const Reactions = require('../db/models/Reactions');
 
 module.exports = {
   renderHomePage: renderHomePage,
@@ -28,7 +33,10 @@ module.exports = {
   SendMail: SendMail,
   SendResetPasswordLink: SendResetPasswordLink,
   ToolbarProfile: ToolbarProfile,
-  ChangeAvatar: ChangeAvatar
+  ChangeAvatar: ChangeAvatar,
+  AddNewPost: AddNewPost,
+  DeletePost: DeletePost,
+  AddNewComment: AddNewComment
 };
 
 /**
@@ -208,7 +216,27 @@ async function EditProfile(req,res) {
 * @param  {object} res HTTP response
 */
 async function ChangeAvatar(req,res) {
-
+await multerUpload.upload(req,res, (err)=>{
+  if (err instanceof multer.MulterError) {
+      console.log(err);
+      res.status(401).send("A Multer error occurred when uploading.")
+    }else if (err) {
+      console.log(err);
+      res.status(401).send("A Multer error occurred when uploading.")
+    }else{
+        console.log("Upload is okay");
+        Informations.findOneAndUpdate(
+          {User_ID: req.userId},
+          {$set: {avatar: req.file.filename}},
+        (err) => {
+          if(err){
+            res.status(401).send("err"+err);
+          }else {
+            res.status(200).send("Success");
+          }
+        });
+    }
+})
 }
 
 
@@ -334,4 +362,122 @@ async function SendResetPasswordLink(req, res) {
     console.log(error)
     res.send(error)
   }
+}
+
+
+/**
+* @name AddNewPost
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function AddNewPost(req, res) {
+  let postData = req.body;
+
+  let createPost = new Posts({
+    User_ID: req.userId
+  });
+  let createPostLayouts = new PostLayouts({
+    Post_ID: createPost._id,
+    title: postData.title,
+    content: postData.content,
+    images: postData.images
+  });
+  createPostLayouts.save((err)=>{
+    if(err){
+      console.log(err);
+    }else{
+      createPost.save();
+      res.status(200).send("Sucess");
+    }
+  })
+}
+
+/**
+* @name DeletePost
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function DeletePost(req, res) {
+  Posts.countDocuments({_id:req.params.postId},(err,postCount)=>{
+    if(postCount>0){
+      Posts.countDocuments({User_ID: req.userId}, (err,postCount2)=>{
+        if(postCount2>0){
+          Posts.findByIdAndDelete({_id: req.params.postId},(err)=>{
+            if(err){
+              console.log(err);
+            }else{
+              PostLayouts.findOneAndDelete({Post_ID:req.params.postId},(err)=>{
+                if(err){
+                  console.log(err);
+                }else{
+                  res.status(200).send("Success");
+                }
+              })
+            }
+          })
+
+        }
+        else{
+          res.status(401).send("May khong du tuoi lam viec nay");
+        }
+      })
+    }else{
+      res.status(404).send("ko co post nao o day car")
+    }
+  })
+}
+
+/**
+* @name UpdatePost
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function UpdatePost(req, res) {
+  Posts.countDocuments({_id:req.params.postId},(err,postCount)=>{
+    if(postCount>0){
+      Posts.countDocuments({User_ID: req.userId}, (err,postCount2)=>{
+        if(postCount2>0){
+          PostLayouts.findOneAndUpdate({Post_ID:req.params.postId},
+            {$set:{content: req.body.content}},
+            (err)=>{
+            if(err){
+              console.log(err);
+            }else{
+              res.status(200).send("Success");
+            }
+          })
+        }
+        else{
+          res.status(401).send("May khong du tuoi lam viec nay");
+        }
+      })
+    }else{
+      res.status(404).send("ko co post nao o day car")
+    }
+  })
+}
+
+/**
+* @name AddNewComment
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function AddNewComment(req, res) {
+  let createComment = new Comments({
+    Parent_ID: req.params.postId,
+    User_ID: req.userId,
+    content: req.body.content,
+    images: req.body.images
+  });
+  createPostLayouts.save((err)=>{
+    if(err){
+      console.log(err);
+    }else{
+      res.status(200).send("Sucess");
+    }
+  })
 }

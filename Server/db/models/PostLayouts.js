@@ -1,31 +1,26 @@
 const mongoose = require('mongoose')
-const path = require('path')
 
-const PostImagesBasePath = 'upload/PostImages'
-const ReactionsSchema = new mongoose.Schema({
-    Parent_id:{
+const PostLayoutsSchema = new mongoose.Schema({
+    Post_ID:{
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Posts'
+        required: true
     },
     title:{
         type:String,
-        required:true
+        default:"NULL"
     },
     content:{
         type:String,
-        required:true
+        required:true,
+        default:"NULL"
     },
     images:{
-        type:String
+        type: String
     },
     link:{
-        type:String
+        type: String
     }
 
 })
-ReactionsSchema.virtual('imagesPath').get(function(){
-    if(this.images != null){
-        return path.join('/',PostImagesBasePath ,this.images)
-    }
-module.exports = mongoose.model('Reactions',ReactionsSchema)
+
+module.exports = mongoose.model('PostLayouts',PostLayoutsSchema)

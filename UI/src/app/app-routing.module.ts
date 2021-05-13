@@ -15,6 +15,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from "@angular/forms";
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { HomeComponent } from './Pages/home/home.component';
 import { LoginComponent } from './Pages/login/login.component';
@@ -25,6 +28,7 @@ import { ProfileComponent } from './Pages/profile/profile.component';
 import { AboutComponent } from './Pages/about/about.component';
 import { FriendComponent } from './Pages/friend/friend.component';
 
+
 let angularMaterialModule = [
   MatSidenavModule,
   MatToolbarModule,
@@ -34,7 +38,10 @@ let angularMaterialModule = [
   MatCardModule,
   MatInputModule,
   MatFormFieldModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  MatDialogModule,
+  MatExpansionModule,
+  MatDatepickerModule
 ];
 
 const routes: Routes = [
@@ -68,7 +75,8 @@ const routes: Routes = [
   },
   {
     path:'**',
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

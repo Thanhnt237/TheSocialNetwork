@@ -1,10 +1,9 @@
 const mongoose = require('mongoose')
 
 const PostsSchema = new mongoose.Schema({
-    User_id:{
+    User_ID:{
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'User'
+        required: true
     },
     date:{
         type:Date,
@@ -12,14 +11,10 @@ const PostsSchema = new mongoose.Schema({
         required:true
     },
     FavoritesCategory_id:{
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'FavoritesCategory'
-      },
+        type: String
+    },
     States_id:{
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'States'
+        type: String
     }
 })
 module.exports = mongoose.model('Posts',PostsSchema)

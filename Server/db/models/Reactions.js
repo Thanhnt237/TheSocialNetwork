@@ -1,15 +1,13 @@
 const mongoose = require('mongoose')
 
 const ReactionsSchema = new mongoose.Schema({
-    Posts_id:{
+    Posts_ID:{
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Posts'
+        required: true
       },
-      User_id:{
+    User_id:{
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'User'
+        required: true
     },
     state:{
         type:String,
