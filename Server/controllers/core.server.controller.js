@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 const { v4 } = require('uuid');
 const mailer = require('./mailer');
+const multer = require('./multer');
 
 const Authentication = require('../db/models/Authentication');
 const User = require('../db/models/User');
@@ -26,7 +27,8 @@ module.exports = {
   PostResetConfirm: PostResetConfirm,
   SendMail: SendMail,
   SendResetPasswordLink: SendResetPasswordLink,
-  ToolbarProfile: ToolbarProfile
+  ToolbarProfile: ToolbarProfile,
+  ChangeAvatar: ChangeAvatar
 };
 
 /**
@@ -185,21 +187,30 @@ async function ToolbarProfile(req,res) {
 * @param  {object} res HTTP response
 */
 async function EditProfile(req,res) {
-  let userInfor
-  let userAuth
-  try{
-    userInfor = Informations.findOne({User_ID: req.userId})
-    userAuth = Authentication.findOne({User_ID: req.userId})
-    userAuth = req.body.email
-    userInfor.name = req.body.name
-    userAuth.password = req.body.password
-    userInfor.phone = req.body.phone
-    res.status(200).send('Success')
-  }
-  catch(err){
-    console.log(err)
-  }
+  Informations.findOneAndUpdate(
+    {User_ID: req.userId},
+    {$set: {name: req.body.name,
+            phone:req.body.phone
+    }},
+    (err)=>{
+      if(err){
+        console.log(err)
+      }else{
+        res.status(200).send("Sucesss");
+      }
+    }
+  )
 }
+
+/**
+* @name ChangeAvatar
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+async function ChangeAvatar(req,res) {
+
+}
+
 
 /**
 * @name SendMail
