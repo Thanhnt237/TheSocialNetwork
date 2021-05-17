@@ -46,15 +46,19 @@
         <mat-accordion class="example-headers-align" multi>
           <mat-expansion-panel>
             <mat-expansion-panel-header>
-              Ngày hôm nay của bạn thế nào? + {{userId}}
+              Chào {{userProfile.name}}, ngày hôm nay của bạn thế nào?
             </mat-expansion-panel-header>
-
-            <mat-form-field>
+          <form (ngSubmit)="onAddNewPost()" name="PostForm" [formGroup]="PostForm">
+            <mat-form-field >
               <mat-label>Bạn muốn chia sẻ điều gì?</mat-label>
-              <input matInput>
-            </mat-form-field>
-            <a mat-button> ảnh </a>
-            <a mat-button> Chia sẻ </a>
+              <input
+              formControlName="content"
+              matInput
+              placeholder="Bạn muốn chia sẻ điều gì?"
+              />
+              </mat-form-field>
+            <button mat-flat-button> Chia sẻ </button>
+          </form>
           </mat-expansion-panel>
         </mat-accordion>
 
