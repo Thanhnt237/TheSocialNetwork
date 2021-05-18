@@ -5,7 +5,7 @@ const ReactionsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
       },
-    User_id:{
+    User_ID:{
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },

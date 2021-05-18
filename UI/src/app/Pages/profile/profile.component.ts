@@ -16,6 +16,8 @@ import { AuthService } from "../../Services/auth.service";
 
 export class ProfileComponent implements OnInit {
 
+  PostForm: FormGroup;
+
   userId:any;
 
   alertError: boolean = false;
@@ -48,7 +50,12 @@ export class ProfileComponent implements OnInit {
     private _activatedRoute: ActivatedRoute,
     public _auth: AuthService
 
-  ) { }
+  ) {
+    this.PostForm = this._formBuilder.group({
+      content: [''],
+      images: [null]
+    })
+   }
 
 
   ngOnInit(): void {
@@ -76,10 +83,6 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  PostForm: FormGroup = this._formBuilder.group({
-      content : new FormControl('', [Validators.required])
-    });
-
   onAddNewPost(){
     if (!this.PostForm.valid) {
       return;
@@ -88,16 +91,19 @@ export class ProfileComponent implements OnInit {
   }
 
   UploadImages(event:any){
-    const images = event.target.files[0];
-    console.log(images);
-
-    this.post.images = images;
+    const file = event.target.files[0];
+      this.PostForm.patchValue({
+        images: file
+      })
   }
 
   AddNewPost(){
-    this.post = this.PostForm.value;
+    const PostFormData = new FormData();
+    PostFormData.append('images',this.PostForm.value.images);
+    PostFormData.append('content',this.PostForm.value.content);
+    console.log(PostFormData);
     this._activatedRoute.paramMap.subscribe(params=>{
-      this._post.AddNewPost(params.get('userId'), this.post)
+      this._post.AddNewPost(params.get('userId'), PostFormData)
       .subscribe(
         res => {
           console.log(res);
@@ -110,6 +116,8 @@ export class ProfileComponent implements OnInit {
         }
       )
     })
+
+    window.location.reload();
   }
 
 }

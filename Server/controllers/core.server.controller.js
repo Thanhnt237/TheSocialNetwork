@@ -374,7 +374,6 @@ async function SendResetPasswordLink(req, res) {
 */
 
 async function AddNewPost(req, res) {
-  let postData = req.body;
 
   let createPost = new Posts({
     TimeLine_ID: req.params.userId
@@ -389,14 +388,15 @@ async function AddNewPost(req, res) {
         res.status(401).send("A Multer error occurred when uploading.")
       }else{
           console.log("Upload is okay");
+          console.log(req.body.content);
           Informations.findOne({User_ID:req.userId},(err,user)=>{
             let createPostLayouts = new PostLayouts({
               Post_ID: createPost._id,
               UserName: user.name,
               UserAvatar: user.avatar,
-              title: postData.title,
-              content: postData.content,
-              images: postData.images
+              title: req.body.title,
+              content: req.body.content,
+              images: req.file.filename
             });
             createPostLayouts.save((err)=>{
               if(err){
