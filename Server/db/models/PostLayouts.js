@@ -5,6 +5,13 @@ const PostLayoutsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
+    UserName:{
+        type: String,
+        required: true
+    },
+    UserAvatar:{
+        type: String
+    },
     title:{
         type:String,
         default:"NULL"

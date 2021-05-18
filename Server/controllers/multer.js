@@ -24,7 +24,7 @@ var upload = multer({
             return cb(new Error('Only image are allowed!'))
         }
     }
-}).single("avatar");
+}).single("images");
 
 
 module.exports = {

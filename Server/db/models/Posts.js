@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const PostsSchema = new mongoose.Schema({
-    User_ID:{
+    TimeLine_ID:{
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },

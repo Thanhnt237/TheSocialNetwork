@@ -43,7 +43,7 @@
       <div class="col-lg-7">
         <div class="StatusPost">
           <!--Status Post-->
-        <mat-accordion class="example-headers-align" multi>
+        <mat-accordion class="example-headers-align" *ngIf="_auth.loggedIn()" multi>
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               Chào {{userProfile.name}}, ngày hôm nay của bạn thế nào?
@@ -56,27 +56,29 @@
               matInput
               placeholder="Bạn muốn chia sẻ điều gì?"
               />
+              <input
+              type="file" name="images" value="" (change)= "UploadImages($event)"
+              placeholder="Bạn muốn chia sẻ điều gì?"
+              />
               </mat-form-field>
-            <button mat-flat-button> Chia sẻ </button>
+            <button mat-flat-button type="submit" [disabled]="!PostForm.valid"> Chia sẻ </button>
           </form>
           </mat-expansion-panel>
         </mat-accordion>
 
         </div>
         <!-- POST -->
-        <div class="Post">
+        <div class="Post" *ngFor="let post of getPost">
           <mat-card class="example-card">
           <mat-card-header>
-            <div mat-card-avatar class="example-header-image"></div>
-            <mat-card-title>Shiba Inu</mat-card-title>
-            <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+            <img mat-card-avatar class="example-header-image" src="http://localhost:8080/public/upload/{{post.UserAvatar}}"/>
+            <mat-card-title>{{post.UserName}}</mat-card-title>
+            <mat-card-subtitle>8 giowf truowcs</mat-card-subtitle>
           </mat-card-header>
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+          <img mat-card-image src="http://localhost:8080/public/upload/{{post.images}}" alt="Photo of a Shiba Inu">
           <mat-card-content>
             <p>
-              The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-              A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-              bred for hunting.
+              {{post.content}}
             </p>
           </mat-card-content>
           <mat-card-actions>
@@ -88,9 +90,6 @@
         </div>
       </div>
     </div>
-
-
-
   </div>
 
 </div>

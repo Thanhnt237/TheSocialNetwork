@@ -36,7 +36,8 @@ module.exports = {
   ChangeAvatar: ChangeAvatar,
   AddNewPost: AddNewPost,
   DeletePost: DeletePost,
-  AddNewComment: AddNewComment
+  AddNewComment: AddNewComment,
+  GetPost: GetPost
 };
 
 /**
@@ -86,7 +87,8 @@ function UserRegister(req, res) {
 
   let createUser = new User();
   let createInformation = new Informations({
-    User_ID: createUser._id
+    User_ID: createUser._id,
+    name: userData.name
   });
   let user = new Authentication({
     User_ID: createUser._id,
@@ -375,22 +377,40 @@ async function AddNewPost(req, res) {
   let postData = req.body;
 
   let createPost = new Posts({
-    User_ID: req.userId
+    TimeLine_ID: req.params.userId
   });
-  let createPostLayouts = new PostLayouts({
-    Post_ID: createPost._id,
-    title: postData.title,
-    content: postData.content,
-    images: postData.images
-  });
-  createPostLayouts.save((err)=>{
-    if(err){
-      console.log(err);
-    }else{
-      createPost.save();
-      res.status(200).send("Sucess");
-    }
+
+  await multerUpload.upload(req,res, (err)=>{
+    if (err instanceof multer.MulterError) {
+        console.log(err);
+        res.status(401).send("A Multer error occurred when uploading.")
+      }else if (err) {
+        console.log(err);
+        res.status(401).send("A Multer error occurred when uploading.")
+      }else{
+          console.log("Upload is okay");
+          Informations.findOne({User_ID:req.userId},(err,user)=>{
+            let createPostLayouts = new PostLayouts({
+              Post_ID: createPost._id,
+              UserName: user.name,
+              UserAvatar: user.avatar,
+              title: postData.title,
+              content: postData.content,
+              images: postData.images
+            });
+            createPostLayouts.save((err)=>{
+              if(err){
+                console.log(err);
+              }else{
+                createPost.save();
+                res.status(200).send("Sucess");
+              }
+            })
+          })
+      }
   })
+
+
 }
 
 /**
@@ -479,5 +499,24 @@ async function AddNewComment(req, res) {
     }else{
       res.status(200).send("Sucess");
     }
+  })
+}
+
+/**
+* @name GetPost
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function GetPost(req, res) {
+
+  Posts.find({TimeLine_ID: req.params.userId},(err, postId)=>{
+    PostLayouts.find({Post_ID: postId}, (err,postLayout)=>{
+      if(err){
+        console.log(err);
+      }else{
+        res.status(200).send(postLayout)
+      }
+    })
   })
 }

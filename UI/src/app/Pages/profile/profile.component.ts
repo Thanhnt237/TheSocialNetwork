@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from "@angular/forms"
 
 import { ProfileService } from "../../Services/profile.service";
 import { PostService } from "../../Services/post.service";
+import { AuthService } from "../../Services/auth.service";
 
 @Component({
   selector: 'app-profile',
@@ -28,8 +29,16 @@ export class ProfileComponent implements OnInit {
 
   post = {
     content: String,
-    image: File
+    images: File
   }
+
+  getPost = [{
+    UserName: String,
+    UserAvatar: String,
+    title: String,
+    content: String,
+    images: String
+  }]
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -37,8 +46,10 @@ export class ProfileComponent implements OnInit {
     private _post: PostService,
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
+    public _auth: AuthService
 
   ) { }
+
 
   ngOnInit(): void {
     this._activatedRoute.paramMap.subscribe(params => {
@@ -47,7 +58,16 @@ export class ProfileComponent implements OnInit {
         .subscribe(
           res => {
             this.userProfile = res;
-            console.log(res);
+          },
+          err=>{
+            console.log(err);
+          }
+        )
+      this._post.GetPost(this.userId)
+        .subscribe(
+          res => {
+            this.getPost = res;
+            console.log(this.getPost);
           },
           err=>{
             console.log(err);
@@ -57,8 +77,7 @@ export class ProfileComponent implements OnInit {
   }
 
   PostForm: FormGroup = this._formBuilder.group({
-      content : new FormControl('', [Validators.required]),
-      image: new FormControl('', [Validators.required])
+      content : new FormControl('', [Validators.required])
     });
 
   onAddNewPost(){
@@ -68,20 +87,29 @@ export class ProfileComponent implements OnInit {
     this.AddNewPost();
   }
 
+  UploadImages(event:any){
+    const images = event.target.files[0];
+    console.log(images);
+
+    this.post.images = images;
+  }
+
   AddNewPost(){
     this.post = this.PostForm.value;
-    this._post.AddNewPost(this.post)
-    .subscribe(
-      res => {
-        console.log(res);
-      },
-      err => {
-        console.log(err);
-        this.alertError = true;
-        this.errCatching = err.error;
-        console.log(this.errCatching);
-      }
-    )
+    this._activatedRoute.paramMap.subscribe(params=>{
+      this._post.AddNewPost(params.get('userId'), this.post)
+      .subscribe(
+        res => {
+          console.log(res);
+        },
+        err => {
+          console.log(err);
+          this.alertError = true;
+          this.errCatching = err.error;
+          console.log(this.errCatching);
+        }
+      )
+    })
   }
 
 }

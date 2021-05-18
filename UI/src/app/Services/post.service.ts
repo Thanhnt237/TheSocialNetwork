@@ -8,14 +8,20 @@ import { Router } from "@angular/router";
 
 export class PostService {
 
-  readonly _postUrl = "http://localhost:8080/api/Post/new";
+  readonly _addPostUrl = "http://localhost:8080/api/Post/new/";
+  readonly _getPostUrl = "http://localhost:8080/api/Post/getPost/"
 
   constructor(
     private http: HttpClient,
     private _router: Router
   ) { }
 
-  AddNewPost(post: any){
-    return this.http.post<any>(this._postUrl, post);
+  AddNewPost(userId: any, post: any){
+    return this.http.post<any>(this._addPostUrl + userId, post);
   }
+
+  GetPost(userId: any){
+    return this.http.get<any>(this._getPostUrl + userId);
+  }
+
 }
