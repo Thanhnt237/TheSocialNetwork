@@ -18,6 +18,10 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { HomeComponent } from './Pages/home/home.component';
 import { LoginComponent } from './Pages/login/login.component';
@@ -41,7 +45,11 @@ let angularMaterialModule = [
   ReactiveFormsModule,
   MatDialogModule,
   MatExpansionModule,
-  MatDatepickerModule
+  MatDatepickerModule,
+  MatTabsModule,
+  MatPaginatorModule,
+  MatTooltipModule,
+  MatButtonToggleModule
 ];
 
 const routes: Routes = [

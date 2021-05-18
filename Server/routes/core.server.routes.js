@@ -20,7 +20,7 @@ const coreCtrl = require('../controllers').Core;
   router.route('/api/Post/delete/:postId').post(coreCtrl.verifyToken,coreCtrl.DeletePost);
   router.route('/api/Comments/new/:postId').post(coreCtrl.verifyToken,coreCtrl.AddNewComment);
   router.route('/api/Post/getPost/:userId').get(coreCtrl.GetPost);
-
+  router.route('/api/Comment/getComment/:postId').get(coreCtrl.GetComment);
 
   router.route("/send-email").get((req,res)=>{res.render('reset')});
   router.route("/send-email").post(coreCtrl.SendMail);

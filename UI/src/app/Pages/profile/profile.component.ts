@@ -7,6 +7,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from "@angular/forms"
 import { ProfileService } from "../../Services/profile.service";
 import { PostService } from "../../Services/post.service";
 import { AuthService } from "../../Services/auth.service";
+import { CommentService } from "../../Services/comment.service";
 
 @Component({
   selector: 'app-profile',
@@ -16,6 +17,9 @@ import { AuthService } from "../../Services/auth.service";
 
 export class ProfileComponent implements OnInit {
 
+  openComment: boolean = true;
+  liked: boolean = true;
+  likedColor:String = "basic";
   PostForm: FormGroup;
 
   userId:any;
@@ -34,8 +38,13 @@ export class ProfileComponent implements OnInit {
     images: File
   }
 
+  getComment = [{
+    content: String
+  }]
+
   getPost = [{
     UserName: String,
+    Post_ID: String,
     UserAvatar: String,
     title: String,
     content: String,
@@ -48,7 +57,8 @@ export class ProfileComponent implements OnInit {
     private _post: PostService,
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
-    public _auth: AuthService
+    public _auth: AuthService,
+    private _comment: CommentService
 
   ) {
     this.PostForm = this._formBuilder.group({
@@ -57,6 +67,9 @@ export class ProfileComponent implements OnInit {
     })
    }
 
+   CommentForm: FormGroup = this._formBuilder.group({
+     content: new FormControl('', [Validators.required])
+   })
 
   ngOnInit(): void {
     this._activatedRoute.paramMap.subscribe(params => {
@@ -80,7 +93,18 @@ export class ProfileComponent implements OnInit {
             console.log(err);
           }
         )
+
     });
+  }
+
+  LikedColorChange(){
+    this.liked = !this.liked;
+    if(this.liked == true){
+      this.likedColor = "basic"
+    }
+    else{
+      this.likedColor = "primary"
+    }
   }
 
   onAddNewPost(){
@@ -90,11 +114,48 @@ export class ProfileComponent implements OnInit {
     this.AddNewPost();
   }
 
+  onAddNewComment(PostId: any){
+    if (!this.CommentForm.valid) {
+      return;
+    }
+    this.AddNewComment(PostId);
+  }
+
+  AddNewComment(PostId: any){
+    this._comment.AddNewComment(PostId, this.CommentForm.value)
+    .subscribe(
+      res => {
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+        this.alertError = true;
+        this.errCatching = err.error;
+        console.log(this.errCatching);
+      }
+    )
+  }
+
   UploadImages(event:any){
     const file = event.target.files[0];
       this.PostForm.patchValue({
         images: file
       })
+  }
+  //// TODO: Chờ fix cái củ cải này
+  onLoadComment(postId: any){
+    this.openComment = !this.openComment;
+    this._comment.GetAllComment(postId)
+      .subscribe(
+        res => {
+          this.getComment = res;
+          console.log(this.getComment)
+        },
+        err =>{
+          console.log(err);
+        }
+
+      )
   }
 
   AddNewPost(){

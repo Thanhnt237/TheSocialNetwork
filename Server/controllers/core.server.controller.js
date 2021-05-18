@@ -37,7 +37,8 @@ module.exports = {
   AddNewPost: AddNewPost,
   DeletePost: DeletePost,
   AddNewComment: AddNewComment,
-  GetPost: GetPost
+  GetPost: GetPost,
+  GetComment: GetComment
 };
 
 /**
@@ -493,7 +494,7 @@ async function AddNewComment(req, res) {
     content: req.body.content,
     images: req.body.images
   });
-  createPostLayouts.save((err)=>{
+  createComment.save((err)=>{
     if(err){
       console.log(err);
     }else{
@@ -519,4 +520,20 @@ async function GetPost(req, res) {
       }
     })
   })
+}
+
+/**
+* @name GetComment
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function GetComment(req, res) {
+    Comments.find({Parent_ID: req.params.postId}, (err,comment)=>{
+      if(err){
+        console.log(err);
+      }else{
+        res.status(200).send(comment)
+      }
+    })
 }
