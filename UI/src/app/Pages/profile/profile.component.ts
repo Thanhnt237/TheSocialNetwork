@@ -17,7 +17,8 @@ import { CommentService } from "../../Services/comment.service";
 
 export class ProfileComponent implements OnInit {
 
-  openComment: boolean = true;
+  openComment: Boolean = true;
+
   liked: boolean = true;
   likedColor:String = "basic";
   PostForm: FormGroup;
@@ -143,9 +144,8 @@ export class ProfileComponent implements OnInit {
       })
   }
   //// TODO: Chờ fix cái củ cải này
-  onLoadComment(postId: any){
-    this.openComment = !this.openComment;
-    this._comment.GetAllComment(postId)
+  onLoadComment(post: any){
+    this._comment.GetAllComment(post.Post_ID)
       .subscribe(
         res => {
           this.getComment = res;

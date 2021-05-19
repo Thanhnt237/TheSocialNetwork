@@ -82,7 +82,7 @@
           <img mat-card-image src="http://localhost:8080/public/upload/{{post.images}}">
           <mat-card-actions>
             <button mat-button (click)="LikedColorChange()" [color]="likedColor">LIKE</button>
-            <button mat-button (click)="onLoadComment(post.Post_ID)">COMMENT</button>
+            <button mat-button (click)="openComment = !openComment" onload="onLoadComment(post)" >COMMENT</button>
             <button mat-button>SHARE</button>
           </mat-card-actions>
           <mat-card-actions>

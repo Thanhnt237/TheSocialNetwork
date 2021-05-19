@@ -15,7 +15,10 @@
   </div>
 
   <!-- Right -->
-  <mat-icon matBadge="15" matBadgeColor="warn" *ngIf="_authService.loggedIn()">home</mat-icon>
+  <button mat-button [matMenuTriggerFor]="menu"><mat-icon matBadge="15" matBadgeColor="warn" *ngIf="_authService.loggedIn()">group</mat-icon></button>
+  <mat-menu #menu="matMenu">
+    <a mat-menu-item> lời mời kết bạn </a>
+  </mat-menu>
   <mat-icon matBadge="15" matBadgeColor="warn" *ngIf="_authService.loggedIn()">home</mat-icon>
 
   <span class="" *ngIf="_authService.loggedIn()">

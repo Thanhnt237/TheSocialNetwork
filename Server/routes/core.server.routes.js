@@ -21,6 +21,10 @@ const coreCtrl = require('../controllers').Core;
   router.route('/api/Comments/new/:postId').post(coreCtrl.verifyToken,coreCtrl.AddNewComment);
   router.route('/api/Post/getPost/:userId').get(coreCtrl.GetPost);
   router.route('/api/Comment/getComment/:postId').get(coreCtrl.GetComment);
+  router.route('/api/Friend/FriendRequest/:userId').post(coreCtrl.verifyToken, coreCtrl.FriendRequest);
+  router.route('/api/Friend/AcceptFriend/:userId').post(coreCtrl.verifyToken, coreCtrl.AcceptFriend);
+  router.route('/api/Friend/getAllFriendRequest').get(coreCtrl.verifyToken, coreCtrl.getAllFriendRequest);
+  router.route('/api/Friend/getAllFriend').get(coreCtrl.verifyToken, coreCtrl.getAllFriend);
 
   router.route("/send-email").get((req,res)=>{res.render('reset')});
   router.route("/send-email").post(coreCtrl.SendMail);

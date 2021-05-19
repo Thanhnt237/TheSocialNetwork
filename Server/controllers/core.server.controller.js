@@ -19,6 +19,7 @@ const Posts = require('../db/models/Posts');
 const PostLayouts = require('../db/models/PostLayouts');
 const Comments = require('../db/models/Comments');
 const Reactions = require('../db/models/Reactions');
+const FriendList = require('../db/models/FriendList');
 
 module.exports = {
   renderHomePage: renderHomePage,
@@ -38,7 +39,13 @@ module.exports = {
   DeletePost: DeletePost,
   AddNewComment: AddNewComment,
   GetPost: GetPost,
-  GetComment: GetComment
+  GetComment: GetComment,
+  FriendRequest: FriendRequest,
+  AcceptFriend: AcceptFriend,
+  DeleteFriendRequest: DeleteFriendRequest,
+  DeleteFriend: DeleteFriend,
+  getAllFriendRequest: getAllFriendRequest,
+  getAllFriend: getAllFriend
 };
 
 /**
@@ -96,6 +103,9 @@ function UserRegister(req, res) {
     email: userData.email,
     password: hash_password
   });
+  let createFriendList = new FriendList({
+    User_ID: createUser._id
+  });
 
   Authentication.countDocuments({email: userData.email}, function (err, count){
     if(count>0){
@@ -112,6 +122,7 @@ function UserRegister(req, res) {
       })
       createUser.save();
       createInformation.save();
+      createFriendList.save();
     }
   });
 }
@@ -536,4 +547,180 @@ async function GetComment(req, res) {
         res.status(200).send(comment)
       }
     })
+}
+
+/**
+* @name FriendRequest
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function FriendRequest(req, res) {
+  if(req.userId == req.params.userId){
+    res.status(401).send("Không thể gửi yêu cầu kết bạn đến chính mình")
+  }else{
+    FriendList.countDocuments({User_ID: req.params.userId},(err,count)=>{
+      if(count>0){
+        FriendList.countDocuments({FriendQueue_ID: req.userId},(err,count2)=>{
+          if(count2>0){
+            res.send("Đã gửi yêu cầu kết bạn, chờ phản hồi");
+          }else{
+            FriendList.findOneAndUpdate(
+              {User_ID:req.params.userId},
+              {$push:{FriendQueue_ID: req.userId}},
+              (err)=>{
+                if(err){
+                  console.log(err)
+                }else{
+                  res.status(200).send("Đã gửi yêu cầu kết bạn thành công")
+                }
+              }
+            )
+          }
+        })
+      }else{
+        res.status(401).send("Không tìm thấy danh sách bạn bè")
+      }
+    })
+  }
+}
+
+/**
+* @name AcceptFriend
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function AcceptFriend(req, res) {
+  FriendList.countDocuments({User_ID: req.userId},(err,count)=>{
+    if(count>0){
+      FriendList.countDocuments({FriendQueue_ID: req.params.userId},(err,count2)=>{
+        if(count2>0){
+          FriendList.findOneAndUpdate(
+            {FriendQueue_ID: req.params.userId},
+            {$pop:{FriendQueue_ID:req.params.userId}, $push:{Friend_ID: req.params.userId}},
+            (err)=>{
+              if(err){
+                console.log(err)
+              }else{
+                res.status(200).send("Kết bạn thành công");
+              }
+            }
+          )
+        }else{
+          res.status(401).send("Không tìm thấy yêu cầu kết bạn này")
+        }
+      })
+    }else{
+      res.status(401).send("Không tìm thấy danh sách bạn bè");
+    }
+  })
+}
+
+/**
+* @name DeleteFriendRequest
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function DeleteFriendRequest(req, res) {
+  FriendList.countDocuments({User_ID: req.userId},(err,count)=>{
+    if(count>0){
+      FriendList.countDocuments({FriendQueue_ID: req.params.userId},(err,count2)=>{
+        if(count2>0){
+          FriendList.findOneAndUpdate(
+            {FriendQueue_ID: req.params.userId},
+            {$pop:{FriendQueue_ID:req.params.userId}},
+            (err)=>{
+              if(err){
+                console.log(err)
+              }else{
+                res.status(200).send("Từ chối kết bạn thành công");
+              }
+            }
+          )
+        }else{
+          res.status(401).send("Không tìm thấy yêu cầu kết bạn này")
+        }
+      })
+    }else{
+      res.status(401).send("Không tìm thấy danh sách bạn bè");
+    }
+  })
+}
+
+/**
+* @name DeleteFriend
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function DeleteFriend(req, res) {
+  FriendList.countDocuments({User_ID: req.userId},(err,count)=>{
+    if(count>0){
+      FriendList.countDocuments({Friend_ID: req.params.userId},(err,count2)=>{
+        if(count2>0){
+          FriendList.findOneAndUpdate(
+            {Friend_ID: req.params.userId},
+            {$pop:{Friend_ID:req.params.userId}},
+            (err)=>{
+              if(err){
+                console.log(err)
+              }else{
+                res.status(200).send("Hủy kết bạn thành công");
+              }
+            }
+          )
+        }else{
+          res.status(401).send("Không tìm thấy bạn bè này")
+        }
+      })
+    }else{
+      res.status(401).send("Không tìm thấy danh sách bạn bè");
+    }
+  })
+}
+
+/**
+* @name getAllFriendRequest
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function getAllFriendRequest(req, res) {
+  FriendList.countDocuments({User_ID:req.userId},(err,count)=>{
+    if(count>0){
+      FriendList.findOne({User_ID:req.userId},(err,friendList)=>{
+        if(friendList.FriendQueue_ID == null){
+          res.status(200).send("Không có lời mời kết bạn nào");
+        }else{
+          res.status(200).send(friendList.FriendQueue_ID)
+        }
+      })
+    }else{
+      res.status(401).send("Không tìm thấy danh sách bạn bè")
+    }
+  })
+}
+
+/**
+* @name getAllFriend
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function getAllFriend(req, res) {
+  FriendList.countDocuments({User_ID:req.userId},(err,count)=>{
+    if(count>0){
+      FriendList.findOne({User_ID:req.userId},(err,friendList)=>{
+        if(friendList.FriendQueue_ID == null){
+          res.status(200).send("Không có bạn bè nào");
+        }else{
+          res.status(200).send(friendList.Friend_ID)
+        }
+      })
+    }else{
+      res.status(401).send("Không tìm thấy danh sách bạn bè")
+    }
+  })
 }
