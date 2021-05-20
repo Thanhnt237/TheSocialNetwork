@@ -24,6 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToolbarComponent } from './Blocks/toolbar/toolbar.component';
 
 import { ReactiveFormsModule } from "@angular/forms";
+import { SideNavComponent } from './Blocks/side-nav/side-nav.component';
 
 let angularMaterialModule = [
   MatSidenavModule,
@@ -42,7 +43,8 @@ let angularMaterialModule = [
 @NgModule({
   declarations: [
     AppComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    SideNavComponent
   ],
   imports: [
     BrowserModule,

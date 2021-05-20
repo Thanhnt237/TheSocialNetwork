@@ -36,6 +36,7 @@ module.exports = {
   SendResetPasswordLink: SendResetPasswordLink,
   ToolbarProfile: ToolbarProfile,
   ChangeAvatar: ChangeAvatar,
+  ChangeCover: ChangeCover,
   AddNewPost: AddNewPost,
   DeletePost: DeletePost,
   AddNewComment: AddNewComment,
@@ -177,7 +178,12 @@ async function GetUserProfile(req,res) {
             name: userInfor.name,
             userId: req.userId,
             phone: userInfor.phone,
-            avatar: userInfor.avatar
+            avatar: userInfor.avatar,
+            cover: userInfor.cover,
+            address: userInfor.address,
+            DoB: userInfor.DoB,
+            description: userInfor.description,
+            gender: userInfor.description
           })
         }
       })
@@ -219,7 +225,7 @@ async function EditProfile(req,res) {
       if(err){
         console.log(err)
       }else{
-        res.status(200).send("Sucesss");
+        res.status(200).send("Thành công");
       }
     }
   )
@@ -247,12 +253,42 @@ await multerUpload.upload(req,res, (err)=>{
           if(err){
             res.status(401).send("err"+err);
           }else {
-            res.status(200).send("Success");
+            res.status(200).send("Đổi ảnh đại diện thành công");
           }
         });
     }
 })
 }
+
+/**
+* @name ChangeCover
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+async function ChangeCover(req,res) {
+await multerUpload.upload(req,res, (err)=>{
+  if (err instanceof multer.MulterError) {
+      console.log(err);
+      res.status(401).send("A Multer error occurred when uploading.")
+    }else if (err) {
+      console.log(err);
+      res.status(401).send("A Multer error occurred when uploading.")
+    }else{
+        console.log("Upload is okay");
+        Informations.findOneAndUpdate(
+          {User_ID: req.userId},
+          {$set: {cover: req.file.filename}},
+        (err) => {
+          if(err){
+            res.status(401).send("err"+err);
+          }else {
+            res.status(200).send("Đổi ảnh bìa thành công");
+          }
+        });
+    }
+})
+}
+
 
 
 /**

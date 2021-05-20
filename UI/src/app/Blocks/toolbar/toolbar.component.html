@@ -21,7 +21,11 @@
     <mat-menu #menu="matMenu">
       <a mat-menu-item *ngIf="noFriendQueue">{{noFriendQueueCatching}}</a>
       <div class="Friend_Queue" *ngIf="!noFriendQueue">
-        <a mat-menu-item *ngFor="let friend of friendRequest">{{friend.name}} </a>
+        <a mat-menu-item *ngFor="let friend of friendRequest">
+          {{friend.name}}
+          <button mat-button (click)="acceptFriendRequest(friend.FriendQueue_ID)">Chấp nhận</button>
+          <button mat-button (click)="deleteFriendRequest(friend.FriendQueue_ID)">Từ chối</button>
+        </a>
       </div>
     </mat-menu>
     <button mat-button><mat-icon matBadge="15" matBadgeColor="warn" *ngIf="_authService.loggedIn()">home</mat-icon></button>

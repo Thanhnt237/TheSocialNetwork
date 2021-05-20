@@ -30,9 +30,15 @@ export class ProfileComponent implements OnInit {
   errCatching = '';
 
   userProfile = {
+    DoB: String,
+    address: String,
+    avatar: String,
+    cover: String,
+    description: String,
     email: String,
+    gender:String,
     name: String,
-    avatar: String
+    phone: String
   };
 
   post = {
@@ -80,6 +86,7 @@ export class ProfileComponent implements OnInit {
       this._profile.getUserProfile(this.userId)
         .subscribe(
           res => {
+            console.log(res);
             this.userProfile = res;
           },
           err=>{
@@ -111,7 +118,17 @@ export class ProfileComponent implements OnInit {
   }
 
   onAddNewFriend(){
-
+      this._activatedRoute.paramMap.subscribe(params =>{
+        this._friend.SendFriendRequest(params.get('userId'),"anything")
+          .subscribe(
+            res=>{
+              console.log(res)
+            },
+            err=>{
+              console.log(err)
+            }
+          )
+      })
   }
 
   onAddNewPost(){

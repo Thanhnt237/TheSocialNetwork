@@ -1,0 +1,10 @@
+#chatForm{background-color: #f0f2d0}
+
+#left, #right: {min-height: 300px}
+#left{width:30%; float:left; overflow:auto; background-color: #f0f2d0}
+#right{width:70%; float:right; background-color: #d4f9f8}
+
+#boxTitle{border: solid 1px black; padding:5px; text-align: center; font-weight: bold}
+#boxContent{border: solid 1px black; border-top:none; padding:5px; text-align: center}
+
+#listMessages{height:300px; width:100%; overflow:auto; background-color: #fcead4}

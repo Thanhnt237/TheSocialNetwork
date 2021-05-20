@@ -10,6 +10,8 @@ export class FriendService {
   readonly _getFriendRequestUrl = "http://localhost:8080/api/Friend/getAllFriendRequest";
   readonly _sendFriendRequestUrl = "http://localhost:8080/api/Friend/FriendRequest/";
   readonly _getFriendUrl = "http://localhost:8080/api/Friend/getAllFriend";
+  readonly _acceptFriendUrl = "http://localhost:8080/api/Friend/AcceptFriend/";
+  readonly _deleteFriendUrl = "http://localhost:8080/api/Friend/DeleteFriendRequest/";
 
   constructor(
     private http: HttpClient,
@@ -20,12 +22,21 @@ export class FriendService {
     return this.http.get<any>(this._getFriendRequestUrl);
   }
 
-  SendFriendRequest(userId: any, userSendId: any){
-    return this.http.post<any>(this._sendFriendRequestUrl + userId, userSendId);
+  SendFriendRequest(userId: any, anything: any){
+    return this.http.post<any>(this._sendFriendRequestUrl + userId,anything);
   }
 
   GetAllFriend(){
     return this.http.get<any>(this._getFriendUrl);
   }
+
+  AcceptFriendRequest(friendQueue_ID: any, anything:any){
+    return this.http.post<any>(this._acceptFriendUrl + friendQueue_ID, anything);
+  }
+
+  DeleteFriendRequest(friendQueue_ID: any, anything:any){
+    return this.http.post<any>(this._deleteFriendUrl + friendQueue_ID, anything);
+  }
+
 
 }

@@ -1,0 +1,22 @@
+<mat-sidenav-container>
+  <!--Left menu -->
+  <mat-sidenav #right position="start" #sidenav mode = "side"  opened = "true">
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="['/']">
+        <mat-icon mat-list-icon> home </mat-icon> Trang chủ
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div id="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+  <!--Right menu -->
+  <mat-sidenav #left position="end" #sidenav mode = "side" [(opened)] = "opened" *ngIf="_authService.loggedIn()">
+    <a mat-button *ngIf="alertError">{{errCatching}}</a>
+    <div class="" *ngIf="!alertError">
+      <a mat-button *ngFor="let friend of friendList">{{friend.name}}</a>
+    </div>
+  </mat-sidenav>
+</mat-sidenav-container>

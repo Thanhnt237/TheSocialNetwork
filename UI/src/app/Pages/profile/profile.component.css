@@ -1,19 +1,19 @@
 .cover{
-  width: 700px;
-  height: 400px;
+  width: 1200px;
+  height: 800px;
 }
 .avatar{
   padding: center;
   margin-top: -100px;
-  margin-left: 250px;
-  width: 200px;
-  height:200px;
+  margin-left: 500px;
+  width: 250px;
+  height:250px;
 }
 .UserName{
-  margin-left: 250px;
+  margin-left: 500px;
   font-style: Bold;
 }
 .Biology{
-  margin-left: 250px;
+  margin-left: 500px;
   font-style: Bold;
 }

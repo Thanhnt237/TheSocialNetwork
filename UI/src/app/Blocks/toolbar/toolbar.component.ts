@@ -22,7 +22,9 @@ export class ToolbarComponent implements OnInit {
 
   friendRequest = [{
     User_ID: String,
-    name: String
+    FriendQueue_ID: String,
+    name: String,
+    avatar: String
   }]
 
 
@@ -42,10 +44,8 @@ export class ToolbarComponent implements OnInit {
     this._getUserId.getToolbarProfile()
       .subscribe(
         res => {
-          console.log(res);
           this.userProfile.userId = res.userId;
           this.userProfile.name = res.name;
-          console.log(this.userProfile);
         },
         err=>{
           console.log(err);
@@ -67,4 +67,27 @@ export class ToolbarComponent implements OnInit {
       )
   }
 
+  acceptFriendRequest(friendQueue_ID: any){
+    this._friend.AcceptFriendRequest(friendQueue_ID, "anything")
+      .subscribe(
+        res => {
+          window.location.reload()
+        },
+        err => {
+          window.location.reload()
+        }
+      )
+  }
+
+  deleteFriendRequest(friendQueue_ID: any){
+    this._friend.DeleteFriendRequest(friendQueue_ID, "anything")
+      .subscribe(
+        res => {
+          window.location.reload()
+        },
+        err => {
+          window.location.reload()
+        }
+      )
+  }
 }

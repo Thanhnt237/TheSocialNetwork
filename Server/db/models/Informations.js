@@ -10,19 +10,23 @@ const InformationsSchema = new mongoose.Schema({
     },
     cover:{
         type:String,
-        default: "Null"
+        default: "defaultCover.jpg"
     },
     avatar:{
         type:String,
-        default: "Null"
+        default: "defaultAvatar.jpg"
     },
     name:{
         type:String,
-        default: "Null"
+        default: "Aries"
+    },
+    phone:{
+        type:String,
+        default: "0912345678"
     },
     address:{
         type:String,
-        default: "Null"
+        default: "Phố Wall"
     },
     DoB:{
         type:Date,
@@ -31,11 +35,11 @@ const InformationsSchema = new mongoose.Schema({
     },
     description:{
         type:String,
-        default: "Null"
+        default: "Một anh chàng đẹp trai"
     },
     gender:{
         type:String,
-        default: "Null"
+        default: "Không rõ"
     }
 })
 InformationsSchema.virtual('coverPath').get(function(){

@@ -16,6 +16,7 @@ const coreCtrl = require('../controllers').Core;
   router.route('/api/toolbar-profile').get(coreCtrl.verifyToken,coreCtrl.ToolbarProfile);
   router.route('/api/edit-profile').post(coreCtrl.verifyToken,coreCtrl.EditProfile);
   router.route('/api/change-avatar').post(coreCtrl.verifyToken,coreCtrl.ChangeAvatar);
+  router.route('/api/change-cover').post(coreCtrl.verifyToken,coreCtrl.ChangeCover);
   router.route('/api/Post/new/:userId').post(coreCtrl.verifyToken,coreCtrl.AddNewPost);
   router.route('/api/Post/delete/:postId').post(coreCtrl.verifyToken,coreCtrl.DeletePost);
   router.route('/api/Comments/new/:postId').post(coreCtrl.verifyToken,coreCtrl.AddNewComment);
@@ -27,6 +28,7 @@ const coreCtrl = require('../controllers').Core;
   router.route('/api/Friend/getAllFriend').get(coreCtrl.verifyToken, coreCtrl.getAllFriend);
   router.route('/api/Friend/DeleteFriendRequest/:userId').post(coreCtrl.verifyToken, coreCtrl.DeleteFriendRequest);
   router.route('/api/Friend/DeleteFriend/:userId').post(coreCtrl.verifyToken, coreCtrl.DeleteFriend);
+  router.route('/socket-chating').get((req,res)=>{res.render('socket-chating')});
 
   router.route("/send-email").get((req,res)=>{res.render('reset')});
   router.route("/send-email").post(coreCtrl.SendMail);
