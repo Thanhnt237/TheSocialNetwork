@@ -1,1 +1,30 @@
-<p>chat works!</p>
+<h1>Socket.io 2.3.0 Chating Service</h1>
+
+<div id="chatForm">
+  <div id="left">
+    <div id="boxTitle"> Users Online</div>
+    <div id="boxContent" *ngFor="let user of listUser">
+      <div class="userOnline">{{user}}</div>
+    </div>
+  </div>
+  <div id="right">
+    <div id="listMessages" >
+      <p *ngFor="let message of listMessages">{{message}}</p>
+    </div>
+
+    <input type="text" id="txtMessage" [(ngModel)] = "messageFromClient" (onChange)="TypingEvent()">
+    <input type="button" id="btnSendMessage" (click)="SendMessage(messageFromClient)" value="Send">
+
+  </div>
+  <div style="border: solid 1px black" *ngFor="let something of showSomething">
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('#btnSendMessage').keypress(function(event) {
+     if (event.keyCode == 13 || event.which == 13) {
+     SendMessage(messageFromClient);
+}
+});
+</script>

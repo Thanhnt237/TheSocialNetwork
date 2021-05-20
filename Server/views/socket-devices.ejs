@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <title>Socketio - Chat Service</title>
+    <link rel="stylesheet" href="/public/css/socket-style.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="socket.io/socket.io.js"></script>
+
+    <script>
+        var socket = io("http://localhost:8080");
+
+        $(document).ready(function() {
+            $("#btnSendMessage").click(function() {
+                socket.emit("message", "FlowRate: 0.65L/phút, TotalFlow: 0.2 L");
+            });
+        });
+
+        socket.on("Server-sent-data", function(data) {
+            console.log(data);
+            $("#listMessages").append("<div class='ms'>" + data + "</div>");
+        });
+    </script>
+</head>
+
+<body>
+  <h1>Socket.io 2.3.0 Admin Chat Service</h1>
+
+  <div id="chatForm">
+    <div id="left">
+      <div id="boxTitle"> Users Online</div>
+      <div id="boxContent">
+        <div class="userOnline" id="userOnline"></div>
+      </div>
+    </div>
+    <div id="right">
+      <div id="listMessages" >
+        <p> </p>
+      </div>
+
+      <input type="text" id="txtMessage">
+      <input type="button" id="btnSendMessage" value="Send">
+
+    </div>
+    <div style="border: solid 1px black">
+
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    $('#btnSendMessage').keypress(function(event) {
+       if (event.keyCode == 13 || event.which == 13) {
+       SendMessage(messageFromClient);
+  }
+});
+  </script>
+
+</body>
+
+</html>

@@ -17,6 +17,14 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+            "lodash",
+            "socket.io-client",
+            "socket.io-parser",
+            "rxjs/Observable",
+            "rxjs",
+            "rxjs/Rx"
+          ],
             "outputPath": "dist/UI",
             "index": "src/index.html",
             "main": "src/main.ts",
