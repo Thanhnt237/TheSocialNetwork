@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
 
-const FriendListSchema = new mongoose.Schema({
+const FriendQueueSchema = new mongoose.Schema({
     User_ID:{
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
     },
-    Friend_ID:{
+    FriendQueue_ID:{
         type: mongoose.Schema.Types.ObjectId
     },
     avatar:{
@@ -18,4 +18,4 @@ const FriendListSchema = new mongoose.Schema({
         required: true
     }
 })
-module.exports = mongoose.model('FriendList',FriendListSchema)
+module.exports = mongoose.model('FriendQueue',FriendQueueSchema)

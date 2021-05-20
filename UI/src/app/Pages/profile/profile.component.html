@@ -13,99 +13,103 @@
     <div class="">
       <span class="Biology"> Mô tả ngắn về mày ở đây</span>
     </div>
-  <div class="RoutingButton">
-    <a mat-button [routerLink]="['/']" > Dòng thời gian </a>
-    <a mat-button [routerLink]="['/about']" > Giới thiệu </a>
-    <a mat-button [routerLink]="['/friend']" > Bạn bè </a>
-  </div>
-  </div>
+    <a mat-button (click)="onAddNewFriend()" > Thêm bạn </a>
 
-  <!--Content -->
-  <div class="content">
-    <div class="row">
-      <div class="col-lg-5">
-        <div class="CoutRating">
-          <span>lượt theo dõi</span>
-          <span>Bài viết</span>
-          <span>lượt thích</span>
-        </div>
-        <div class="About">
-          <span >Giới thiệu</span>
-          <span>Sở thích</span>
-        </div>
-        <div class="Picture">
-          Ảnh
-        </div>
-        <div class="Friend">
-          bạn bè
-        </div>
-      </div>
-      <div class="col-lg-7">
-        <div class="StatusPost">
-          <!--Status Post-->
-        <mat-accordion class="example-headers-align" *ngIf="_auth.loggedIn()" multi>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              Chào {{userProfile.name}}, ngày hôm nay của bạn thế nào?
-            </mat-expansion-panel-header>
-          <form (ngSubmit)="onAddNewPost()" name="PostForm" [formGroup]="PostForm">
-            <mat-form-field >
-              <mat-label>Bạn muốn chia sẻ điều gì?</mat-label>
-              <input
-              formControlName="content"
-              matInput
-              placeholder="Bạn muốn chia sẻ điều gì?"
-              />
-              <input
-              type="file" (change)= "UploadImages($event)"
-              />
-              </mat-form-field>
-            <button mat-flat-button type="submit" [disabled]="!PostForm.valid"> Chia sẻ </button>
-          </form>
-          </mat-expansion-panel>
-        </mat-accordion>
+<!--Routing button-->
+    <mat-tab-group>
+      <mat-tab label="Dòng thời gian">
+        <!--Content -->
+        <div class="content">
+          <div class="row">
+            <div class="col-lg-5">
+              <div class="CoutRating">
+                <span>lượt theo dõi</span>
+                <span>Bài viết</span>
+                <span>lượt thích</span>
+              </div>
+              <div class="About">
+                <span >Giới thiệu</span>
+                <span>Sở thích</span>
+              </div>
+              <div class="Picture">
+                Ảnh
+              </div>
+              <div class="Friend">
+                bạn bè
+              </div>
+            </div>
+            <div class="col-lg-7">
+              <div class="StatusPost">
+                <!--Status Post-->
+              <mat-accordion class="example-headers-align" *ngIf="_auth.loggedIn()" multi>
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    Chào {{userProfile.name}}, ngày hôm nay của bạn thế nào?
+                  </mat-expansion-panel-header>
+                <form (ngSubmit)="onAddNewPost()" name="PostForm" [formGroup]="PostForm">
+                  <mat-form-field >
+                    <mat-label>Bạn muốn chia sẻ điều gì?</mat-label>
+                    <input
+                    formControlName="content"
+                    matInput
+                    placeholder="Bạn muốn chia sẻ điều gì?"
+                    />
+                    <input
+                    type="file" (change)= "UploadImages($event)"
+                    />
+                    </mat-form-field>
+                  <button mat-flat-button type="submit" [disabled]="!PostForm.valid"> Chia sẻ </button>
+                </form>
+                </mat-expansion-panel>
+              </mat-accordion>
 
-        </div>
-        <!-- POST -->
-        <div class="Post" *ngFor="let post of getPost">
-          <mat-card class="example-card">
-          <mat-card-header>
-            <img mat-card-avatar class="example-header-image" src="http://localhost:8080/public/upload/{{post.UserAvatar}}"/>
-            <mat-card-title>{{post.UserName}}</mat-card-title>
-            <mat-card-subtitle>8 giowf truowcs + {{post.Post_ID}}</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <p>
-              {{post.content}}
-            </p>
-          </mat-card-content>
-          <img mat-card-image src="http://localhost:8080/public/upload/{{post.images}}">
-          <mat-card-actions>
-            <button mat-button (click)="LikedColorChange()" [color]="likedColor">LIKE</button>
-            <button mat-button (click)="openComment = !openComment" onload="onLoadComment(post)" >COMMENT</button>
-            <button mat-button>SHARE</button>
-          </mat-card-actions>
-          <mat-card-actions>
-          <div class="comment" [hidden] = openComment>
-            <form (ngSubmit)="onAddNewComment(post.Post_ID)" name="CommentForm" [formGroup]="CommentForm">
-              <mat-form-field class="full-width" >
-                <mat-label>Leave a comment</mat-label>
-                <input matInput placeholder="Ex. It makes me feel..." class="full-width" formControlName="content"/>
-                <button mat-flat-button type="submit" [disabled]="!CommentForm.valid"> Chia sẻ </button>
-              </mat-form-field>
-            </form>
-            <div class="comment" *ngFor="let comment of getComment">
-              {{comment.content}}
+              </div>
+              <!-- POST -->
+              <div class="Post" *ngFor="let post of getPost">
+                <mat-card class="example-card">
+                <mat-card-header>
+                  <img mat-card-avatar class="example-header-image" src="http://localhost:8080/public/upload/{{post.UserAvatar}}"/>
+                  <mat-card-title>{{post.UserName}}</mat-card-title>
+                  <mat-card-subtitle>8 giowf truowcs + {{post.Post_ID}}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                  <p>
+                    {{post.content}}
+                  </p>
+                </mat-card-content>
+                <img mat-card-image src="http://localhost:8080/public/upload/{{post.images}}">
+                <mat-card-actions>
+                  <button mat-button (click)="LikedColorChange()" [color]="likedColor">LIKE</button>
+                  <button mat-button (click)="openComment = !openComment" onload="onLoadComment(post)" >COMMENT</button>
+                  <button mat-button>SHARE</button>
+                </mat-card-actions>
+                <mat-card-actions>
+                <div class="comment" [hidden] = openComment>
+                  <form (ngSubmit)="onAddNewComment(post.Post_ID)" name="CommentForm" [formGroup]="CommentForm">
+                    <mat-form-field class="full-width" >
+                      <mat-label>Leave a comment</mat-label>
+                      <input matInput placeholder="Ex. It makes me feel..." class="full-width" formControlName="content"/>
+                      <button mat-flat-button type="submit" [disabled]="!CommentForm.valid"> Chia sẻ </button>
+                    </mat-form-field>
+                  </form>
+                  <div class="comment" *ngFor="let comment of getComment">
+                    {{comment.content}}
+                  </div>
+                </div>
+                </mat-card-actions>
+                <mat-card-footer>
+
+                </mat-card-footer>
+              </mat-card>
+              </div>
             </div>
           </div>
-          </mat-card-actions>
-          <mat-card-footer>
-
-          </mat-card-footer>
-        </mat-card>
         </div>
-      </div>
-    </div>
+      </mat-tab>
+      <mat-tab label="Giới thiệu"> Giới thiệu </mat-tab>
+      <mat-tab label="Bạn bè"> Danh sách bạn bè </mat-tab>
+    </mat-tab-group>
   </div>
+
 
 </div>

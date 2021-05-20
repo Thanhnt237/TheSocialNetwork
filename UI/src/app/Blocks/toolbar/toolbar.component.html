@@ -1,25 +1,31 @@
 <mat-toolbar class="mat-elevation-z8">
-  <a routerLink="/"> <mat-icon routerLink="/"> public </mat-icon> TSN </a>
-  <span >
+  <a mat-button routerLink="/"> <mat-icon routerLink="/"> public </mat-icon> TSN </a>
+  <span>
     <!-- Search form -->
-      <mat-icon aria-hidden="true"> search </mat-icon>
-      <input class="searchBox" type="text" placeholder="Search" aria-label="Search">
+      <button mat-button><mat-icon class="mat-icon-rtl-mirror" aria-hidden="true"> search </mat-icon></button>
+      <input matInput class="searchBox" type="text" placeholder="Search" aria-label="Search">
   </span>
   <div class="spacer"></div>
 
   <!-- Center -->
   <div class="center">
     <a mat-button [routerLink]="['/']" > Trang chủ </a>
-    <a mat-button [routerLink]="['/something']" > Tin tức </a>
-    <a mat-button [routerLink]="['/caidgiasd']" > Trò truyện </a>
+    <a mat-button [routerLink]="['/news']" > Tin tức </a>
+    <a mat-button [routerLink]="['/chat']" > Trò truyện </a>
   </div>
 
   <!-- Right -->
-  <button mat-button [matMenuTriggerFor]="menu"><mat-icon matBadge="15" matBadgeColor="warn" *ngIf="_authService.loggedIn()">group</mat-icon></button>
-  <mat-menu #menu="matMenu">
-    <a mat-menu-item> lời mời kết bạn </a>
-  </mat-menu>
-  <mat-icon matBadge="15" matBadgeColor="warn" *ngIf="_authService.loggedIn()">home</mat-icon>
+  <div class="right" *ngIf="_authService.loggedIn()">
+    <button mat-button [matMenuTriggerFor]="menu" *ngIf="!noFriendQueue"><mat-icon matBadge="{{friendRequest.length}}" matBadgeColor="warn">group</mat-icon></button>
+    <button mat-button [matMenuTriggerFor]="menu" *ngIf="noFriendQueue"><mat-icon *ngIf="_authService.loggedIn()">group</mat-icon></button>
+    <mat-menu #menu="matMenu">
+      <a mat-menu-item *ngIf="noFriendQueue">{{noFriendQueueCatching}}</a>
+      <div class="Friend_Queue" *ngIf="!noFriendQueue">
+        <a mat-menu-item *ngFor="let friend of friendRequest">{{friend.name}} </a>
+      </div>
+    </mat-menu>
+    <button mat-button><mat-icon matBadge="15" matBadgeColor="warn" *ngIf="_authService.loggedIn()">home</mat-icon></button>
+  </div>
 
   <span class="" *ngIf="_authService.loggedIn()">
     <button mat-button [matMenuTriggerFor]="menu">{{userProfile.name}}</button>

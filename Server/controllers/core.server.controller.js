@@ -20,6 +20,7 @@ const PostLayouts = require('../db/models/PostLayouts');
 const Comments = require('../db/models/Comments');
 const Reactions = require('../db/models/Reactions');
 const FriendList = require('../db/models/FriendList');
+const FriendQueue = require('../db/models/FriendQueue');
 
 module.exports = {
   renderHomePage: renderHomePage,
@@ -559,27 +560,39 @@ async function FriendRequest(req, res) {
   if(req.userId == req.params.userId){
     res.status(401).send("Không thể gửi yêu cầu kết bạn đến chính mình")
   }else{
-    FriendList.countDocuments({User_ID: req.params.userId},(err,count)=>{
-      if(count>0){
-        FriendList.countDocuments({FriendQueue_ID: req.userId},(err,count2)=>{
-          if(count2>0){
-            res.send("Đã gửi yêu cầu kết bạn, chờ phản hồi");
-          }else{
-            FriendList.findOneAndUpdate(
-              {User_ID:req.params.userId},
-              {$push:{FriendQueue_ID: req.userId}},
-              (err)=>{
+    FriendList.countDocuments({User_ID: req.params.userId, Friend_ID: req.userId},(err,checkFriend)=>{
+      if(err){
+        console.log(err)
+      }else{
+        if(checkFriend>0){
+          res.status(401).send("Hai bạn đã là bạn bè, không thẻ gửi lời mời kết bạn")
+        }else{
+          FriendQueue.countDocuments({User_ID: req.params.userId, FriendQueue_ID:req.userId},(err,count)=>{
+            if(count>0){
+              res.status(200).send("Đã gửi lời mời kết bạn, chờ phản hồi")
+            }else{
+              Informations.findOne({User_ID: req.userId},(err,user)=>{
                 if(err){
                   console.log(err)
                 }else{
-                  res.status(200).send("Đã gửi yêu cầu kết bạn thành công")
+                  let friend = new FriendQueue({
+                    User_ID: req.params.userId,
+                    FriendQueue_ID:req.userId,
+                    avatar: user.avatar,
+                    name: user.name
+                  })
+                  friend.save((err)=>{
+                    if(err){
+                      console.log(err)
+                    }else{
+                      res.status(200).send("Yêu cầu kết bạn thành công");
+                    }
+                  })
                 }
-              }
-            )
-          }
-        })
-      }else{
-        res.status(401).send("Không tìm thấy danh sách bạn bè")
+              })
+            }
+          })
+        }
       }
     })
   }
@@ -592,27 +605,41 @@ async function FriendRequest(req, res) {
 */
 
 async function AcceptFriend(req, res) {
-  FriendList.countDocuments({User_ID: req.userId},(err,count)=>{
-    if(count>0){
-      FriendList.countDocuments({FriendQueue_ID: req.params.userId},(err,count2)=>{
-        if(count2>0){
-          FriendList.findOneAndUpdate(
-            {FriendQueue_ID: req.params.userId},
-            {$pop:{FriendQueue_ID:req.params.userId}, $push:{Friend_ID: req.params.userId}},
-            (err)=>{
-              if(err){
-                console.log(err)
-              }else{
-                res.status(200).send("Kết bạn thành công");
-              }
-            }
-          )
-        }else{
-          res.status(401).send("Không tìm thấy yêu cầu kết bạn này")
-        }
-      })
+  FriendQueue.countDocuments({User_ID:req.userId, FriendQueue_ID:req.params.userId},(err,count)=>{
+    if(err){
+      console.log(err);
     }else{
-      res.status(401).send("Không tìm thấy danh sách bạn bè");
+      if(count>0){
+        FriendList.countDocuments({User_ID:req.userId, Friend_ID:req.params.userId},(err,count2)=>{
+          if(err){
+            console.log(err)
+          }else{
+            if(count2>0){
+              res.status(200).send("Hai bạn đã là bạn bè của nhau")
+            }else{
+              Informations.findOne({User_ID:req.params.userId},(err,user)=>{
+                let friend = new FriendList({
+                  User_ID:req.userId,
+                  Friend_ID:req.params.userId,
+                  avatar: user.avatar,
+                  name:user.name
+                });
+                friend.save((err)=>{
+                  FriendQueue.findOneAndDelete({User_ID:req.userId, FriendQueue_ID:req.params.userId},(err)=>{
+                    if(err){
+                      console.log(err)
+                    }else{
+                      res.status(200).send("Kết bạn thành công")
+                    }
+                  })
+                })
+              })
+            }
+          }
+        })
+      }else{
+        res.status(401).send("Không tồn tại yêu cầu kết bạn này")
+      }
     }
   })
 }
@@ -623,28 +650,23 @@ async function AcceptFriend(req, res) {
 * @param  {object} res HTTP response
 */
 
+// TODO: Nhớ làm cái này
 async function DeleteFriendRequest(req, res) {
-  FriendList.countDocuments({User_ID: req.userId},(err,count)=>{
-    if(count>0){
-      FriendList.countDocuments({FriendQueue_ID: req.params.userId},(err,count2)=>{
-        if(count2>0){
-          FriendList.findOneAndUpdate(
-            {FriendQueue_ID: req.params.userId},
-            {$pop:{FriendQueue_ID:req.params.userId}},
-            (err)=>{
-              if(err){
-                console.log(err)
-              }else{
-                res.status(200).send("Từ chối kết bạn thành công");
-              }
-            }
-          )
-        }else{
-          res.status(401).send("Không tìm thấy yêu cầu kết bạn này")
-        }
-      })
+  FriendQueue.countDocuments({User_ID:req.userId, FriendQueue_ID:req.params.userId},(err,count)=>{
+    if(err){
+      console.log(err)
     }else{
-      res.status(401).send("Không tìm thấy danh sách bạn bè");
+      if(count>0){
+        FriendQueue.findOneAndDelete({User_ID:req.userId, FriendQueue_ID:req.params.userId},(err)=>{
+          if(err){
+            console.log(err)
+          }else{
+            res.status(200).send("Xóa yêu cầu kết bạn thành công")
+          }
+        })
+      }else{
+        res.status(401).send("Không tìm thấy yêu cầu kết bạn này")
+      }
     }
   })
 }
@@ -656,27 +678,21 @@ async function DeleteFriendRequest(req, res) {
 */
 
 async function DeleteFriend(req, res) {
-  FriendList.countDocuments({User_ID: req.userId},(err,count)=>{
-    if(count>0){
-      FriendList.countDocuments({Friend_ID: req.params.userId},(err,count2)=>{
-        if(count2>0){
-          FriendList.findOneAndUpdate(
-            {Friend_ID: req.params.userId},
-            {$pop:{Friend_ID:req.params.userId}},
-            (err)=>{
-              if(err){
-                console.log(err)
-              }else{
-                res.status(200).send("Hủy kết bạn thành công");
-              }
-            }
-          )
-        }else{
-          res.status(401).send("Không tìm thấy bạn bè này")
-        }
-      })
+  FriendList.countDocuments({User_ID: req.userId, Friend_ID:req.params.userId},(err,count)=>{
+    if(err){
+      console.log(err)
     }else{
-      res.status(401).send("Không tìm thấy danh sách bạn bè");
+      if(count>0){
+        FriendList.findOneAndDelete({User_ID: req.userId, Friend_ID:req.params.userId},(err)=>{
+          if(err){
+            console.log(err)
+          }else{
+            res.status(200).send("Hủy kết bạn thành công");
+          }
+        })
+      }else{
+        res.status(401).send("Không tìm thấy bạn bè này");
+      }
     }
   })
 }
@@ -688,17 +704,13 @@ async function DeleteFriend(req, res) {
 */
 
 async function getAllFriendRequest(req, res) {
-  FriendList.countDocuments({User_ID:req.userId},(err,count)=>{
+  FriendQueue.countDocuments({User_ID:req.userId},(err,count)=>{
     if(count>0){
-      FriendList.findOne({User_ID:req.userId},(err,friendList)=>{
-        if(friendList.FriendQueue_ID == null){
-          res.status(200).send("Không có lời mời kết bạn nào");
-        }else{
-          res.status(200).send(friendList.FriendQueue_ID)
-        }
+      FriendQueue.find({User_ID:req.userId}, (err,friendList)=>{
+        res.status(200).send(friendList)
       })
     }else{
-      res.status(401).send("Không tìm thấy danh sách bạn bè")
+      res.status(401).send("Không có lời mời kết bạn mới nào")
     }
   })
 }
@@ -712,15 +724,11 @@ async function getAllFriendRequest(req, res) {
 async function getAllFriend(req, res) {
   FriendList.countDocuments({User_ID:req.userId},(err,count)=>{
     if(count>0){
-      FriendList.findOne({User_ID:req.userId},(err,friendList)=>{
-        if(friendList.FriendQueue_ID == null){
-          res.status(200).send("Không có bạn bè nào");
-        }else{
-          res.status(200).send(friendList.Friend_ID)
-        }
+      FriendList.find({User_ID:req.userId},(err,friendList)=>{
+        res.status(200).send(friendList)
       })
     }else{
-      res.status(401).send("Không tìm thấy danh sách bạn bè")
+      res.status(401).send("Không có bạn bè nào")
     }
   })
 }

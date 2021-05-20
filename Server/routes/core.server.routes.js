@@ -25,6 +25,8 @@ const coreCtrl = require('../controllers').Core;
   router.route('/api/Friend/AcceptFriend/:userId').post(coreCtrl.verifyToken, coreCtrl.AcceptFriend);
   router.route('/api/Friend/getAllFriendRequest').get(coreCtrl.verifyToken, coreCtrl.getAllFriendRequest);
   router.route('/api/Friend/getAllFriend').get(coreCtrl.verifyToken, coreCtrl.getAllFriend);
+  router.route('/api/Friend/DeleteFriendRequest/:userId').post(coreCtrl.verifyToken, coreCtrl.DeleteFriendRequest);
+  router.route('/api/Friend/DeleteFriend/:userId').post(coreCtrl.verifyToken, coreCtrl.DeleteFriend);
 
   router.route("/send-email").get((req,res)=>{res.render('reset')});
   router.route("/send-email").post(coreCtrl.SendMail);

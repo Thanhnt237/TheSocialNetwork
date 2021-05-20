@@ -24,9 +24,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToolbarComponent } from './Blocks/toolbar/toolbar.component';
 
 import { ReactiveFormsModule } from "@angular/forms";
-import { NewsComponent } from './Pages/news/news.component';
-import { ChatComponent } from './Pages/chat/chat.component';
-import { EditProfileComponent } from './Pages/edit-profile/edit-profile.component';
 
 let angularMaterialModule = [
   MatSidenavModule,
@@ -45,10 +42,7 @@ let angularMaterialModule = [
 @NgModule({
   declarations: [
     AppComponent,
-    ToolbarComponent,
-    NewsComponent,
-    ChatComponent,
-    EditProfileComponent
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,

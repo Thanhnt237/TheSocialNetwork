@@ -31,6 +31,9 @@ import { ResetConfirmComponent } from './Pages/reset-confirm/reset-confirm.compo
 import { ProfileComponent } from './Pages/profile/profile.component';
 import { AboutComponent } from './Pages/about/about.component';
 import { FriendComponent } from './Pages/friend/friend.component';
+import { NewsComponent } from './Pages/news/news.component';
+import { ChatComponent } from './Pages/chat/chat.component';
+import { EditProfileComponent } from './Pages/edit-profile/edit-profile.component';
 
 
 let angularMaterialModule = [
@@ -82,6 +85,14 @@ const routes: Routes = [
     component: FriendComponent
   },
   {
+    path:'chat',
+    component: ChatComponent
+  },
+  {
+    path:'news',
+    component: NewsComponent
+  },
+  {
     path:'**',
     component: HomeComponent,
     canActivate: [AuthGuard]
@@ -97,7 +108,10 @@ const routes: Routes = [
     ResetConfirmComponent,
     ProfileComponent,
     AboutComponent,
-    FriendComponent
+    FriendComponent,
+    NewsComponent,
+    ChatComponent,
+    EditProfileComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

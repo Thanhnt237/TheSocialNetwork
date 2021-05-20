@@ -8,6 +8,7 @@ import { ProfileService } from "../../Services/profile.service";
 import { PostService } from "../../Services/post.service";
 import { AuthService } from "../../Services/auth.service";
 import { CommentService } from "../../Services/comment.service";
+import { FriendService } from "../../Services/friend.service";
 
 @Component({
   selector: 'app-profile',
@@ -59,7 +60,8 @@ export class ProfileComponent implements OnInit {
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
     public _auth: AuthService,
-    private _comment: CommentService
+    private _comment: CommentService,
+    private _friend: FriendService
 
   ) {
     this.PostForm = this._formBuilder.group({
@@ -106,6 +108,10 @@ export class ProfileComponent implements OnInit {
     else{
       this.likedColor = "primary"
     }
+  }
+
+  onAddNewFriend(){
+
   }
 
   onAddNewPost(){
@@ -168,6 +174,7 @@ export class ProfileComponent implements OnInit {
       .subscribe(
         res => {
           console.log(res);
+          this._router.navigate(['/profile/'+params.get('userId')])
         },
         err => {
           console.log(err);
@@ -178,7 +185,7 @@ export class ProfileComponent implements OnInit {
       )
     })
 
-    window.location.reload();
+
   }
 
 }
