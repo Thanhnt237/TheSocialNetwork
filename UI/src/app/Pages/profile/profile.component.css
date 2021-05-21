@@ -9,6 +9,16 @@
   width: 250px;
   height:250px;
 }
+.changeAvatar{
+  padding: center;
+  margin-top: -200px;
+  margin-left: 600px;
+}
+.changeCover{
+  padding: center;
+  margin-top: -200px;
+  margin-left: 900px;
+}
 .UserName{
   margin-left: 500px;
   font-style: Bold;

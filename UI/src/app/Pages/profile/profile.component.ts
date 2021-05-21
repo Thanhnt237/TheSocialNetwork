@@ -181,6 +181,47 @@ export class ProfileComponent implements OnInit {
       )
   }
 
+  changeAvatar(event: any){
+    const images = event.target.files[0];
+    console.log(images);
+
+    const formdata = new FormData();
+    formdata.append('images', images)
+
+    this._profile.ChangeAvatar(formdata)
+      .subscribe(
+        res => {
+          console.log(res);
+          window.location.reload();
+        },
+        err => {
+          console.log(err);
+          window.location.reload();
+        }
+
+      )
+  }
+
+  changeCover(event: any){
+    const images = event.target.files[0];
+
+    const formdata = new FormData();
+    formdata.append('images', images)
+
+    this._profile.ChangeCover(formdata)
+      .subscribe(
+        res => {
+          console.log(res);
+          window.location.reload();
+        },
+        err => {
+          console.log(err);
+          window.location.reload();
+        }
+
+      )
+  }
+
   AddNewPost(){
     const PostFormData = new FormData();
     PostFormData.append('images',this.PostForm.value.images);

@@ -21,6 +21,7 @@ const Comments = require('../db/models/Comments');
 const Reactions = require('../db/models/Reactions');
 const FriendList = require('../db/models/FriendList');
 const FriendQueue = require('../db/models/FriendQueue');
+const Chats = require('../db/models/Chats');
 
 module.exports = {
   renderHomePage: renderHomePage,
@@ -230,6 +231,19 @@ async function EditProfile(req,res) {
     }
   )
 }
+
+/*
+email: userAuth.email,
+name: userInfor.name,
+userId: req.userId,
+phone: userInfor.phone,
+avatar: userInfor.avatar,
+cover: userInfor.cover,
+address: userInfor.address,
+DoB: userInfor.DoB,
+description: userInfor.description,
+gender: userInfor.description
+*/
 
 /**
 * @name ChangeAvatar
@@ -665,7 +679,41 @@ async function AcceptFriend(req, res) {
                     if(err){
                       console.log(err)
                     }else{
-                      res.status(200).send("Kết bạn thành công")
+                      let chat = new Chats({
+                        User_ID: req.userId,
+                        Friend_ID: req.params.userId
+                      })
+                      chat.save((err)=>{
+                        if(err){
+                          console.log(err)
+                        }else{
+                          Informations.findOne({User_ID: req.userId},(err,user2)=>{
+                            let coFriend = new FriendList({
+                              User_ID:req.params.userId,
+                              Friend_ID:req.userId,
+                              avatar: user2.avatar,
+                              name:user2.name
+                            });
+                            coFriend.save((err)=>{
+                              if(err){
+                                console.log(err)
+                              }else{
+                                let chat2 = new Chats({
+                                  User_ID:req.params.userId,
+                                  Friend_ID:req.userId
+                                })
+                                chat2.save((err)=>{
+                                  if(err){
+                                    console.log(err)
+                                  }else{
+                                    res.status(200).send("Kết bạn thành công");
+                                  }
+                                })
+                              }
+                            })
+                          })
+                        }
+                      })
                     }
                   })
                 })

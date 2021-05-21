@@ -3,9 +3,11 @@
   <div class="Heading">
     <div class="image">
       <img class="cover" src="http://localhost:8080/public/upload/{{userProfile.cover}}" alt="Cover">
+      <input class = "changeCover" type="file" (change)= "changeCover($event)" >
     </div>
     <div class="image">
       <img class="avatar" src="http://localhost:8080/public/upload/{{userProfile.avatar}}" alt="">
+      <input class = "changeAvatar" type="file" (change)= "changeAvatar($event)" >
     </div>
     <div class="">
       <span class="UserName"> {{userProfile.name}} </span>

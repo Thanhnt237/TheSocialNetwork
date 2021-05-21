@@ -1,19 +1,19 @@
 const mongoose = require('mongoose')
 
 const ChatsSchema = new mongoose.Schema({
-    Parent_id:{
+    User_ID:{
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
     },
-    partner_id:{
+    Friend_ID:{
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
     },
-    content:{
+    content:[{
         type:String,
         required:true
-    }
+    }]
 })
 module.exports = mongoose.model('Chats',ChatsSchema)

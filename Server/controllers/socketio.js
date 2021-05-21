@@ -11,6 +11,7 @@ const Comments = require('../db/models/Comments');
 const Reactions = require('../db/models/Reactions');
 const FriendList = require('../db/models/FriendList');
 const FriendQueue = require('../db/models/FriendQueue');
+const Chats = require('../db/models/Chats');
 
 module.exports = function(io) {
     io.use(function(socket,next){
