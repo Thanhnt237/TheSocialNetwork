@@ -150,7 +150,7 @@ if(userData.email === '' || userData.password === ''){
       if(!user.comparePassword(userData.password)){
         res.status(401).send('Invalid Password');
       }else {
-        let payload = { subject:user.User_ID, email: user.email }
+        let payload = { subject:user.User_ID}
         let token = jwt.sign(payload, 'secretKey')
         res.status(200).send({token});
       }

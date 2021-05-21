@@ -85,8 +85,9 @@ const routes: Routes = [
     component: FriendComponent
   },
   {
-    path:'chat',
-    component: ChatComponent
+    path:'chat/:userId',
+    component: ChatComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:'news',

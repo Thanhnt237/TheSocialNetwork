@@ -18,28 +18,28 @@ export class ChatComponent implements OnInit {
 
   ngOnInit(): void {
     this.websocketService.listen("Server-reply-message").subscribe((data:any)=>{
-  this.listMessages.push(data);
-  this.messageFromClient = '';
-  console.log(this.listMessages);
-})
+    this.listMessages.push(data);
+    this.messageFromClient = '';
+    console.log(this.listMessages);
+  })
 
-this.websocketService.listen("Server-sent-userName").subscribe((data:any)=>{
-this.listUser = data;
-console.log(this.listUser);
-})
+  this.websocketService.listen("Server-sent-userName").subscribe((data:any)=>{
+  this.listUser = data;
+  console.log(this.listUser);
+  })
 
-this.websocketService.listen("Server-sent-data").subscribe((data:any)=>{
-this.showSomething.push(data);
-console.log(this.showSomething);
-})
-}
+  this.websocketService.listen("Server-sent-data").subscribe((data:any)=>{
+  this.showSomething.push(data);
+  console.log(this.showSomething);
+  })
+  }
 
-SendMessage(data: any){
-this.websocketService.emit("Client-sent-Message", data);
-}
+  SendMessage(data: any){
+  this.websocketService.emit("Client-sent-Message", data);
+  }
 
-TypingEvent(){
-this.websocketService.emit("Client-is-typing", " is typing...")
-}
+  TypingEvent(){
+  this.websocketService.emit("Client-is-typing", " is typing...")
+  }
 
 }

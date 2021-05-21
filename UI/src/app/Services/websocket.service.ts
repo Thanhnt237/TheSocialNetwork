@@ -8,11 +8,16 @@ import * as Rx from 'rxjs/Rx';
 })
 export class WebsocketService {
 
+  token: any = localStorage.getItem("token");
   socket: any;
   readonly url: string = "localhost:8080"
 
   constructor(){
-    this.socket = io(this.url);
+    this.socket = io(this.url, {
+      query: {
+        token: this.token
+      }
+    });
   }
 
   listen(eventName: string){
