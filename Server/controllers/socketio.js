@@ -35,13 +35,71 @@ module.exports = function(io) {
       next();
     }).
     on('connection', function(socket,res) {
-      Informations.findOne({User_ID: socket.userId},(err,user)=>{
+
+      User.findByIdAndUpdate({_id: socket.userId}, {$set:{State: "Online"}}, (err)=>{
         if(err){
           console.log(err)
         }else{
-          console.log(user);
+          User.findById({_id: socket.userId},(err,user)=>{
+            if(err){
+              console.log(err)
+            }else{
+              //console.log(user)
+            }
+          })
         }
       })
+
+      Informations.findOne({User_ID: socket.userId},(err,userInfor)=>{
+        if(err){
+          console.log(err)
+        }else{
+          //console.log(userInfor);
+        }
+      })
+
+
+    socket.on("disconnect", () => {
+      User.findByIdAndUpdate({_id: socket.userId}, {$set:{State: "Offline"}}, (err)=>{
+        if(err){
+          console.log(err)
+        }else{
+          User.findById({_id: socket.userId},(err,user)=>{
+            if(err){
+              console.log(err)
+            }else{
+              //console.log(user)
+            }
+          })
+        }
+      })
+    });
+
+    User.find({State: "Online"}, (err,userOnline)=>{
+      if(err){
+        console.log(err)
+      }else{
+        io.emit("Server-Sent-User", userOnline)
+      }
+    })
+
+    FriendList.find({User_ID:socket.userId},(err,friendUser)=>{
+      if(err){
+        console.log(err)
+      }else{
+        let listIDFriendOnline = [];
+        friendUser.forEach((element)=>{listIDFriendOnline.push(element.Friend_ID)})
+
+        User.find({_id: {$in: listIDFriendOnline}}, (err,userOnline)=>{
+          if(err){
+            console.log(err)
+          }else{
+            io.emit("Server-Sent-UserOnline",userOnline)
+          }
+        })
+
+      }
+    })
 
     });
 };

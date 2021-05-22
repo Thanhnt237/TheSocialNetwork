@@ -8,6 +8,10 @@ const UserSchema = new mongoose.Schema({
     FavoritesCategory_id:{
         type: String,
         default: "NULL"
+    },
+    State:{
+      type: String,
+      default: "Offline"
     }
 })
 module.exports = mongoose.model('User',UserSchema)

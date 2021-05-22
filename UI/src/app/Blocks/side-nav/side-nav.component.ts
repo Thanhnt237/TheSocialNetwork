@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 
 import { AuthService } from "../../Services/auth.service";
 import { FriendService } from "../../Services/friend.service";
+import { WebsocketService } from "../../Services/websocket.service";
 
 @Component({
   selector: 'app-side-nav',
@@ -15,6 +16,8 @@ export class SideNavComponent implements OnInit {
   alertError: boolean = false;
   errCatching = '';
 
+  listUser: any[] = [];
+
   friendList = [{
     User_ID: String,
     name: String
@@ -23,10 +26,17 @@ export class SideNavComponent implements OnInit {
   constructor(
       private _friend: FriendService,
       private _router: Router,
-      public _authService: AuthService
+      public _authService: AuthService,
+      private _websocketService: WebsocketService
   ) { }
 
   ngOnInit(): void {
+
+    this._websocketService.listen("Server-Sent-UserOnline").subscribe((data:any)=>{
+    this.listUser = data;
+    console.log(this.listUser);
+    })
+
     this.getAllFriend();
   }
 
