@@ -22,6 +22,7 @@ const Reactions = require('../db/models/Reactions');
 const FriendList = require('../db/models/FriendList');
 const FriendQueue = require('../db/models/FriendQueue');
 const Chats = require('../db/models/Chats');
+const Test = require('../db/models/Test');
 
 module.exports = {
   renderHomePage: renderHomePage,
@@ -48,8 +49,33 @@ module.exports = {
   DeleteFriendRequest: DeleteFriendRequest,
   DeleteFriend: DeleteFriend,
   getAllFriendRequest: getAllFriendRequest,
-  getAllFriend: getAllFriend
+  getAllFriend: getAllFriend,
+  GetTest:GetTest
 };
+
+/**
+* @name GetTest
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+function GetTest(req,res) {
+  let data = req.body;
+
+  let newTest = new Test({
+    fruit: data.fruit,
+    animal: data.animal,
+    things: data.things
+  })
+
+  newTest.save((err)=>{
+    if(err){
+      console.log(err)
+    }else{
+      res.status(200).send("Thành công")
+    }
+  })
+}
 
 /**
 * @name renderHomePage

@@ -1,0 +1,21 @@
+<form (ngSubmit)="onPostTest()" name="TestForm" [formGroup]="TestForm">
+  <div class="animal">
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Animal</mat-label>
+      <input
+        formControlName="animal"
+        matInput
+      />
+    </mat-form-field>
+  </div>
+  <div class="fruit">
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Fruit</mat-label>
+      <input
+        formControlName="fruit"
+        matInput
+      />
+    </mat-form-field>
+  </div>
+  <button mat-flat-button color="primary" >Post</button>
+</form>

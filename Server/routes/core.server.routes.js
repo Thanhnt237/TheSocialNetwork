@@ -36,4 +36,6 @@ const coreCtrl = require('../controllers').Core;
   router.route('/reset-confirm/:token').get(coreCtrl.GetResetConfirm);
   router.route('/reset-confirm/:token').post(coreCtrl.PostResetConfirm);
 
+  router.route("/fortest").post(coreCtrl.GetTest);
+
 module.exports = router;
