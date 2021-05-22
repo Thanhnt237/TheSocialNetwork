@@ -54,7 +54,7 @@ module.exports = function(io) {
         if(err){
           console.log(err)
         }else{
-          //console.log(userInfor);
+          console.log(userInfor);
         }
       })
 
@@ -75,31 +75,33 @@ module.exports = function(io) {
       })
     });
 
-    User.find({State: "Online"}, (err,userOnline)=>{
+    FriendList.find({User_ID: socket.userId}, (err,getFriendListOfOnlineUser)=>{
       if(err){
         console.log(err)
       }else{
-        io.emit("Server-Sent-User", userOnline)
-      }
-    })
+        let friendListOfOnlineUser = [];
+        getFriendListOfOnlineUser.forEach((element)=>{friendListOfOnlineUser.push(element.Friend_ID)})
 
-    FriendList.find({User_ID:socket.userId},(err,friendUser)=>{
-      if(err){
-        console.log(err)
-      }else{
-        let listIDFriendOnline = [];
-        friendUser.forEach((element)=>{listIDFriendOnline.push(element.Friend_ID)})
-
-        User.find({_id: {$in: listIDFriendOnline}}, (err,userOnline)=>{
+        User.find({_id: {$in: friendListOfOnlineUser}, State:"Online"}, (err,onlineFriend)=>{
           if(err){
             console.log(err)
           }else{
-            io.emit("Server-Sent-UserOnline",userOnline)
+            let InforOfOnlineUser = [];
+            onlineFriend.forEach((element)=>{InforOfOnlineUser.push(element._id)})
+
+            Informations.find({User_ID: {$in: InforOfOnlineUser}}, (err,onlineFriendInfor)=>{
+              if(err){
+                console.log(err)
+              }else{
+                socket.emit("Server-Sent-UserOnline",onlineFriendInfor)
+              }
+            })
           }
         })
-
       }
     })
+
+
 
     });
 };
