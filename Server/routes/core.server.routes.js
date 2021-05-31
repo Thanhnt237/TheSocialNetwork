@@ -29,6 +29,7 @@ const coreCtrl = require('../controllers').Core;
   router.route('/api/Friend/DeleteFriendRequest/:userId').post(coreCtrl.verifyToken, coreCtrl.DeleteFriendRequest);
   router.route('/api/Friend/DeleteFriend/:userId').post(coreCtrl.verifyToken, coreCtrl.DeleteFriend);
   router.route('/socket-chating').get((req,res)=>{res.render('socket-chating')});
+  router.route('/api/Chat/:userId').get(coreCtrl.verifyToken, coreCtrl.getChatService);
 
   router.route("/send-email").get((req,res)=>{res.render('reset')});
   router.route("/send-email").post(coreCtrl.SendMail);

@@ -13,7 +13,36 @@ const FriendList = require('../db/models/FriendList');
 const FriendQueue = require('../db/models/FriendQueue');
 const Chats = require('../db/models/Chats');
 
+function getOnline(socket){
+  FriendList.find({User_ID: socket.userId}, (err,getFriendListOfOnlineUser)=>{
+    if(err){
+      console.log(err)
+    }else{
+      let friendListOfOnlineUser = [];
+      getFriendListOfOnlineUser.forEach((element)=>{friendListOfOnlineUser.push(element.Friend_ID)})
+
+      User.find({_id: {$in: friendListOfOnlineUser}, State:"Online"}, (err,onlineFriend)=>{
+        if(err){
+          console.log(err)
+        }else{
+          let InforOfOnlineUser = [];
+          onlineFriend.forEach((element)=>{InforOfOnlineUser.push(element._id)})
+
+          Informations.find({User_ID: {$in: InforOfOnlineUser}}, (err,onlineFriendInfor)=>{
+            if(err){
+              console.log(err)
+            }else{
+              socket.emit("Server-Sent-UserOnline",onlineFriendInfor)
+            }
+          })
+        }
+      })
+    }
+  })
+}
+
 module.exports = function(io) {
+  //IO MiddleWare
     io.use(function(socket,next){
       if(!socket.handshake.query.token){
         return console.log('Unauthorized request');
@@ -36,6 +65,7 @@ module.exports = function(io) {
     }).
     on('connection', function(socket,res) {
 
+      //Set online state for user
       User.findByIdAndUpdate({_id: socket.userId}, {$set:{State: "Online"}}, (err)=>{
         if(err){
           console.log(err)
@@ -45,20 +75,22 @@ module.exports = function(io) {
               console.log(err)
             }else{
               //console.log(user)
+              getOnline(socket)
             }
           })
         }
       })
 
+      //Find user informations to put on right side
       Informations.findOne({User_ID: socket.userId},(err,userInfor)=>{
         if(err){
           console.log(err)
         }else{
-          console.log(userInfor);
+          //console.log(userInfor);
         }
       })
 
-
+    //Set Offline state for user
     socket.on("disconnect", () => {
       User.findByIdAndUpdate({_id: socket.userId}, {$set:{State: "Offline"}}, (err)=>{
         if(err){
@@ -69,37 +101,15 @@ module.exports = function(io) {
               console.log(err)
             }else{
               //console.log(user)
+              getOnline(socket)
             }
           })
         }
       })
     });
 
-    FriendList.find({User_ID: socket.userId}, (err,getFriendListOfOnlineUser)=>{
-      if(err){
-        console.log(err)
-      }else{
-        let friendListOfOnlineUser = [];
-        getFriendListOfOnlineUser.forEach((element)=>{friendListOfOnlineUser.push(element.Friend_ID)})
-
-        User.find({_id: {$in: friendListOfOnlineUser}, State:"Online"}, (err,onlineFriend)=>{
-          if(err){
-            console.log(err)
-          }else{
-            let InforOfOnlineUser = [];
-            onlineFriend.forEach((element)=>{InforOfOnlineUser.push(element._id)})
-
-            Informations.find({User_ID: {$in: InforOfOnlineUser}}, (err,onlineFriendInfor)=>{
-              if(err){
-                console.log(err)
-              }else{
-                socket.emit("Server-Sent-UserOnline",onlineFriendInfor)
-              }
-            })
-          }
-        })
-      }
-    })
+    // Get online friend and put on right side
+    getOnline(socket)
 
 
 

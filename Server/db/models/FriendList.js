@@ -10,8 +10,7 @@ const FriendListSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId
     },
     avatar:{
-        type:String,
-        required: true
+        type:String
     },
     name:{
         type:String,

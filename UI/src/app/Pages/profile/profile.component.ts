@@ -46,17 +46,19 @@ export class ProfileComponent implements OnInit {
     images: File
   }
 
-  getComment = [{
-    content: String
-  }]
-
   getPost = [{
     UserName: String,
     Post_ID: String,
     UserAvatar: String,
     title: String,
     content: String,
-    images: String
+    images: String,
+    Comments: [{
+      User_ID:String,
+      content:String
+    }],
+    like: Number,
+    date: Date
   }]
 
   constructor(
@@ -117,6 +119,10 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  sortPost(){
+
+  }
+
   onAddNewFriend(){
       this._activatedRoute.paramMap.subscribe(params =>{
         this._friend.SendFriendRequest(params.get('userId'),"anything")
@@ -165,20 +171,6 @@ export class ProfileComponent implements OnInit {
       this.PostForm.patchValue({
         images: file
       })
-  }
-  //// TODO: Chờ fix cái củ cải này
-  onLoadComment(post: any){
-    this._comment.GetAllComment(post.Post_ID)
-      .subscribe(
-        res => {
-          this.getComment = res;
-          console.log(this.getComment)
-        },
-        err =>{
-          console.log(err);
-        }
-
-      )
   }
 
   changeAvatar(event: any){

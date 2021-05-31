@@ -50,6 +50,8 @@ module.exports = {
   DeleteFriend: DeleteFriend,
   getAllFriendRequest: getAllFriendRequest,
   getAllFriend: getAllFriend,
+  getChatService: getChatService,
+  saveChatService: saveChatService,
   GetTest:GetTest
 };
 
@@ -151,6 +153,7 @@ function UserRegister(req, res) {
       })
       createUser.save();
       createInformation.save();
+      createFriendList.name = createInformation.name;
       createFriendList.save();
     }
   });
@@ -257,19 +260,6 @@ async function EditProfile(req,res) {
     }
   )
 }
-
-/*
-email: userAuth.email,
-name: userInfor.name,
-userId: req.userId,
-phone: userInfor.phone,
-avatar: userInfor.avatar,
-cover: userInfor.cover,
-address: userInfor.address,
-DoB: userInfor.DoB,
-description: userInfor.description,
-gender: userInfor.description
-*/
 
 /**
 * @name ChangeAvatar
@@ -582,6 +572,14 @@ async function AddNewComment(req, res) {
     content: req.body.content,
     images: req.body.images
   });
+  PostLayouts.findOneAndUpdate({Post_ID: req.params.postId},
+    {$push:{Comments: createComment}}, (err)=>{
+      if(err){
+        console.log(err)
+      }else{
+        res.status(200).send("Bình luận thành công")
+      }
+    })
   createComment.save((err)=>{
     if(err){
       console.log(err);
@@ -598,16 +596,14 @@ async function AddNewComment(req, res) {
 */
 
 async function GetPost(req, res) {
+  try{
+    let postId = await Posts.find({TimeLine_ID: req.params.userId});
+    let postLayout = await PostLayouts.find({Post_ID: postId})
 
-  Posts.find({TimeLine_ID: req.params.userId},(err, postId)=>{
-    PostLayouts.find({Post_ID: postId}, (err,postLayout)=>{
-      if(err){
-        console.log(err);
-      }else{
-        res.status(200).send(postLayout)
-      }
-    })
-  })
+    res.status(200).send(postLayout);
+  } catch (err){
+    console.log(err)
+  };
 }
 
 /**
@@ -841,4 +837,30 @@ async function getAllFriend(req, res) {
       res.status(401).send("Không có bạn bè nào")
     }
   })
+}
+
+/**
+* @name getChatService
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function getChatService(req,res) {
+  try{
+    let userInfor = await Informations.findOne({User_ID: req.params.userId})
+    let chat = await Chats.findOne({User_ID: req.userId, Friend_ID: req.params.userId})
+    res.status(200).send(chat)
+  }catch(err){
+    console.log(err)
+  };
+}
+
+/**
+* @name saveChatService
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+function saveChatService(req,res) {
+
 }

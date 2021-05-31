@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+const moment = require('moment');
 const PostLayoutsSchema = new mongoose.Schema({
     Post_ID:{
         type: mongoose.Schema.Types.ObjectId,
@@ -26,7 +26,21 @@ const PostLayoutsSchema = new mongoose.Schema({
     },
     link:{
         type: String
-    }
+    },
+    date:{
+        type: String,
+        default: moment().format('dddd, DD-MM-YYYY LTS'),
+        required:true
+    },
+    Comments: [
+      {
+      User_ID:{
+        type: String
+      },
+      content:{
+        type: String
+      }
+      }]
 
 })
 

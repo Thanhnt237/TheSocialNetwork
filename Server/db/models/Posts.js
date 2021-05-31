@@ -5,11 +5,6 @@ const PostsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
-    date:{
-        type:Date,
-        default:Date.now,
-        required:true
-    },
     FavoritesCategory_id:{
         type: String
     },
