@@ -1,8 +1,11 @@
 <div id="chatForm">
 
   <div id="right">
+    <div class="header">
+      {{friend.name}}
+    </div>
     <div id="listMessages" >
-      <p *ngFor="let message of listMessages">{{message}}</p>
+      <p *ngFor=""></p>
     </div>
 
     <input type="text" id="txtMessage" [(ngModel)] = "messageFromClient" (onChange)="TypingEvent()">

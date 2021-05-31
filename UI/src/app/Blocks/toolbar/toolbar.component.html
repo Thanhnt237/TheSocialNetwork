@@ -1,5 +1,5 @@
 <mat-toolbar class="mat-elevation-z8">
-  <a mat-button routerLink="/"> <mat-icon routerLink="/"> public </mat-icon> TSN </a>
+  <a mat-button routerLink="/" class="Logo"> <mat-icon routerLink="/"> public </mat-icon> TSN </a>
   <span>
     <!-- Search form -->
       <button mat-button><mat-icon class="mat-icon-rtl-mirror" aria-hidden="true"> search </mat-icon></button>
@@ -9,9 +9,9 @@
 
   <!-- Center -->
   <div class="center">
-    <a mat-button [routerLink]="['/']" > Trang chủ </a>
-    <a mat-button [routerLink]="['/news']" > Tin tức </a>
-    <a mat-button [routerLink]="['/chat']" > Trò truyện </a>
+    <a mat-button [routerLink]="['/']" > <mat-icon> home </mat-icon> <br> <span> Trang chủ </span></a>
+    <a mat-button [routerLink]="['/news']" > <mat-icon> feed </mat-icon> <br> <span> tin tức </span></a>
+    <a mat-button [routerLink]="['/chat']" > <mat-icon> chat </mat-icon> <br> <span> Trò chuyện </span> </a>
   </div>
 
   <!-- Right -->
@@ -32,9 +32,15 @@
   </div>
 
   <span class="" *ngIf="_authService.loggedIn()">
-    <button mat-button [matMenuTriggerFor]="menu">{{userProfile.name}}</button>
+    <button mat-button [matMenuTriggerFor]="menu">
+      <img mat-card-avatar src="http://localhost:8080/public/upload/{{userProfile.avatar}}">
+      <span> {{userProfile.name}} </span>
+    </button>
     <mat-menu #menu="matMenu">
-      <a mat-menu-item [routerLink]="['/profile/',userProfile.userId]" >Ảnh đại diện</a>
+      <a mat-menu-item [routerLink]="['/profile/',userProfile.userId]">
+        <img mat-card-avatar src="http://localhost:8080/public/upload/{{userProfile.avatar}}">
+        {{userProfile.name}}
+      </a>
       <button mat-menu-item>Cài đặt</button>
       <button mat-menu-item>Chỉnh sửa thông tin</button>
       <button mat-menu-item>Chủ đề yêu thích</button>

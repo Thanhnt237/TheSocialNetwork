@@ -24,9 +24,9 @@ export class SideNavComponent implements OnInit {
   }]
 
   constructor(
-      private _friend: FriendService,
       private _router: Router,
       public _authService: AuthService,
+      private _friend: FriendService,
       private _websocketService: WebsocketService
   ) { }
 

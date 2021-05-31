@@ -119,10 +119,6 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  sortPost(){
-
-  }
-
   onAddNewFriend(){
       this._activatedRoute.paramMap.subscribe(params =>{
         this._friend.SendFriendRequest(params.get('userId'),"anything")

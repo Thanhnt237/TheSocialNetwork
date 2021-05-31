@@ -599,7 +599,7 @@ async function GetPost(req, res) {
   try{
     let postId = await Posts.find({TimeLine_ID: req.params.userId});
     let postLayout = await PostLayouts.find({Post_ID: postId})
-
+    postLayout.reverse();
     res.status(200).send(postLayout);
   } catch (err){
     console.log(err)
@@ -862,5 +862,5 @@ async function getChatService(req,res) {
 */
 
 function saveChatService(req,res) {
-
+  
 }

@@ -17,7 +17,8 @@ export class ToolbarComponent implements OnInit {
 
   userProfile = {
     userId: String,
-    name: String
+    name: String,
+    avatar: String
   };
 
   friendRequest = [{
@@ -44,8 +45,7 @@ export class ToolbarComponent implements OnInit {
     this._getUserId.getToolbarProfile()
       .subscribe(
         res => {
-          this.userProfile.userId = res.userId;
-          this.userProfile.name = res.name;
+          this.userProfile = res;
         },
         err=>{
           console.log(err);

@@ -111,7 +111,9 @@ module.exports = function(io) {
     // Get online friend and put on right side
     getOnline(socket)
 
-
+    socket.on("Client-is-typing", (data)=>{
+      io.emit("Server-reply-typing-event", socket.id + data);
+    })
 
     });
 };
