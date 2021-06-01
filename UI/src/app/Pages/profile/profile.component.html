@@ -2,48 +2,108 @@
   <!--Heading -->
   <div class="Heading">
     <div class="image">
-      <iframe src="http://localhost:8080/public/upload/{{userProfile.cover}}" width="872" height="290.65"></iframe>
-      <input class = "changeCover" type="file" (change)= "changeCover($event)" >
+        <img class="cover" mat-card-cover src="http://localhost:8080/public/upload/{{userProfile.cover}}" alt="">
+        <label for="change-cover" class="changeCover"> <mat-icon>photo_camera</mat-icon> Đổi ảnh bìa </label>
+      <input class = "changeCover" id="change-cover" type="file" (change)= "changeCover($event)" hidden=true>
     </div>
     <div class="image">
-      <img class="avatar" src="http://localhost:8080/public/upload/{{userProfile.avatar}}" alt="">
-      <input class = "changeAvatar" type="file" (change)= "changeAvatar($event)" >
+      <img class="avatar" src="http://localhost:8080/public/upload/{{userProfile.avatar}} " mat-card-avatar >
+      <label for="change-avatar" class="changeAvatar"> <mat-icon>photo_camera</mat-icon> </label>
+      <input class = "changeAvatar" id="change-avatar" type="file" (change)= "changeAvatar($event)" hidden=true>
     </div>
-    <div class="">
+    <div class="divUserName">
       <span class="UserName"> {{userProfile.name}} </span>
     </div>
-    <div class="">
+    <div class="divBiology">
       <span class="Biology">{{userProfile.description}}</span>
     </div>
-    <a mat-button (click)="onAddNewFriend()" > Thêm bạn </a>
+    <a mat-stroked-button (click)="onAddNewFriend()" class="AddFriendButtonHeading" > Thêm bạn </a>
 
 <!--Routing button-->
-    <mat-tab-group>
-      <mat-tab label="Dòng thời gian">
+    <mat-tab-group style="padding-top:20px;" mat-align-tabs="center">
+      <mat-tab label="Dòng thời gian" class="TimeLine">
         <!--Content -->
         <div class="content">
           <div class="row">
             <div class="col-lg-5">
-              <div class="CoutRating">
-                <span>lượt theo dõi</span>
-                <span>Bài viết</span>
-                <span>lượt thích</span>
-              </div>
-              <div class="About">
-                <span >Giới thiệu</span>
-                <span>Sở thích</span>
-              </div>
-              <div class="Picture">
-                Ảnh
-              </div>
-              <div class="Friend">
-                bạn bè
-              </div>
+              <mat-card class="CountRating">
+                <mat-card-content>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="count">
+                        <span class="countTop">2</span> <br>
+                        <div class="countBottom">
+                          <span class="countBottom">Lượt theo dõi</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="count">
+                        <span class="countTop">2</span><br>
+                        <div class="countBottom">
+                          <span class="countBottom">Bài viết</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="countlast">
+                        <span class="countTop">2</span><br>
+                        <div class="countBottom">
+                          <span class="countBottom">Lượt thích</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+              <mat-card class="About">
+                <mat-card-content>
+                  <div class="row">
+                    <div class="AboutHeader">
+                      <span>Giới thiệu</span>
+                    </div>
+                    <div class="AboutContent">
+                      <mat-icon class="AboutIcon">person</mat-icon> <span> Giới tính: <mat-icon class="AboutIcon" style="color:blue;">male</mat-icon> Nam</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="AboutHeader">
+                      <span>Sở thích</span>
+                    </div>
+                    <div class="AboutContent">
+                      <mat-chip-list aria-label="Fish selection">
+                        <mat-chip><mat-icon>palette</mat-icon> Vẽ </mat-chip>
+                        <mat-chip><mat-icon>headphones</mat-icon> Nghe nhạc </mat-chip>
+                      </mat-chip-list>
+                    </div>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+              <mat-card class="Friend">
+                <mat-card-content>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="AboutHeader">
+                        Bạn bè
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div style="float:right;" class="AboutHeader">
+                        0
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="AboutContent">
+                    Bạn bè
+                  </div>
+                </mat-card-content>
+              </mat-card>
             </div>
             <div class="col-lg-7">
               <div class="StatusPost">
                 <!--Status Post-->
-              <mat-accordion class="example-headers-align" *ngIf="_auth.loggedIn()" multi>
+              <mat-accordion *ngIf="_auth.loggedIn()" multi>
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
                     Chào {{userProfile.name}}, ngày hôm nay của bạn thế nào?
@@ -82,7 +142,7 @@
                 <img mat-card-image src="http://localhost:8080/public/upload/{{post.images}}">
                 <mat-card-actions>
                   <button mat-button (click)="LikedColorChange()" [color]="likedColor">Thích</button>
-                  <button mat-button (click)="openComment = !openComment">bình luận</button>
+                  <button mat-button (click)="openComment = !openComment">Bình luận</button>
                   <button mat-button>Chia sẻ</button>
                 </mat-card-actions>
                 <mat-card-actions>

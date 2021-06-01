@@ -22,6 +22,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { HomeComponent } from './Pages/home/home.component';
 import { LoginComponent } from './Pages/login/login.component';
@@ -52,7 +53,8 @@ let angularMaterialModule = [
   MatTabsModule,
   MatPaginatorModule,
   MatTooltipModule,
-  MatButtonToggleModule
+  MatButtonToggleModule,
+  MatChipsModule
 ];
 
 const routes: Routes = [

@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit {
   openComment: Boolean = true;
 
   liked: boolean = true;
-  likedColor:String = "basic";
+  likedColor:String = "green";
   PostForm: FormGroup;
 
   userId:any;
