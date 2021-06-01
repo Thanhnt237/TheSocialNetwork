@@ -54,8 +54,9 @@ export class ProfileComponent implements OnInit {
     content: String,
     images: String,
     Comments: [{
-      User_ID:String,
-      content:String
+      User_ID: String,
+      avatar: String,
+      content: String
     }],
     like: Number,
     date: Date

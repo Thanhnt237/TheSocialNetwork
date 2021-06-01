@@ -10,6 +10,7 @@ export class PostService {
 
   readonly _addPostUrl = "http://localhost:8080/api/Post/new/";
   readonly _getPostUrl = "http://localhost:8080/api/Post/getPost/"
+  readonly _homePageUrl = "http://localhost:8080/api/home"
 
   constructor(
     private http: HttpClient,
@@ -22,6 +23,10 @@ export class PostService {
 
   GetPost(userId: any){
     return this.http.get<any>(this._getPostUrl + userId);
+  }
+
+  RenderHomePage(){
+    return this.http.get<any>(this._homePageUrl)
   }
 
 }

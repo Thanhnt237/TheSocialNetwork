@@ -177,6 +177,7 @@
                 <mat-card-actions>
                 <div class="comment" [hidden] = false>
                   <div class="comment" *ngFor = "let comment of post.Comments">
+                    {{comment.User_ID}}
                     {{comment.content}}
                   </div>
                   <form (ngSubmit)="onAddNewComment(post.Post_ID)" name="CommentForm" [formGroup]="CommentForm">
@@ -194,6 +195,7 @@
                 </mat-card-footer>
               </mat-card>
               </div>
+
             </div>
           </div>
         </div>

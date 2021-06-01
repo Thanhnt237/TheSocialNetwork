@@ -1,0 +1,42 @@
+<div class="container">
+  <!-- POST -->
+  <div class="Post" *ngFor="let post of getPost">
+    <mat-card class="example-card">
+    <mat-card-header>
+      <img mat-card-avatar class="example-header-image" src="http://localhost:8080/public/upload/{{post.UserAvatar}}"/>
+      <mat-card-title>{{post.UserName}}</mat-card-title>
+      <mat-card-subtitle>{{post.date}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        {{post.content}}
+      </p>
+    </mat-card-content>
+    <img mat-card-image src="http://localhost:8080/public/upload/{{post.images}}">
+    <mat-card-actions>
+      <button mat-button (click)="LikedColorChange()" [color]="likedColor">Thích</button>
+      <button mat-button (click)="openComment = !openComment">Bình luận</button>
+      <button mat-button>Chia sẻ</button>
+    </mat-card-actions>
+    <mat-card-actions>
+    <div class="comment" [hidden] = false>
+      <div class="comment" *ngFor = "let comment of post.Comments">
+        {{comment.User_ID}}
+        {{comment.content}}
+      </div>
+      <form (ngSubmit)="onAddNewComment(post.Post_ID)" name="CommentForm" [formGroup]="CommentForm">
+        <img src="http://localhost:8080/public/upload/{{userProfile.avatar}} " mat-card-avatar >
+        <mat-form-field class="full-width" >
+          <mat-label>Để lại bình luận...</mat-label>
+          <input matInput placeholder="Ex. It makes me feel..." class="full-width" formControlName="content"/>
+        </mat-form-field>
+        <button mat-flat-button type="submit" [disabled]="!CommentForm.valid"> Chia sẻ </button>
+      </form>
+    </div>
+    </mat-card-actions>
+    <mat-card-footer>
+
+    </mat-card-footer>
+  </mat-card>
+  </div>
+</div>
