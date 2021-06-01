@@ -73,8 +73,8 @@ export class ProfileComponent implements OnInit {
 
   ) {
     this.PostForm = this._formBuilder.group({
-      content: [''],
-      images: [null]
+      content: new FormControl('', [Validators.required]),
+      images: new FormControl('', [Validators.required])
     })
    }
 

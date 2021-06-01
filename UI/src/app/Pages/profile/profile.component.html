@@ -108,20 +108,49 @@
                   <mat-expansion-panel-header>
                     Chào {{userProfile.name}}, ngày hôm nay của bạn thế nào?
                   </mat-expansion-panel-header>
-                <form (ngSubmit)="onAddNewPost()" name="PostForm" [formGroup]="PostForm">
-                  <mat-form-field >
-                    <mat-label>Bạn muốn chia sẻ điều gì?</mat-label>
-                    <input
-                    formControlName="content"
-                    matInput
-                    placeholder="Bạn muốn chia sẻ điều gì?"
-                    />
-                    <input
-                    type="file" (change)= "UploadImages($event)"
-                    />
-                    </mat-form-field>
-                  <button mat-flat-button type="submit" [disabled]="!PostForm.valid"> Chia sẻ </button>
-                </form>
+
+                  <mat-tab-group mat-align-tabs="center">
+                    <mat-tab label="Đăng bài viết">
+                      <form>
+                        <img src="http://localhost:8080/public/upload/{{userProfile.avatar}} " mat-card-avatar >
+                        <mat-form-field class="full-width" appearance="outline" style="margin-top:10px;margin-left:10px;width:85%">
+                          <mat-label>Bạn muốn chia sẻ điều gì?</mat-label>
+                            <input
+                              class="CreatePost"
+                              formControlName="content"
+                              matInput
+                              placeholder="Bạn muốn chia sẻ điều gì?"
+                            />
+                        </mat-form-field>
+                        <a mat-raised-button class="UploadImages"></a>
+                        <br />
+                        <button mat-flat-button type="submit" [disabled]="!PostForm.valid" class="submitPostBtn"> Chia sẻ </button>
+                      </form>
+                    </mat-tab>
+
+                    <mat-tab label="Đăng ảnh">
+                      <form (ngSubmit)="onAddNewPost()" name="PostForm" [formGroup]="PostForm">
+                        <img src="http://localhost:8080/public/upload/{{userProfile.avatar}} " mat-card-avatar >
+                        <mat-form-field class="full-width" appearance="outline" style="margin-top:10px;margin-left:10px;width:77%">
+                          <mat-label>Bạn muốn chia sẻ điều gì?</mat-label>
+                            <input
+                              class="CreatePost"
+                              formControlName="content"
+                              matInput
+                              placeholder="Bạn muốn chia sẻ điều gì?"
+                            />
+                        </mat-form-field>
+                        <a mat-raised-button class="UploadImages">
+                          <label mat-button for="UploadImages" ><mat-icon style="margin: 5px 5px; size:50px 50px; " >image</mat-icon></label>
+                          <input
+                            id="UploadImages" type="file" (change)= "UploadImages($event)" hidden=true;
+                          />
+                        </a>
+                        <br />
+                        <button mat-flat-button type="submit" [disabled]="!PostForm.valid" class="submitPostBtn"> Chia sẻ </button>
+                      </form>
+                    </mat-tab>
+                  </mat-tab-group>
                 </mat-expansion-panel>
               </mat-accordion>
 
@@ -147,16 +176,17 @@
                 </mat-card-actions>
                 <mat-card-actions>
                 <div class="comment" [hidden] = false>
-                  <form (ngSubmit)="onAddNewComment(post.Post_ID)" name="CommentForm" [formGroup]="CommentForm">
-                    <mat-form-field class="full-width" >
-                      <mat-label>Để lại bình luận...</mat-label>
-                      <input matInput placeholder="Ex. It makes me feel..." class="full-width" formControlName="content"/>
-                      <button mat-flat-button type="submit" [disabled]="!CommentForm.valid"> Chia sẻ </button>
-                    </mat-form-field>
-                  </form>
                   <div class="comment" *ngFor = "let comment of post.Comments">
                     {{comment.content}}
                   </div>
+                  <form (ngSubmit)="onAddNewComment(post.Post_ID)" name="CommentForm" [formGroup]="CommentForm">
+                    <img src="http://localhost:8080/public/upload/{{userProfile.avatar}} " mat-card-avatar >
+                    <mat-form-field class="full-width" >
+                      <mat-label>Để lại bình luận...</mat-label>
+                      <input matInput placeholder="Ex. It makes me feel..." class="full-width" formControlName="content"/>
+                    </mat-form-field>
+                    <button mat-flat-button type="submit" [disabled]="!CommentForm.valid"> Chia sẻ </button>
+                  </form>
                 </div>
                 </mat-card-actions>
                 <mat-card-footer>

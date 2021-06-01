@@ -113,4 +113,20 @@
 .AddFriendButtonHeading{
   float:right;
   margin-top: -25px;
+  margin-right: 25px;
+}
+
+.submitPostBtn{
+  width: 100%;
+  background-color: green;
+  color: white;
+}
+
+.UploadImages{
+  float:right;
+  margin: 20px 5px;
+}
+
+.CreatePost{
+  width: 260%;
 }

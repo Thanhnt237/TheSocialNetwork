@@ -85,8 +85,20 @@ function GetTest(req,res) {
 * @param  {object} res HTTP response
 */
 
-function renderHomePage(req, res) {
-  res.render('home');
+async function renderHomePage(req, res) {
+  try{
+    let getUserFriend = await FriendList.find({User_ID: req.userId})
+    let user = [];
+    user.push(req.userId);
+    getUserFriend.forEach((friend) => {
+      user.push(friend.Friend_ID)
+    });
+    let postId = await Posts.find({TimeLine_ID: {$in: user}});
+    let post = await PostLayouts.find({Post_ID: {$in: postId} })
+    res.status(200).send(post);
+  }catch(err){
+    console.log(err)
+  }
 }
 
 /**
@@ -862,5 +874,5 @@ async function getChatService(req,res) {
 */
 
 function saveChatService(req,res) {
-  
+
 }

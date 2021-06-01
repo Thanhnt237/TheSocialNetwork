@@ -9,7 +9,7 @@ var router = express.Router();
 
 const coreCtrl = require('../controllers').Core;
 
-  router.route('/').get(coreCtrl.renderHomePage);
+  router.route('/api/home').get(coreCtrl.verifyToken, coreCtrl.renderHomePage);
   router.route('/api/login').post(coreCtrl.UserLogin);
   router.route('/api/register').post(coreCtrl.UserRegister);
   router.route('/api/profile/:userId').get(coreCtrl.GetUserProfile);
