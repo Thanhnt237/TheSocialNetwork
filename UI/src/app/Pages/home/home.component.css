@@ -1,4 +1,26 @@
 .Post{
   margin-top: 25px;
   margin-bottom: 25px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%
+}
+.rightCommentLayout{
+  background-color: #f5f5f5;
+  margin-left: 10px;
+  width: 70%;
+}
+.rightTopCommentLayout{
+  margin-top: 0px;
+  margin-bottom: 10px;
+  padding: 5px 0px;
+}
+.rightBottomCommentLayout{
+  margin-top: 0px;
+  margin-bottom: 10px;
+  padding: 5px 0px;
+}
+.commentSubmitBtn{
+  background-color: green;
+  color: white;
 }

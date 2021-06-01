@@ -5,9 +5,13 @@ const CommentsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
-    User_ID:{
-        type: mongoose.Schema.Types.ObjectId,
+    UserName:{
+        type: String,
         required: true
+    },
+    avatar:{
+      type: String,
+      required: true
     },
     content:{
         type:String,

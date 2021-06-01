@@ -578,27 +578,29 @@ async function UpdatePost(req, res) {
 */
 
 async function AddNewComment(req, res) {
-  let createComment = new Comments({
+  let user = await Informations.findOne({User_ID:req.userId})
+
+  let createComment = await new Comments({
     Parent_ID: req.params.postId,
-    User_ID: req.userId,
-    content: req.body.content,
-    images: req.body.images
+    UserName: user.name,
+    avatar: user.avatar,
+    content: req.body.content
   });
+
   PostLayouts.findOneAndUpdate({Post_ID: req.params.postId},
     {$push:{Comments: createComment}}, (err)=>{
       if(err){
         console.log(err)
       }else{
-        res.status(200).send("Bình luận thành công")
+        createComment.save((err)=>{
+          if(err){
+            console.log(err);
+          }else{
+            res.status(200).send("Bình luận thành công")
+          }
+        })
       }
     })
-  createComment.save((err)=>{
-    if(err){
-      console.log(err);
-    }else{
-      res.status(200).send("Sucess");
-    }
-  })
 }
 
 /**

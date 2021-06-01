@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit {
     content: String,
     images: String,
     Comments: [{
-      User_ID: String,
+      UserName: String,
       avatar: String,
       content: String
     }],
@@ -100,7 +100,7 @@ export class ProfileComponent implements OnInit {
         .subscribe(
           res => {
             this.getPost = res;
-            console.log(this.getPost);
+            console.log(res);
           },
           err=>{
             console.log(err);

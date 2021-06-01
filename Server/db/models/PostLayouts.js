@@ -34,7 +34,10 @@ const PostLayoutsSchema = new mongoose.Schema({
     },
     Comments: [
       {
-      User_ID:{
+      UserName:{
+        type: String
+      },
+      avatar:{
         type: String
       },
       content:{

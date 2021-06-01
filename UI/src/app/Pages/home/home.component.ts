@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
     content: String,
     images: String,
     Comments: [{
-      User_ID: String,
+      UserName: String,
       avatar: String,
       content: String
     }],

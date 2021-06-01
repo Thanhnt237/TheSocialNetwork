@@ -1,6 +1,5 @@
 <div class="container">
   <!--Heading -->
-  <div class="Heading">
     <div class="image">
         <img class="cover" mat-card-cover src="http://localhost:8080/public/upload/{{userProfile.cover}}" alt="">
         <label for="change-cover" class="changeCover"> <mat-icon>photo_camera</mat-icon> Đổi ảnh bìa </label>
@@ -20,7 +19,7 @@
     <a mat-stroked-button (click)="onAddNewFriend()" class="AddFriendButtonHeading" > Thêm bạn </a>
 
 <!--Routing button-->
-    <mat-tab-group style="padding-top:20px;" mat-align-tabs="center">
+    <mat-tab-group style="padding-top:20px; width:100%;" mat-align-tabs="center">
       <mat-tab label="Dòng thời gian" class="TimeLine">
         <!--Content -->
         <div class="content">
@@ -113,7 +112,7 @@
                     <mat-tab label="Đăng bài viết">
                       <form>
                         <img src="http://localhost:8080/public/upload/{{userProfile.avatar}} " mat-card-avatar >
-                        <mat-form-field class="full-width" appearance="outline" style="margin-top:10px;margin-left:10px;width:85%">
+                        <mat-form-field class="full-width" appearance="outline" style="margin-top:10px;margin-left:10px;width:80%">
                           <mat-label>Bạn muốn chia sẻ điều gì?</mat-label>
                             <input
                               class="CreatePost"
@@ -131,7 +130,7 @@
                     <mat-tab label="Đăng ảnh">
                       <form (ngSubmit)="onAddNewPost()" name="PostForm" [formGroup]="PostForm">
                         <img src="http://localhost:8080/public/upload/{{userProfile.avatar}} " mat-card-avatar >
-                        <mat-form-field class="full-width" appearance="outline" style="margin-top:10px;margin-left:10px;width:77%">
+                        <mat-form-field class="full-width" appearance="outline" style="margin-top:10px;margin-left:10px;width:75%">
                           <mat-label>Bạn muốn chia sẻ điều gì?</mat-label>
                             <input
                               class="CreatePost"
@@ -176,17 +175,30 @@
                 </mat-card-actions>
                 <mat-card-actions>
                 <div class="comment" [hidden] = false>
-                  <div class="comment" *ngFor = "let comment of post.Comments">
-                    {{comment.User_ID}}
-                    {{comment.content}}
+                  <div class="comment" *ngFor = "let comment of post.Comments" style="padding: 10px 10px; margin-top:10px; margin-bottom:10px;  ">
+                    <div class="row">
+                      <div class="col-sm-1">
+                        <img mat-card-avatar src="http://localhost:8080/public/upload/{{post.images}}">
+                      </div>
+                      <div class="col-sm-11">
+                        <div class="rightCommentLayout">
+                          <div class="rightTopCommentLayout">
+                            <span style="font-size: 20px;font-weight: normal; padding: 10px 10px; margin-top:10px; margin-bottom:10px;">{{comment.UserName}}</span><br>
+                          </div>
+                          <div class="rightBottomCommentLayout">
+                            <span style="font-size: 13px;font-weight: normal; padding: 0px 10px; margin-top:0px; margin-bottom:10px;">{{comment.content}}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <form (ngSubmit)="onAddNewComment(post.Post_ID)" name="CommentForm" [formGroup]="CommentForm">
                     <img src="http://localhost:8080/public/upload/{{userProfile.avatar}} " mat-card-avatar >
-                    <mat-form-field class="full-width" >
+                    <mat-form-field class="full-width" style="margin-left:10px; margin-right:10px; width:65%" >
                       <mat-label>Để lại bình luận...</mat-label>
-                      <input matInput placeholder="Ex. It makes me feel..." class="full-width" formControlName="content"/>
+                      <input matInput placeholder="Đợi chút, bức ảnh này..." class="full-width" formControlName="content"/>
                     </mat-form-field>
-                    <button mat-flat-button type="submit" [disabled]="!CommentForm.valid"> Chia sẻ </button>
+                    <button mat-flat-button type="submit" [disabled]="!CommentForm.valid" class="commentSubmitBtn"> Chia sẻ </button>
                   </form>
                 </div>
                 </mat-card-actions>
@@ -291,7 +303,7 @@
       </mat-tab>
       <mat-tab label="Bạn bè"> Danh sách bạn bè </mat-tab>
     </mat-tab-group>
-  </div>
+
 
 
 </div>
