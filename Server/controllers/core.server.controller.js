@@ -146,9 +146,6 @@ function UserRegister(req, res) {
     email: userData.email,
     password: hash_password
   });
-  let createFriendList = new FriendList({
-    User_ID: createUser._id
-  });
 
   Authentication.countDocuments({email: userData.email}, function (err, count){
     if(count>0){
@@ -165,8 +162,6 @@ function UserRegister(req, res) {
       })
       createUser.save();
       createInformation.save();
-      createFriendList.name = createInformation.name;
-      createFriendList.save();
     }
   });
 }
@@ -225,7 +220,7 @@ async function GetUserProfile(req,res) {
             address: userInfor.address,
             DoB: userInfor.DoB,
             description: userInfor.description,
-            gender: userInfor.description
+            gender: userInfor.gender
           })
         }
       })

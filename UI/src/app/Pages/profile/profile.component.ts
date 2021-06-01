@@ -89,8 +89,8 @@ export class ProfileComponent implements OnInit {
       this._profile.getUserProfile(this.userId)
         .subscribe(
           res => {
-            console.log(res);
             this.userProfile = res;
+            console.log(this.userProfile.gender)
           },
           err=>{
             console.log(err);

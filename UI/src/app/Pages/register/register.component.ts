@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
     'confirmPassword': ''
     };
 
-    hide: boolean = false;
+    hide: boolean = true;
 
     constructor(
       private _auth: AuthService,

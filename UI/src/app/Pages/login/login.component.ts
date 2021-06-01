@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
     'password': ''
     };
 
-    hide: boolean = false;
+    hide: boolean = true;
 
     constructor(
         private _formBuilder: FormBuilder,
