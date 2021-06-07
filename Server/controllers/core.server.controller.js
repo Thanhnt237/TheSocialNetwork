@@ -590,6 +590,10 @@ async function AddNewPost(req, res) {
     TimeLine_ID: req.params.userId
   });
 
+  let createReaction = new Reactions({
+    Post_ID: createPost._id,
+  })
+
   await multerUpload.upload(req,res, (err)=>{
     if (err instanceof multer.MulterError) {
         console.log(err);
@@ -614,6 +618,7 @@ async function AddNewPost(req, res) {
                 console.log(err);
               }else{
                 createPost.save();
+                createReaction.save();
                 res.status(200).send("Đăng bài viết thành công!");
               }
             })
@@ -633,6 +638,10 @@ async function AddNewPostNoImage(req, res) {
       TimeLine_ID: req.params.userId
     });
 
+    let createReaction = new Reactions({
+      Post_ID: createPost._id,
+    })
+
     Informations.findOne({User_ID:req.userId},(err,user)=>{
     let createPostLayouts = new PostLayouts({
       Post_ID: createPost._id,
@@ -646,6 +655,7 @@ async function AddNewPostNoImage(req, res) {
           console.log(err);
         }else{
           createPost.save();
+          createReaction.save();
           res.status(200).send("Đăng bài viết thành công!");
           }
         })
