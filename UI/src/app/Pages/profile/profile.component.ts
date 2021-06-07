@@ -18,12 +18,22 @@ import { FriendService } from "../../Services/friend.service";
 
 export class ProfileComponent implements OnInit {
 
+  date = new FormControl(new Date());
   openComment: Boolean = true;
+
+  editBiology: Boolean = false;
+  editName: Boolean = false;
+  editGender: Boolean = false;
+  editDoB: Boolean = false;
+  editAddress: Boolean = false;
+  editPhone: Boolean = false;
 
   liked: boolean = true;
   likedColor:String = "green";
   PostForm: FormGroup;
-
+  postNoImage = {
+    "content": ""
+  }
   userId:any;
 
   alertError: boolean = false;
@@ -36,10 +46,18 @@ export class ProfileComponent implements OnInit {
     cover: String,
     description: String,
     email: String,
-    gender:String,
+    "gender": "",
     name: String,
     phone: String
   };
+
+  editProfile = {
+    "address": "",
+    "description": "",
+    "gender":"",
+    "name": "",
+    "phone": ""
+  }
 
   post = {
     content: String,
@@ -83,6 +101,16 @@ export class ProfileComponent implements OnInit {
      content: new FormControl('', [Validators.required])
    })
 
+   CheckGender(){
+     if(this.userProfile.gender == "Nam"){
+       return 0;
+     }else if(this.userProfile.gender == "Nữ"){
+       return 1;
+     }else {
+       return -1;
+     }
+   }
+
   ngOnInit(): void {
     this._activatedRoute.paramMap.subscribe(params => {
       this.userId = params.get('userId');
@@ -90,7 +118,7 @@ export class ProfileComponent implements OnInit {
         .subscribe(
           res => {
             this.userProfile = res;
-            console.log(this.userProfile.gender)
+            //console.log(this.userProfile)
           },
           err=>{
             console.log(err);
@@ -153,12 +181,20 @@ export class ProfileComponent implements OnInit {
     .subscribe(
       res => {
         console.log(res);
+        let userId = this._activatedRoute.snapshot.paramMap.get('userId')
+        this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+            this._router.navigate([`/profile/${userId}`]);
+        });
       },
       err => {
         console.log(err);
         this.alertError = true;
         this.errCatching = err.error;
         console.log(this.errCatching);
+        let userId = this._activatedRoute.snapshot.paramMap.get('userId')
+        this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+            this._router.navigate([`/profile/${userId}`]);
+        });
       }
     )
   }
@@ -181,11 +217,17 @@ export class ProfileComponent implements OnInit {
       .subscribe(
         res => {
           console.log(res);
-          window.location.reload();
+          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
+          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+              this._router.navigate([`/profile/${userId}`]);
+          });
         },
         err => {
           console.log(err);
-          window.location.reload();
+          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
+          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+              this._router.navigate([`/profile/${userId}`]);
+          });
         }
 
       )
@@ -201,13 +243,39 @@ export class ProfileComponent implements OnInit {
       .subscribe(
         res => {
           console.log(res);
-          window.location.reload();
+          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
+          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+              this._router.navigate([`/profile/${userId}`]);
+          });
         },
         err => {
           console.log(err);
-          window.location.reload();
+          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
+          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+              this._router.navigate([`/profile/${userId}`]);
+          });
         }
 
+      )
+  }
+
+  DeletePost(postId: any){
+    this._post.DeletePost(postId)
+      .subscribe(
+        res => {
+          console.log(res);
+          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
+          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+              this._router.navigate([`/profile/${userId}`]);
+          });
+        },
+        err => {
+          console.log(err);
+          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
+          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+              this._router.navigate([`/profile/${userId}`]);
+          });
+        }
       )
   }
 
@@ -221,18 +289,127 @@ export class ProfileComponent implements OnInit {
       .subscribe(
         res => {
           console.log(res);
-          this._router.navigate(['/profile/'+params.get('userId')])
+          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
+          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+              this._router.navigate([`/profile/${userId}`]);
+          });
         },
         err => {
           console.log(err);
           this.alertError = true;
           this.errCatching = err.error;
           console.log(this.errCatching);
+          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
+          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+              this._router.navigate([`/profile/${userId}`]);
+          });
         }
       )
     })
-
-
   }
+
+  PostNoImage(){
+    this._activatedRoute.paramMap.subscribe(params=>{
+      this._post.AddNewPostNoImage(params.get('userId'), this.postNoImage)
+        .subscribe(
+          res =>{
+            console.log(res);
+            let userId = this._activatedRoute.snapshot.paramMap.get('userId')
+            this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+                this._router.navigate([`/profile/${userId}`]);
+            });
+          },
+          err =>{
+            console.log(err);
+            let userId = this._activatedRoute.snapshot.paramMap.get('userId')
+            this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+                this._router.navigate([`/profile/${userId}`]);
+            });
+          }
+        )
+
+    })
+  }
+
+  EditDescription(){
+    this._profile.EditDescription(this.editProfile)
+      .subscribe(
+        res=> console.log(res),
+        err => {
+          console.log(err);
+          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
+          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+              this._router.navigate([`/profile/${userId}`]);
+          });
+        }
+      )
+  }
+
+  EditName(){
+    this._profile.EditName({"name": this.editProfile.name})
+      .subscribe(
+        res=> console.log(res),
+        err => {
+          console.log(err);
+          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
+          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+              this._router.navigate([`/profile/${userId}`]);
+          });
+        }
+      )
+  }
+  EditGender(){
+    this._profile.EditGender({"gender": this.editProfile.gender})
+      .subscribe(
+        res=> console.log(res),
+        err => {
+          console.log(err);
+          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
+          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+              this._router.navigate([`/profile/${userId}`]);
+          });
+        }
+      )
+  }
+  EditDoB(){
+    this._profile.EditDoB({"DoB": this.date.value})
+      .subscribe(
+        res=> console.log(res),
+        err => {
+          console.log(err);
+          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
+          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+              this._router.navigate([`/profile/${userId}`]);
+          });
+        }
+      )
+  }
+  EditAddress(){
+    this._profile.EditAddress({"phone": this.editProfile.address})
+      .subscribe(
+        res=> console.log(res),
+        err => {
+          console.log(err);
+          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
+          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+              this._router.navigate([`/profile/${userId}`]);
+          });
+        }
+      )
+  }
+  EditPhone(){
+    this._profile.EditPhone({"phone": this.editProfile.phone})
+      .subscribe(
+        res=> console.log(res),
+        err => {
+          console.log(err);
+          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
+          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+              this._router.navigate([`/profile/${userId}`]);
+          });
+        }
+      )
+  }
+
 
 }

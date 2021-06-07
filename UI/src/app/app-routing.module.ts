@@ -23,6 +23,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatTableModule } from '@angular/material/table';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 import { HomeComponent } from './Pages/home/home.component';
 import { LoginComponent } from './Pages/login/login.component';
@@ -54,7 +57,10 @@ let angularMaterialModule = [
   MatPaginatorModule,
   MatTooltipModule,
   MatButtonToggleModule,
-  MatChipsModule
+  MatChipsModule,
+  MatTableModule,
+  MatNativeDateModule,
+  MatSelectModule
 ];
 
 const routes: Routes = [

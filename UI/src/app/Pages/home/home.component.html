@@ -5,6 +5,7 @@
     <img mat-card-avatar class="example-header-image" src="http://localhost:8080/public/upload/{{post.UserAvatar}}"/>
     <mat-card-title>{{post.UserName}}</mat-card-title>
     <mat-card-subtitle>{{post.date}}</mat-card-subtitle>
+    <button mat-button (click)="DeletePost(post.Post_ID)" class="DeleteBtn">X</button>
   </mat-card-header>
   <mat-card-content>
     <p>

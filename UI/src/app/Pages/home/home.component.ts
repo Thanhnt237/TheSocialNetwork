@@ -98,6 +98,18 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  DeletePost(postId: any){
+    this._post.DeletePost(postId)
+      .subscribe(
+        res => {
+          console.log(res);
+        },
+        err => {
+          console.log(err);
+        }
+      )
+  }
+
   onAddNewComment(PostId: any){
     if (!this.CommentForm.valid) {
       return;

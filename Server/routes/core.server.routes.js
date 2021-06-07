@@ -15,10 +15,17 @@ const coreCtrl = require('../controllers').Core;
   router.route('/api/profile/:userId').get(coreCtrl.GetUserProfile);
   router.route('/api/toolbar-profile').get(coreCtrl.verifyToken,coreCtrl.ToolbarProfile);
   router.route('/api/edit-profile').post(coreCtrl.verifyToken,coreCtrl.EditProfile);
+  router.route('/api/edit-profile/description').post(coreCtrl.verifyToken,coreCtrl.EditDescription);
+  router.route('/api/edit-profile/name').post(coreCtrl.verifyToken,coreCtrl.EditName);
+  router.route('/api/edit-profile/gender').post(coreCtrl.verifyToken,coreCtrl.EditGender);
+  router.route('/api/edit-profile/DoB').post(coreCtrl.verifyToken,coreCtrl.EditDoB);
+  router.route('/api/edit-profile/address').post(coreCtrl.verifyToken,coreCtrl.EditAddress);
+  router.route('/api/edit-profile/phone').post(coreCtrl.verifyToken,coreCtrl.EditPhone);
   router.route('/api/change-avatar').post(coreCtrl.verifyToken,coreCtrl.ChangeAvatar);
   router.route('/api/change-cover').post(coreCtrl.verifyToken,coreCtrl.ChangeCover);
   router.route('/api/Post/new/:userId').post(coreCtrl.verifyToken,coreCtrl.AddNewPost);
-  router.route('/api/Post/delete/:postId').post(coreCtrl.verifyToken,coreCtrl.DeletePost);
+  router.route('/api/Post/new/noImage/:userId').post(coreCtrl.verifyToken,coreCtrl.AddNewPostNoImage)
+  router.route('/api/Post/delete/:postId').delete(coreCtrl.verifyToken,coreCtrl.DeletePost);
   router.route('/api/Post/getPost/:userId').get(coreCtrl.GetPost);
   router.route('/api/Comments/new/:postId').post(coreCtrl.verifyToken,coreCtrl.AddNewComment);
   router.route('/api/Comment/getComment/:postId').get(coreCtrl.GetComment);

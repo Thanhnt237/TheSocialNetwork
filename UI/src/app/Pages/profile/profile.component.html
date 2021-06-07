@@ -14,9 +14,16 @@
       <span class="UserName"> {{userProfile.name}} </span>
     </div>
     <div class="divBiology">
-      <span class="Biology">{{userProfile.description}}</span>
+      <span class="Biology" *ngIf="!editBiology">{{userProfile.description}} <mat-icon style="color:green; margin-left:10px;" (click) = "editBiology = !editBiology">border_color</mat-icon> </span>
+      <form class="form" *ngIf="editBiology">
+        <div class="form-group">
+            <input class="form-control" id="editBiology" type="text" name="description" placeholder="{{userProfile.description}}" value="{{userProfile.description}}" [(ngModel)]="editProfile.description">
+        </div>
+        <button mat-flat-button class="submitPostBtn" style="width:5%; margin:10px 10px;" (click)="EditDescription()"> Lưu </button>
+        <button mat-stroked-button style="width:5%; margin:10px 10px;" (click)="editBiology = !editBiology"> Hủy </button>
+      </form>
     </div>
-    <a mat-stroked-button (click)="onAddNewFriend()" class="AddFriendButtonHeading" > Thêm bạn </a>
+    <a mat-stroked-button (click)="onAddNewFriend()" class="AddFriendButtonHeading"> Thêm bạn </a>
 
 <!--Routing button-->
     <mat-tab-group style="padding-top:20px; width:100%;" mat-align-tabs="center">
@@ -62,7 +69,12 @@
                       <span>Giới thiệu</span>
                     </div>
                     <div class="AboutContent">
-                      <mat-icon class="AboutIcon">person</mat-icon> <span> Giới tính: <mat-icon class="AboutIcon" style="color:blue;">male female</mat-icon> {{userProfile.gender}}</span>
+                      <mat-icon class="AboutIcon">person</mat-icon>
+                      <span> Giới tính: <mat-icon *ngIf="CheckGender() == 0" class="AboutIcon" style="color:blue;">male</mat-icon>
+                                        <mat-icon *ngIf="CheckGender() == 1" class="AboutIcon" style="color:pink;">female</mat-icon>
+                                        <mat-icon *ngIf="CheckGender() == -1" class="AboutIcon" style="color:black;">transgender</mat-icon>
+                        {{userProfile.gender}}
+                      </span>
                     </div>
                   </div>
                   <div class="row">
@@ -107,23 +119,23 @@
                   <mat-expansion-panel-header>
                     Chào {{userProfile.name}}, ngày hôm nay của bạn thế nào?
                   </mat-expansion-panel-header>
-
                   <mat-tab-group mat-align-tabs="center">
                     <mat-tab label="Đăng bài viết">
-                      <form>
+                      <form class="form-group">
                         <img src="http://localhost:8080/public/upload/{{userProfile.avatar}} " mat-card-avatar >
                         <mat-form-field class="full-width" appearance="outline" style="margin-top:10px;margin-left:10px;width:80%">
                           <mat-label>Bạn muốn chia sẻ điều gì?</mat-label>
                             <input
                               class="CreatePost"
-                              formControlName="content"
                               matInput
+                              name="content"
                               placeholder="Bạn muốn chia sẻ điều gì?"
+                              [(ngModel)]="postNoImage.content"
                             />
                         </mat-form-field>
                         <a mat-raised-button class="UploadImages"></a>
                         <br />
-                        <button mat-flat-button type="submit" [disabled]="!PostForm.valid" class="submitPostBtn"> Chia sẻ </button>
+                        <button mat-flat-button class="submitPostBtn" (click)="PostNoImage()"> Chia sẻ </button>
                       </form>
                     </mat-tab>
 
@@ -161,13 +173,14 @@
                   <img mat-card-avatar class="example-header-image" src="http://localhost:8080/public/upload/{{post.UserAvatar}}"/>
                   <mat-card-title>{{post.UserName}}</mat-card-title>
                   <mat-card-subtitle>{{post.date}}</mat-card-subtitle>
+                  <button mat-button (click)="DeletePost(post.Post_ID)" class="DeleteBtn">X</button>
                 </mat-card-header>
                 <mat-card-content>
                   <p>
                     {{post.content}}
                   </p>
                 </mat-card-content>
-                <img mat-card-image src="http://localhost:8080/public/upload/{{post.images}}">
+                <img mat-card-image *ngIf="post.images != null" src="http://localhost:8080/public/upload/{{post.images}}" >
                 <mat-card-actions>
                   <button mat-button (click)="LikedColorChange()" [color]="likedColor">Thích</button>
                   <button mat-button (click)="openComment = !openComment">Bình luận</button>
@@ -213,10 +226,99 @@
         </div>
       </mat-tab>
       <mat-tab label="Giới thiệu">
-        <h2>Giới thiệu</h2>
-        <!-- TODO: Sua thong tin ca nhan -->
-        <div class="">
-
+        <div class="container">
+          <mat-card class="Introduction">
+            <mat-card-content>
+              <h2>Giới thiệu</h2>
+              <!-- TODO: Sua thong tin ca nhan -->
+              <div class="HeadingDisplayProfile">
+                <span><mat-icon>person</mat-icon> Thông tin cá nhân</span>
+              </div>
+              <div class="ContentDisplayProfile">
+                <div class="ContentElement row">
+                  <p class="LeftContentElement col-md-2">Tên</p><br>
+                  <p class="MidContentElement col-md-8" *ngIf="!editName">{{userProfile.name}}</p><br>
+                  <form class="form col-md-8" *ngIf="editName">
+                    <div class="form-group">
+                        <input class="form-control EditIntroduction" type="text" name="name" placeholder="{{userProfile.name}}" value="{{userProfile.name}}" [(ngModel)]="editProfile.name">
+                    </div>
+                    <button mat-flat-button class="submitPostBtn" style="width:5%; margin:10px 10px;" (click)="EditName()"> Lưu </button>
+                    <button mat-stroked-button style="width:5%; margin:10px 10px;" (click)="editName = !editName"> Hủy </button>
+                  </form>
+                  <span class="RightContentElement col-md-2" *ngIf="!editName"><mat-icon style="color:green; margin-left:10px;" (click) = "editName = !editName">border_color</mat-icon></span><br>
+                </div>
+                <div class="ContentElement row">
+                  <span class="LeftContentElement col-md-2">Giới tính</span><br>
+                  <span class="MidContentElement col-md-8" *ngIf="!editGender">{{userProfile.gender}}</span><br>
+                  <form class="form col-md-8" *ngIf="editGender">
+                    <mat-form-field appearance="fill" >
+                      <mat-label>Giới tính</mat-label>
+                      <mat-select disableRipple [(ngModel)]="editProfile.gender" name="gender">
+                        <mat-option value="Nam">Nam</mat-option>
+                        <mat-option value="Nữ">Nữ</mat-option>
+                        <mat-option value="Không rõ">Không rõ</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <button mat-flat-button class="submitPostBtn" style="width:5%; margin:10px 10px;" (click)="EditGender()"> Lưu </button>
+                    <button mat-stroked-button style="width:5%; margin:10px 10px;" (click)="editGender = !editGender"> Hủy </button>
+                  </form>
+                  <span class="RightContentElement col-md-2" *ngIf="!editGender"><mat-icon style="color:green; margin-left:10px;" (click) = "editGender = !editGender">border_color</mat-icon></span><br>
+                </div>
+                <div class="LastContentElement row">
+                  <span class="LeftContentElement col-md-2">Ngày sinh</span><br>
+                  <span class="MidContentElement col-md-8" *ngIf="!editDoB">{{userProfile.DoB}}</span><br>
+                  <form class="form col-md-8" *ngIf="editDoB">
+                    <div class="form-group">
+                      <mat-form-field class="col-md-8" appearance="fill">
+                        <mat-label>Angular forms</mat-label>
+                        <input matInput [matDatepicker]="picker1" [formControl]="date">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                    <button mat-flat-button class="submitPostBtn" style="width:5%; margin:10px 10px;" (click)="EditDoB()"> Lưu </button>
+                    <button mat-stroked-button style="width:5%; margin:10px 10px;" (click)="editDoB = !editDoB"> Hủy </button>
+                  </form>
+                  <span class="RightContentElement col-md-2" *ngIf="!editDoB"><mat-icon style="color:green; margin-left:10px;" (click) = "editDoB = !editDoB">border_color</mat-icon></span><br>
+                </div>
+              </div>
+              <div class="HeadingDisplayProfile">
+                <span><mat-icon>call</mat-icon>Thông tin liên hệ</span><br>
+              </div>
+              <div class="ContentDisplayProfile">
+                <div class="ContentElement row">
+                  <span class="LeftContentElement col-md-2">Địa chỉ</span><br>
+                  <span class="MidContentElement col-md-8" *ngIf="!editAddress">{{userProfile.address}}</span><br>
+                  <form class="form col-md-8" *ngIf="editAddress">
+                    <div class="form-group">
+                        <input class="form-control EditIntroduction" type="text" name="address" placeholder="{{userProfile.address}}" value="{{userProfile.address}}" [(ngModel)]="editProfile.address">
+                    </div>
+                    <button mat-flat-button class="submitPostBtn" style="width:5%; margin:10px 10px;" (click)="EditAddress()"> Lưu </button>
+                    <button mat-stroked-button style="width:5%; margin:10px 10px;" (click)="editAddress = !editAddress"> Hủy </button>
+                  </form>
+                  <span class="RightContentElement col-md-2" *ngIf="!editAddress"><mat-icon style="color:green; margin-left:10px;" (click) = "editAddress = !editAddress">border_color</mat-icon></span><br>
+                </div>
+                <div class="LastContentElement row">
+                  <span class="LeftContentElement col-md-2">Số điện thoại</span><br>
+                  <span class="MidContentElement col-md-8" *ngIf="!editPhone">{{userProfile.phone}}</span><br>
+                  <form class="form col-md-8" *ngIf="editPhone">
+                    <div class="form-group">
+                        <input class="form-control EditIntroduction" type="text" name="phone" placeholder="{{userProfile.phone}}" value="{{userProfile.phone}}" [(ngModel)]="editProfile.phone">
+                    </div>
+                    <button mat-flat-button class="submitPostBtn" style="width:5%; margin:10px 10px;" (click)="EditPhone()"> Lưu </button>
+                    <button mat-stroked-button style="width:5%; margin:10px 10px;" (click)="editPhone = !editPhone"> Hủy </button>
+                  </form>
+                  <span class="RightContentElement col-md-2" *ngIf="!editPhone"><mat-icon style="color:green; margin-left:10px;" (click) = "editPhone = !editPhone">border_color</mat-icon></span><br>
+                </div>
+              </div>
+              <div class="HeadingDisplayProfile">
+                <span><mat-icon>favorite</mat-icon>Sở thích</span><br>
+              </div>
+              <div class="ContentDisplayProfile">
+                <span>Địa chỉ</span><br>
+              </div>
+            </mat-card-content>
+          </mat-card>
         </div>
       </mat-tab>
       <mat-tab label="Bạn bè"> Danh sách bạn bè </mat-tab>

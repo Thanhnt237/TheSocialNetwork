@@ -31,6 +31,12 @@ module.exports = {
   UserRegister: UserRegister,
   GetUserProfile: GetUserProfile,
   EditProfile: EditProfile,
+  EditDescription:EditDescription,
+  EditName: EditName,
+  EditGender: EditGender,
+  EditDoB: EditDoB,
+  EditAddress: EditAddress,
+  EditPhone: EditPhone,
   ResetPassword: ResetPassword,
   GetResetConfirm: GetResetConfirm,
   PostResetConfirm: PostResetConfirm,
@@ -40,6 +46,7 @@ module.exports = {
   ChangeAvatar: ChangeAvatar,
   ChangeCover: ChangeCover,
   AddNewPost: AddNewPost,
+  AddNewPostNoImage:AddNewPostNoImage,
   DeletePost: DeletePost,
   AddNewComment: AddNewComment,
   GetPost: GetPost,
@@ -175,7 +182,7 @@ function UserLogin(req,res) {
   let userData = req.body;
 
 if(userData.email === '' || userData.password === ''){
-  res.status(401).send('Invalid Email and Password');
+  res.status(401).send('Tài khoản và mật khẩu không được để là khoảng trắng');
 }else {
   Authentication.findOne({email: userData.email}, (err,user) => {
     if(err){
@@ -256,13 +263,131 @@ async function EditProfile(req,res) {
   Informations.findOneAndUpdate(
     {User_ID: req.userId},
     {$set: {name: req.body.name,
-            phone:req.body.phone
+            phone:req.body.phone,
+            address: req.body.address,
+            DoB: req.body.DoB,
+            description: req.body.description,
+            gender: req.body.gender
     }},
     (err)=>{
       if(err){
         console.log(err)
       }else{
         res.status(200).send("Thành công");
+      }
+    }
+  )
+}
+
+/**
+* @name EditDescription
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+async function EditDescription(req,res) {
+  Informations.findOneAndUpdate(
+    {User_ID: req.userId},
+    {$set: {description: req.body.description}},
+    (err)=>{
+      if(err){
+        console.log(err)
+      }else{
+        res.status(200).send("Chỉnh sửa mô tả thành công!");
+      }
+    }
+  )
+}
+
+/**
+* @name EditName
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+async function EditName(req,res) {
+  Informations.findOneAndUpdate(
+    {User_ID: req.userId},
+    {$set: {name: req.body.name}},
+    (err)=>{
+      if(err){
+        console.log(err)
+      }else{
+        res.status(200).send("Chỉnh sửa tên thành công!");
+      }
+    }
+  )
+}
+
+/**
+* @name EditGender
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+async function EditGender(req,res) {
+  Informations.findOneAndUpdate(
+    {User_ID: req.userId},
+    {$set: {gender: req.body.gender}},
+    (err)=>{
+      if(err){
+        console.log(err)
+      }else{
+        res.status(200).send("Chỉnh sửa giới tính thành công!");
+      }
+    }
+  )
+}
+
+/**
+* @name EditDoB
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+async function EditDoB(req,res) {
+  Informations.findOneAndUpdate(
+    {User_ID: req.userId},
+    {$set: {DoB: req.body.DoB}},
+    (err)=>{
+      if(err){
+        console.log(err)
+      }else{
+        res.status(200).send("Chỉnh sửa ngày sinh thành công!");
+      }
+    }
+  )
+}
+
+/**
+* @name EditAddress
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+async function EditAddress(req,res) {
+  Informations.findOneAndUpdate(
+    {User_ID: req.userId},
+    {$set: {address: req.body.address}},
+    (err)=>{
+      if(err){
+        console.log(err)
+      }else{
+        res.status(200).send("Chỉnh sửa địa chỉ thành công!");
+      }
+    }
+  )
+}
+
+/**
+* @name EditPhone
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+async function EditPhone(req,res) {
+  Informations.findOneAndUpdate(
+    {User_ID: req.userId},
+    {$set: {phone: req.body.phone}},
+    (err)=>{
+      if(err){
+        console.log(err)
+      }else{
+        res.status(200).send("Chỉnh sửa số điện thoại thành công!");
       }
     }
   )
@@ -489,14 +614,42 @@ async function AddNewPost(req, res) {
                 console.log(err);
               }else{
                 createPost.save();
-                res.status(200).send("Sucess");
+                res.status(200).send("Đăng bài viết thành công!");
               }
             })
           })
       }
   })
+}
 
+/**
+* @name AddNewPostNoImage
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
 
+async function AddNewPostNoImage(req, res) {
+    let createPost = new Posts({
+      TimeLine_ID: req.params.userId
+    });
+
+    Informations.findOne({User_ID:req.userId},(err,user)=>{
+    let createPostLayouts = new PostLayouts({
+      Post_ID: createPost._id,
+      UserName: user.name,
+      UserAvatar: user.avatar,
+      title: req.body.title,
+      content: req.body.content,
+      });
+      createPostLayouts.save((err)=>{
+        if(err){
+          console.log(err);
+        }else{
+          createPost.save();
+          res.status(200).send("Đăng bài viết thành công!");
+          }
+        })
+    })
 }
 
 /**
@@ -508,7 +661,7 @@ async function AddNewPost(req, res) {
 async function DeletePost(req, res) {
   Posts.countDocuments({_id:req.params.postId},(err,postCount)=>{
     if(postCount>0){
-      Posts.countDocuments({User_ID: req.userId}, (err,postCount2)=>{
+      Posts.countDocuments({TimeLine_ID: req.userId}, (err,postCount2)=>{
         if(postCount2>0){
           Posts.findByIdAndDelete({_id: req.params.postId},(err)=>{
             if(err){
@@ -518,7 +671,7 @@ async function DeletePost(req, res) {
                 if(err){
                   console.log(err);
                 }else{
-                  res.status(200).send("Success");
+                  res.status(200).send("Xóa bài viết thành công!");
                 }
               })
             }
@@ -526,11 +679,11 @@ async function DeletePost(req, res) {
 
         }
         else{
-          res.status(401).send("May khong du tuoi lam viec nay");
+          res.status(401).send("Bạn không có quyền làm việc này!");
         }
       })
     }else{
-      res.status(404).send("ko co post nao o day car")
+      res.status(404).send("Post này không tồn tại!")
     }
   })
 }
@@ -847,6 +1000,8 @@ async function getAllFriend(req, res) {
     }
   })
 }
+
+
 
 /**
 * @name getChatService

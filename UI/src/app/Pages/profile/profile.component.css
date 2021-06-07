@@ -122,6 +122,11 @@
   color: white;
 }
 
+.DeleteBtn{
+  float: right !important;
+  margin-left: 100px;
+}
+
 .commentSubmitBtn{
   background-color: green;
   color: white;
@@ -150,4 +155,55 @@
   margin-top: 0px;
   margin-bottom: 10px;
   padding: 5px 0px;
+}
+
+.Introduction{
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+.HeadingDisplayProfile{
+  font-size: 18px;
+  font-weight: bold;
+  font-family: "Segoe UI";
+  padding: 10px 10px;
+}
+
+.ContentDisplayProfile{
+  font-size: 15px;
+  padding: 10px 10px;
+}
+
+.ContentElement{
+  border-top: solid 1px grey;
+  padding: 20px 0px;
+  text-align: center;
+}
+.LastContentElement{
+  border-top: solid 1px grey;
+  border-bottom: solid 1px grey;
+  padding: 20px 0px;
+}
+.LeftContentElement{
+  text-align: left;
+  font-family: "Segoe UI";
+  font-size: 18px;
+}
+.MidContentElement{
+  font-weight: bold;
+  font-size: 18px;
+  float:right;
+  text-align: center;
+}
+.RightContentElement{
+  text-align: right;
+}
+
+#editBiology{
+margin: auto auto;
+width: 35%;
+}
+
+.EditIntroduction{
+  margin: auto auto;
+  width: 50%;
 }
