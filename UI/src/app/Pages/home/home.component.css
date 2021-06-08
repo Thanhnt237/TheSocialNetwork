@@ -24,3 +24,12 @@
   background-color: green;
   color: white;
 }
+textarea {
+  resize: none;
+  background-color: white;
+  width: 100%;
+  border: none;
+  font-size: 18pt;
+  padding: 5px 0px;
+  line-height: 0.7cm;
+}

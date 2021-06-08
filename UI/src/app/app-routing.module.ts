@@ -26,6 +26,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatTableModule } from '@angular/material/table';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 
 import { HomeComponent } from './Pages/home/home.component';
 import { LoginComponent } from './Pages/login/login.component';
@@ -38,6 +39,7 @@ import { FriendComponent } from './Pages/friend/friend.component';
 import { NewsComponent } from './Pages/news/news.component';
 import { ChatComponent } from './Pages/chat/chat.component';
 import { EditProfileComponent } from './Pages/edit-profile/edit-profile.component';
+import { SearchComponent } from './Pages/search/search.component';
 
 
 let angularMaterialModule = [
@@ -93,6 +95,10 @@ const routes: Routes = [
     component: FriendComponent
   },
   {
+    path:'search',
+    component: SearchComponent
+  },
+  {
     path:'chat/:friendId',
     component: ChatComponent,
     canActivate: [AuthGuard]
@@ -100,6 +106,10 @@ const routes: Routes = [
   {
     path:'news',
     component: NewsComponent
+  },
+  {
+    path:'setting',
+    component: EditProfileComponent
   },
   {
     path:'**',
@@ -120,6 +130,7 @@ const routes: Routes = [
     FriendComponent,
     NewsComponent,
     ChatComponent,
+    SearchComponent,
     EditProfileComponent
   ],
   imports: [
@@ -127,6 +138,7 @@ const routes: Routes = [
     FormsModule,
     CommonModule,
     HttpClientModule,
+    TextareaAutosizeModule,
     angularMaterialModule
   ],
   exports: [RouterModule]

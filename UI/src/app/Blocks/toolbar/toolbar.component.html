@@ -2,16 +2,16 @@
   <a mat-button routerLink="/" class="Logo"> <mat-icon routerLink="/"> public </mat-icon> TSN </a>
   <span>
     <!-- Search form -->
-      <button mat-button><mat-icon class="mat-icon-rtl-mirror" aria-hidden="true"> search </mat-icon></button>
-      <input matInput class="searchBox" type="text" placeholder="Search" aria-label="Search">
+      <button mat-button (click)="Search()" [routerLink]="['/search']"><mat-icon class="mat-icon-rtl-mirror" aria-hidden="true"> search </mat-icon></button>
+      <input matInput name="searchBar" class="searchBox" type="text" placeholder="Tìm Kiếm" aria-label="Search" [(ngModel)]="searchBar.searchBar">
   </span>
   <div class="spacer"></div>
 
   <!-- Center -->
   <div class="center">
-    <a mat-button [routerLink]="['/']" > <mat-icon> home </mat-icon> <br> <span> Trang chủ </span></a>
-    <a mat-button [routerLink]="['/news']" > <mat-icon> feed </mat-icon> <br> <span> tin tức </span></a>
-    <a mat-button [routerLink]="['/chat']" > <mat-icon> chat </mat-icon> <br> <span> Trò chuyện </span> </a>
+    <a mat-button [routerLink]="['/']" >     <mat-icon style="margin-top:15px;"> home </mat-icon> <br> <span> Trang chủ </span></a>
+    <a mat-button [routerLink]="['/news']" > <mat-icon style="margin-top:15px;"> feed </mat-icon> <br> <span> tin tức </span></a>
+    <a mat-button [routerLink]="['/chat']" > <mat-icon style="margin-top:15px;"> chat </mat-icon> <br> <span> Trò chuyện </span> </a>
   </div>
 
   <!-- Right -->
@@ -28,7 +28,6 @@
         </a>
       </div>
     </mat-menu>
-    <button mat-button><mat-icon matBadge="15" matBadgeColor="warn" *ngIf="_authService.loggedIn()">home</mat-icon></button>
   </div>
 
   <span class="" *ngIf="_authService.loggedIn()">
@@ -41,9 +40,7 @@
         <img mat-card-avatar src="http://localhost:8080/public/upload/{{userProfile.avatar}}">
         {{userProfile.name}}
       </a>
-      <button mat-menu-item>Cài đặt</button>
-      <button mat-menu-item>Chỉnh sửa thông tin</button>
-      <button mat-menu-item>Chủ đề yêu thích</button>
+      <button mat-menu-item [routerLink]="['/setting']">Cài đặt</button>
       <button mat-menu-item (click)="_authService.logoutUser()" *ngIf="_authService.loggedIn()">Đăng xuất</button>
     </mat-menu>
   </span>

@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const NewsSchema = new mongoose.Schema({
     FavoritesCategory_id:{
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
         ref: 'FavoritesCategory'
       },
     date:{

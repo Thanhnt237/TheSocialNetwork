@@ -12,6 +12,11 @@ const UserSchema = new mongoose.Schema({
     State:{
       type: String,
       default: "Offline"
+    },
+    Role:{
+      type: String,
+      require: true,
+      default: "MEMBER"
     }
 })
 module.exports = mongoose.model('User',UserSchema)

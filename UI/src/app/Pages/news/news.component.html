@@ -1,1 +1,45 @@
-<p>news works!</p>
+<div class="StatusPost">
+  <form (ngSubmit)="onAddNewNews()" name="NewsForm" [formGroup]="NewsForm">
+    <img src="http://localhost:8080/public/upload/{{userProfile.avatar}} " mat-card-avatar >
+    <mat-form-field class="full-width" appearance="outline" style="margin-top:10px;margin-left:10px;width:75%">
+      <mat-label>Bạn muốn chia sẻ điều gì?</mat-label>
+        <textarea
+          class="CreatePost"
+          formControlName="content"
+          matInput
+          placeholder="Bạn muốn chia sẻ điều gì?">
+        </textarea>
+    </mat-form-field>
+    <a mat-raised-button class="UploadImages">
+      <label mat-button for="UploadImages" ><mat-icon style="margin: 5px 5px; size:50px 50px; " >image</mat-icon></label>
+      <input
+        id="UploadImages" type="file" (change)= "UploadImages($event)" hidden=true;
+      />
+    </a>
+    <br />
+    <button mat-flat-button type="submit" [disabled]="!NewsForm.valid" class="submitPostBtn"> Chia sẻ </button>
+  </form>
+</div>
+
+<div class="container">
+  <mat-card class="example-card">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>Shiba Inu</mat-card-title>
+    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+  <mat-card-content>
+    <p>
+      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+      bred for hunting.
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>LIKE</button>
+    <button mat-button>SHARE</button>
+  </mat-card-actions>
+</mat-card>
+
+</div>

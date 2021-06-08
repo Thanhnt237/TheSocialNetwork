@@ -9,6 +9,8 @@ import { PostService } from "../../Services/post.service";
 import { AuthService } from "../../Services/auth.service";
 import { CommentService } from "../../Services/comment.service";
 import { FriendService } from "../../Services/friend.service";
+import { ReactionService } from "../../Services/reaction.service";
+import { CountService } from "../../Services/count.service";
 
 @Component({
   selector: 'app-profile',
@@ -28,6 +30,9 @@ export class ProfileComponent implements OnInit {
   editAddress: Boolean = false;
   editPhone: Boolean = false;
 
+  countPost:Number = 0;
+  countLike:Number = 0;
+  countFriend:Number = 0;
   liked: boolean = true;
   likedColor:String = "green";
   PostForm: FormGroup;
@@ -76,8 +81,15 @@ export class ProfileComponent implements OnInit {
       avatar: String,
       content: String
     }],
-    like: Number,
+    isLiked: Boolean,
+    like: 0,
     date: Date
+  }]
+
+  getProfileFriend = [{
+    Friend_ID: String,
+    avatar: String,
+    name: String
   }]
 
   constructor(
@@ -88,8 +100,9 @@ export class ProfileComponent implements OnInit {
     private _activatedRoute: ActivatedRoute,
     public _auth: AuthService,
     private _comment: CommentService,
-    private _friend: FriendService
-
+    private _friend: FriendService,
+    private _reaction: ReactionService,
+    private _count: CountService
   ) {
     this.PostForm = this._formBuilder.group({
       content: new FormControl('', [Validators.required]),
@@ -128,6 +141,16 @@ export class ProfileComponent implements OnInit {
         .subscribe(
           res => {
             this.getPost = res;
+            this.getPost.forEach(post => {
+              this._reaction.CheckLiked(post.Post_ID).subscribe(
+                res => post.isLiked = res,
+                err => console.log(err)
+              )
+              this._reaction.CountLike(post.Post_ID).subscribe(
+                res => post.like = res,
+                err => console.log(err)
+              )
+            });
             console.log(res);
           },
           err=>{
@@ -135,6 +158,22 @@ export class ProfileComponent implements OnInit {
           }
         )
 
+      this._count.CountPost(this.userId).subscribe(
+        res => this.countPost = res,
+        err => console.log(err)
+      )
+      this._count.CountLike(this.userId).subscribe(
+        res => this.countLike = res,
+        err => console.log(err)
+      )
+      this._count.CountFriend(this.userId).subscribe(
+        res => this.countFriend = res,
+        err => console.log(err)
+      )
+      this._friend.GetProfileFriend(this.userId).subscribe(
+        res => this.getProfileFriend = res,
+        err => console.log(err)
+      )
     });
   }
 
@@ -409,6 +448,24 @@ export class ProfileComponent implements OnInit {
           });
         }
       )
+  }
+
+  LikePost(post: any){
+    post.isLiked = !post.isLiked;
+    post.like += 1;
+    this._reaction.Like(post.Post_ID).subscribe(
+      res => console.log(res),
+      err => console.log(err)
+    )
+  }
+
+  unLikePost(post: any){
+    post.isLiked = !post.isLiked;
+    post.like -= 1;
+    this._reaction.unLike(post.Post_ID).subscribe(
+      res => console.log(res),
+      err => console.log(err)
+    )
   }
 
 

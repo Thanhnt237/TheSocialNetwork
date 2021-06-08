@@ -9,11 +9,15 @@ export class AuthService {
 
   readonly _registerUrl = "http://localhost:8080/api/register";
   readonly _loginUrl = "http://localhost:8080/api/login";
-
+  readonly _changePasswordUrl = "http://localhost:8080/api/change-password"
   constructor(
     private http: HttpClient,
     private _router: Router
   ) { }
+
+  changePassword(password:any){
+    return this.http.post<any>(this._changePasswordUrl, password);
+  }
 
   registerUser(user: any){
     return this.http.post<any>(this._registerUrl, user);

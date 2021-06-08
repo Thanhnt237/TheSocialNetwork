@@ -9,6 +9,7 @@ import { PostService } from "../../Services/post.service";
 import { AuthService } from "../../Services/auth.service";
 import { CommentService } from "../../Services/comment.service";
 import { FriendService } from "../../Services/friend.service";
+import { ReactionService } from "../../Services/reaction.service";
 
 @Component({
   selector: 'app-home',
@@ -43,7 +44,8 @@ export class HomeComponent implements OnInit {
       avatar: String,
       content: String
     }],
-    like: Number,
+    isLiked: Boolean,
+    like: 0,
     date: Date
   }]
 
@@ -59,7 +61,8 @@ export class HomeComponent implements OnInit {
     private _activatedRoute: ActivatedRoute,
     public _auth: AuthService,
     private _comment: CommentService,
-    private _friend: FriendService
+    private _friend: FriendService,
+    private _reaction: ReactionService
   ) { }
 
   ngOnInit(): void {
@@ -132,5 +135,22 @@ export class HomeComponent implements OnInit {
     )
   }
 
+  LikePost(post: any){
+    post.isLiked = !post.isLiked;
+    post.like += 1;
+    this._reaction.Like(post.Post_ID).subscribe(
+      res => console.log(res),
+      err => console.log(err)
+    )
+  }
+
+  unLikePost(post: any){
+    post.isLiked = !post.isLiked;
+    post.like -= 1;
+    this._reaction.unLike(post.Post_ID).subscribe(
+      res => console.log(res),
+      err => console.log(err)
+    )
+  }
 
 }

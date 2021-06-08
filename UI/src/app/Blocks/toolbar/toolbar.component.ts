@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../../Services/auth.service";
 import { ProfileService } from "../../Services/profile.service";
 import { FriendService } from "../../Services/friend.service";
+import { CountService } from "../../Services/count.service";
 
 import { Router } from "@angular/router";
 
@@ -14,6 +15,10 @@ import { Router } from "@angular/router";
 export class ToolbarComponent implements OnInit {
   noFriendQueue: boolean = false;
   noFriendQueueCatching = '';
+
+  searchBar = {
+    "searchBar": ""
+  };
 
   userProfile = {
     userId: String,
@@ -33,7 +38,8 @@ export class ToolbarComponent implements OnInit {
   constructor(
     public _authService: AuthService,
     public _getUserId: ProfileService,
-    private _friend: FriendService
+    private _friend: FriendService,
+    private _count: CountService
   ) { }
 
   ngOnInit(): void {
@@ -88,6 +94,14 @@ export class ToolbarComponent implements OnInit {
         err => {
           window.location.reload()
         }
+      )
+  }
+
+  Search(){
+    this._count.Search({"search": this.searchBar.searchBar})
+      .subscribe(
+        res => console.log(res),
+        err => console.log(err)
       )
   }
 }

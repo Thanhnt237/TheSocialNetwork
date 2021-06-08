@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from "@angular/common";
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 
 import { AuthService } from "./Services/auth.service";
@@ -52,6 +53,8 @@ let angularMaterialModule = [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    CommonModule,
+    FormsModule,
     angularMaterialModule
   ],
   providers: [

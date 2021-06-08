@@ -13,6 +13,8 @@ export class FriendService {
   readonly _acceptFriendUrl = "http://localhost:8080/api/Friend/AcceptFriend/";
   readonly _deleteFriendUrl = "http://localhost:8080/api/Friend/DeleteFriendRequest/";
 
+  readonly _getProfileFriend = "http://localhost:8080/api/Friend/getProfileFriend/";
+
   constructor(
     private http: HttpClient,
     private _router: Router
@@ -28,6 +30,10 @@ export class FriendService {
 
   GetAllFriend(){
     return this.http.get<any>(this._getFriendUrl);
+  }
+
+  GetProfileFriend(userId: any){
+    return this.http.get<any>(this._getProfileFriend + userId);
   }
 
   AcceptFriendRequest(friendQueue_ID: any, anything:any){

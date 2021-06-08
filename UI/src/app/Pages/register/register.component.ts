@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
       registerUser(){
         if(this.registerForm.value.password !== this.registerForm.value.confirmPassword){
           this.alertError = true;
-          this.errCatching = "Passwords don't match";
+          this.errCatching = "Mật khẩu không trùng khớp";
         }else{
           this.registerUserData = this.registerForm.value;
           this._auth.registerUser(this.registerUserData)

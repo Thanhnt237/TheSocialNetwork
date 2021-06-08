@@ -22,6 +22,7 @@ const Reactions = require('../db/models/Reactions');
 const FriendList = require('../db/models/FriendList');
 const FriendQueue = require('../db/models/FriendQueue');
 const Chats = require('../db/models/Chats');
+const News = require('../db/models/News');
 const Test = require('../db/models/Test');
 
 module.exports = {
@@ -29,6 +30,7 @@ module.exports = {
   verifyToken: verifyToken,
   UserLogin: UserLogin,
   UserRegister: UserRegister,
+  ChangePassword: ChangePassword,
   GetUserProfile: GetUserProfile,
   EditProfile: EditProfile,
   EditDescription:EditDescription,
@@ -51,14 +53,23 @@ module.exports = {
   AddNewComment: AddNewComment,
   GetPost: GetPost,
   GetComment: GetComment,
+  LikePost: LikePost,
+  unLikePost: unLikePost,
+  CountLikePost: CountLikePost,
+  CheckLiked: CheckLiked,
   FriendRequest: FriendRequest,
   AcceptFriend: AcceptFriend,
   DeleteFriendRequest: DeleteFriendRequest,
   DeleteFriend: DeleteFriend,
   getAllFriendRequest: getAllFriendRequest,
   getAllFriend: getAllFriend,
+  getProfileFriend: getProfileFriend,
   getChatService: getChatService,
-  saveChatService: saveChatService,
+  AddNewNews: AddNewNews,
+  CountPost: CountPost,
+  CountLike: CountLike,
+  CountFriend: CountFriend,
+  SearchBar: SearchBar,
   GetTest:GetTest
 };
 
@@ -102,6 +113,7 @@ async function renderHomePage(req, res) {
     });
     let postId = await Posts.find({TimeLine_ID: {$in: user}});
     let post = await PostLayouts.find({Post_ID: {$in: postId} })
+    post.reverse();
     res.status(200).send(post);
   }catch(err){
     console.log(err)
@@ -201,6 +213,23 @@ if(userData.email === '' || userData.password === ''){
     }
   })
 }
+}
+
+/**
+* @name ChangePassword
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+function ChangePassword(req, res) {
+  let hash_password = bcrypt.hashSync(req.body.password, 10);
+
+  Authentication.findOneAndUpdate({User_ID:req.userId},{$set:{password: hash_password}},(err)=>{
+    if(err){
+      console.log(err)
+    }else{
+      res.status(200).send("Đổi mật khẩu thành công");
+    }
+  })
 }
 
 /**
@@ -590,10 +619,6 @@ async function AddNewPost(req, res) {
     TimeLine_ID: req.params.userId
   });
 
-  let createReaction = new Reactions({
-    Post_ID: createPost._id,
-  })
-
   await multerUpload.upload(req,res, (err)=>{
     if (err instanceof multer.MulterError) {
         console.log(err);
@@ -618,7 +643,6 @@ async function AddNewPost(req, res) {
                 console.log(err);
               }else{
                 createPost.save();
-                createReaction.save();
                 res.status(200).send("Đăng bài viết thành công!");
               }
             })
@@ -638,10 +662,6 @@ async function AddNewPostNoImage(req, res) {
       TimeLine_ID: req.params.userId
     });
 
-    let createReaction = new Reactions({
-      Post_ID: createPost._id,
-    })
-
     Informations.findOne({User_ID:req.userId},(err,user)=>{
     let createPostLayouts = new PostLayouts({
       Post_ID: createPost._id,
@@ -655,7 +675,6 @@ async function AddNewPostNoImage(req, res) {
           console.log(err);
         }else{
           createPost.save();
-          createReaction.save();
           res.status(200).send("Đăng bài viết thành công!");
           }
         })
@@ -1011,7 +1030,154 @@ async function getAllFriend(req, res) {
   })
 }
 
+/**
+* @name getProfileFriend
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
 
+async function getProfileFriend(req, res) {
+  FriendList.countDocuments({User_ID: req.params.userId},(err,count)=>{
+    if(count>0){
+      FriendList.find({User_ID:req.params.userId},(err,friendList)=>{
+        res.status(200).send(friendList)
+      })
+    }else{
+      res.status(401).send("Không có bạn bè nào")
+    }
+  })
+}
+
+/**
+* @name CheckLiked
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+// TODO: Handle this
+async function CheckLiked(req,res) {
+  try{
+    let count = await Reactions.countDocuments({Post_ID: req.params.postId, User_ID:req.userId})
+    let isLiked = null;
+    if(count > 0){
+      isLiked = true;
+    }else{
+      isLiked = false;
+    }
+    res.status(200).send(isLiked);
+  }catch(err){
+    console.log(err)
+  };
+}
+
+/**
+* @name LikePost
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+// TODO: Handle this
+async function LikePost(req,res) {
+  try{
+    let count = await Reactions.countDocuments({Post_ID:req.params.postId, User_ID:req.userId});
+    if(count>0){
+      res.status(401).send("Đã thích bài viết này rồi");
+    }else{
+      let likePost = new Reactions({
+        Post_ID: req.params.postId,
+        User_ID: req.userId
+      })
+      await likePost.save();
+      res.status(200).send("Đã thích")
+      }
+    }catch(err){
+    console.log(err)
+  };
+}
+
+/**
+* @name unLikePost
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+// TODO: Handle this
+async function unLikePost(req,res) {
+  try{
+    let count = await Reactions.countDocuments({Post_ID:req.params.postId, User_ID:req.userId})
+    if(count>0){
+      await Reactions.findOneAndDelete({Post_ID:req.params.postId, User_ID:req.userId},(err)=>{
+        if(err){
+          console.log(err)
+        }else{
+          res.status(200).send("Bỏ thích");
+        }
+      })
+    }else{
+      res.status(401).send("Không có bài viết nào!")
+    }
+  }catch(err){
+    console.log(err)
+  };
+}
+
+/**
+* @name CountLikePost
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function CountLikePost(req,res) {
+  try{
+    let count = await Reactions.countDocuments({Post_ID:req.params.postId});
+    res.status(200).send(count.toString());
+  }catch(err){
+    console.log(err)
+  };
+}
+
+/**
+* @name CountPost
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function CountPost(req,res) {
+  try{
+    let count = await Posts.countDocuments({TimeLine_ID: req.params.userId})
+    res.status(200).send(count.toString())
+  }catch(err){
+    console.log(err)
+  };
+}
+
+/**
+* @name CountLike
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function CountLike(req,res) {
+  try{
+    let post = await Posts.find({TimeLine_ID: req.params.userId})
+    let count = await Reactions.countDocuments({Post_ID: {$in: post}})
+    res.status(200).send(count.toString())
+  }catch(err){
+    console.log(err)
+  };
+}
+
+/**
+* @name CountFriend
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function CountFriend(req,res) {
+  try{
+    let count = await FriendList.countDocuments({User_ID: req.params.userId})
+    res.status(200).send(count.toString())
+  }catch(err){
+    console.log(err)
+  };
+}
 
 /**
 * @name getChatService
@@ -1030,11 +1196,63 @@ async function getChatService(req,res) {
 }
 
 /**
-* @name saveChatService
+* @name AddNewNews
 * @param  {object} req HTTP request
 * @param  {object} res HTTP response
 */
 
-function saveChatService(req,res) {
+async function AddNewNews(req,res) {
+  let user = await User.findOne({_id: req.userId})
+  if(user.Role == "ADMIN"){
+    let createNews = new News();
 
+    await multerUpload.upload(req,res, (err)=>{
+      if (err instanceof multer.MulterError) {
+          console.log(err);
+          res.status(401).send("A Multer error occurred when uploading.")
+        }else if (err) {
+          console.log(err);
+          res.status(401).send("A Multer error occurred when uploading.")
+        }else{
+            console.log("Upload is okay");
+            console.log(req.body.content);
+            Informations.findOne({User_ID:req.userId},(err,user)=>{
+              let createPostLayouts = new PostLayouts({
+                Post_ID: createNews._id,
+                UserName: user.name,
+                UserAvatar: user.avatar,
+                title: req.body.title,
+                content: req.body.content,
+                images: req.file.filename
+              });
+              createPostLayouts.save((err)=>{
+                if(err){
+                  console.log(err);
+                }else{
+                  createNews.save();
+                  res.status(200).send("Đăng bài viết thành công!");
+                }
+              })
+            })
+        }
+    })
+  }else{
+    res.status(401).send("Bạn không đủ quyền làm việc này!");
+  }
+}
+
+
+/**
+* @name SearchBar
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function SearchBar(req,res) {
+  try{
+    let user = await Informations.find({name:req.body.search});
+    res.status(200).send(user);
+  }catch(err){
+    console.log(err)
+  };
 }
