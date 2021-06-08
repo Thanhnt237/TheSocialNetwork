@@ -223,3 +223,13 @@ textarea {
   padding: 5px 0px;
   line-height: 0.7cm;
 }
+
+.FriendList{
+
+}
+
+.FriendListCard{
+  width: 40%;
+  padding: auto auto;
+  margin: 10px 10px;
+}

@@ -106,8 +106,13 @@
                   </div>
 
                   <div class="AboutContent">
-                    <div class="" *ngFor="let friend of getProfileFriend" routerLink="/profile/{{friend.Friend_ID}}">
-                      {{friend.name}}
+                    <div *ngIf="countFriend > 0">
+                      <mat-card class="FriendListCard" *ngFor="let friend of getProfileFriend">
+                        <div class="">
+                          <img src="http://localhost:8080/public/upload/{{friend.avatar}}" routerLink="/profile/{{friend.Friend_ID}}"  mat-card-avatar >
+                          <span routerLink="/profile/{{friend.Friend_ID}}" >{{friend.name}}</span>
+                        </div>
+                      </mat-card>
                     </div>
                   </div>
                 </mat-card-content>
@@ -326,7 +331,19 @@
           </mat-card>
         </div>
       </mat-tab>
-      <mat-tab label="Bạn bè"> Danh sách bạn bè </mat-tab>
+      <mat-tab label="Bạn bè">
+
+        <div *ngIf="countFriend > 0">
+          <mat-card class="FriendListCard" *ngFor="let friend of getProfileFriend">
+            <div class="">
+              <img src="http://localhost:8080/public/upload/{{friend.avatar}}" routerLink="/profile/{{friend.Friend_ID}}"  mat-card-avatar >
+              <span routerLink="/profile/{{friend.Friend_ID}}" >{{friend.name}}</span>
+              <button mat-button style="float: right;" (click)="UnFriend(friend.Friend_ID)"><mat-icon>clear</mat-icon></button>
+            </div>
+          </mat-card>
+        </div>
+
+      </mat-tab>
     </mat-tab-group>
 
 

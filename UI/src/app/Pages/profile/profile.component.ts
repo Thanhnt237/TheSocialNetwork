@@ -468,5 +468,20 @@ export class ProfileComponent implements OnInit {
     )
   }
 
+  UnFriend(friendId:any){
+    this._friend.UnFriend(friendId, "anything").subscribe(
+      res => {
+        this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+            this._router.navigate([`/profile/${this.userId}`]);
+        });
+      },
+      err => {
+        this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
+            this._router.navigate([`/profile/${this.userId}`]);
+        });
+      }
+    )
+  }
+
 
 }
