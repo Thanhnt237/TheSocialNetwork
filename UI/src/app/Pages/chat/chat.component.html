@@ -1,21 +1,18 @@
-<div id="chatForm">
+<mat-card class="example-card">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{friend.name}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content style="min-height: 400px;">
+    <p>
 
-  <div id="right">
-    <div class="header">
-      {{friend.name}}
-    </div>
-    <div id="listMessages" >
-      <p *ngFor=""></p>
-    </div>
-
-    <input type="text" id="txtMessage" [(ngModel)] = "messageFromClient" (onChange)="TypingEvent()">
-    <input type="button" id="btnSendMessage" (click)="SendMessage(messageFromClient)" value="Send">
-
-  </div>
-  <div style="border: solid 1px black" *ngFor="let something of showSomething">
-
-  </div>
-</div>
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <input matInput type="text" name="" value="" style="width: 75%; height: 35px;">
+    <button mat-button style="color: white; background-color:green;">Gửi</button>
+  </mat-card-actions>
+</mat-card>
 
 <script type="text/javascript">
   $('#btnSendMessage').keypress(function(event) {
