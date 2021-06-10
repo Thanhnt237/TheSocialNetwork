@@ -1,6 +1,6 @@
 let mongoose = require('mongoose');
 
-const mongodb_url = 'mongodb://localhost:27017/TSN_DATN'
+const mongodb_url = 'mongodb+srv://Thanhdeptrai:<4!NhAaSAXQg_igb>@maincluster.mcwao.mongodb.net/DATN_TSN?retryWrites=true&w=majority'
 
 class Database {
     constructor() {
