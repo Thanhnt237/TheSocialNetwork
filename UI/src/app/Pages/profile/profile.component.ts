@@ -20,6 +20,7 @@ import { CountService } from "../../Services/count.service";
 
 export class ProfileComponent implements OnInit {
 
+  checkPermission: Boolean = false;
   date = new FormControl(new Date());
   openComment: Boolean = true;
 
@@ -174,6 +175,10 @@ export class ProfileComponent implements OnInit {
         res => this.getProfileFriend = res,
         err => console.log(err)
       )
+      this._profile.CheckPermission(this.userId).subscribe(
+        res => this.checkPermission = res,
+        err => console.log(err)
+      )
     });
   }
 
@@ -219,21 +224,14 @@ export class ProfileComponent implements OnInit {
     this._comment.AddNewComment(PostId, this.CommentForm.value)
     .subscribe(
       res => {
-        console.log(res);
-        let userId = this._activatedRoute.snapshot.paramMap.get('userId')
-        this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
-            this._router.navigate([`/profile/${userId}`]);
-        });
+        this.ngOnInit()
       },
       err => {
-        console.log(err);
         this.alertError = true;
         this.errCatching = err.error;
         console.log(this.errCatching);
-        let userId = this._activatedRoute.snapshot.paramMap.get('userId')
-        this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
-            this._router.navigate([`/profile/${userId}`]);
-        });
+        this.ngOnInit()
+        this.CommentForm.reset()
       }
     )
   }
@@ -247,7 +245,6 @@ export class ProfileComponent implements OnInit {
 
   changeAvatar(event: any){
     const images = event.target.files[0];
-    console.log(images);
 
     const formdata = new FormData();
     formdata.append('images', images)
@@ -262,11 +259,7 @@ export class ProfileComponent implements OnInit {
           });
         },
         err => {
-          console.log(err);
-          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
-          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
-              this._router.navigate([`/profile/${userId}`]);
-          });
+          this.ngOnInit()
         }
 
       )
@@ -288,11 +281,7 @@ export class ProfileComponent implements OnInit {
           });
         },
         err => {
-          console.log(err);
-          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
-          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
-              this._router.navigate([`/profile/${userId}`]);
-          });
+          this.ngOnInit()
         }
 
       )
@@ -309,11 +298,7 @@ export class ProfileComponent implements OnInit {
           });
         },
         err => {
-          console.log(err);
-          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
-          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
-              this._router.navigate([`/profile/${userId}`]);
-          });
+          this.ngOnInit()
         }
       )
   }
@@ -334,14 +319,8 @@ export class ProfileComponent implements OnInit {
           });
         },
         err => {
-          console.log(err);
-          this.alertError = true;
-          this.errCatching = err.error;
-          console.log(this.errCatching);
-          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
-          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
-              this._router.navigate([`/profile/${userId}`]);
-          });
+          this.ngOnInit();
+          this.PostForm.reset()
         }
       )
     })
@@ -359,11 +338,8 @@ export class ProfileComponent implements OnInit {
             });
           },
           err =>{
-            console.log(err);
-            let userId = this._activatedRoute.snapshot.paramMap.get('userId')
-            this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
-                this._router.navigate([`/profile/${userId}`]);
-            });
+            this.ngOnInit()
+            this.postNoImage.content = ''
           }
         )
 
@@ -371,83 +347,83 @@ export class ProfileComponent implements OnInit {
   }
 
   EditDescription(){
-    this._profile.EditDescription(this.editProfile)
+    if(this._auth.loggedIn()){
+      this._profile.EditDescription(this.editProfile)
       .subscribe(
         res=> console.log(res),
         err => {
-          console.log(err);
-          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
-          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
-              this._router.navigate([`/profile/${userId}`]);
-          });
+          this.ngOnInit();
+          this.editProfile.description = ''
+          this.editBiology = !this.editBiology
         }
       )
+    }
   }
 
   EditName(){
-    this._profile.EditName({"name": this.editProfile.name})
+    if(this._auth.loggedIn()){
+      this._profile.EditName({"name": this.editProfile.name})
       .subscribe(
         res=> console.log(res),
         err => {
-          console.log(err);
-          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
-          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
-              this._router.navigate([`/profile/${userId}`]);
-          });
+          this.ngOnInit();
+          this.editProfile.name = ''
+          this.editName = !this.editName
         }
       )
+    }
   }
   EditGender(){
-    this._profile.EditGender({"gender": this.editProfile.gender})
+    if(this._auth.loggedIn()){
+      this._profile.EditGender({"gender": this.editProfile.gender})
       .subscribe(
         res=> console.log(res),
         err => {
-          console.log(err);
-          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
-          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
-              this._router.navigate([`/profile/${userId}`]);
-          });
+          this.ngOnInit();
+          this.editProfile.gender = ''
+          this.editGender = !this.editGender
         }
       )
+    }
   }
   EditDoB(){
-    this._profile.EditDoB({"DoB": this.date.value})
+    if(this._auth.loggedIn()){
+      this._profile.EditDoB({"DoB": this.date.value})
       .subscribe(
         res=> console.log(res),
         err => {
-          console.log(err);
-          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
-          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
-              this._router.navigate([`/profile/${userId}`]);
-          });
+          this.ngOnInit();
+          this.date.reset();
+          this.editDoB = !this.editDoB
         }
       )
+    }
   }
   EditAddress(){
-    this._profile.EditAddress({"phone": this.editProfile.address})
+    if(this._auth.loggedIn()){
+      this._profile.EditAddress({"phone": this.editProfile.address})
       .subscribe(
         res=> console.log(res),
         err => {
-          console.log(err);
-          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
-          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
-              this._router.navigate([`/profile/${userId}`]);
-          });
+          this.ngOnInit();
+          this.editProfile.address = ''
+          this.editAddress = !this.editAddress
         }
       )
+    }
   }
   EditPhone(){
-    this._profile.EditPhone({"phone": this.editProfile.phone})
+    if(this._auth.loggedIn()){
+      this._profile.EditPhone({"phone": this.editProfile.phone})
       .subscribe(
         res=> console.log(res),
         err => {
-          console.log(err);
-          let userId = this._activatedRoute.snapshot.paramMap.get('userId')
-          this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
-              this._router.navigate([`/profile/${userId}`]);
-          });
+          this.ngOnInit();
+          this.editProfile.phone = ''
+          this.editPhone = !this.editPhone
         }
       )
+    }
   }
 
   LikePost(post: any){
@@ -476,9 +452,7 @@ export class ProfileComponent implements OnInit {
         });
       },
       err => {
-        this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
-            this._router.navigate([`/profile/${this.userId}`]);
-        });
+        this.ngOnInit()
       }
     )
   }

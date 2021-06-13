@@ -20,10 +20,16 @@ export class ProfileService {
     readonly _editAddressUrl = "http://localhost:8080/api/edit-profile/address";
     readonly _editPhoneUrl = "http://localhost:8080/api/edit-profile/phone";
 
+    readonly _checkPermissionUrl = "http://localhost:8080/api/profile/checkPermission/";
+
     constructor(
       private http: HttpClient,
       private _router: Router
     ) { }
+
+    CheckPermission(userId: any){
+        return this.http.get<any>(this._checkPermissionUrl + userId);
+    }
 
     getUserProfile(userid: any){
       return this.http.get<any>(this._baseProfileUrl + userid);

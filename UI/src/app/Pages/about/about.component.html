@@ -1,1 +1,23 @@
-<h1>about work!</h1>
+<div class="container">
+  <form class="form-group" [formGroup]="EditForm" (ngSubmit)="EditProfile()">
+    <label for="editName">Sua ten</label>
+    <input class="form-control" formControlName="name" type="text" name="editName" value="">
+
+    <label for="editPhone">Sua sdt</label>
+    <input class="form-control"formControlName="phone" type="text" name="editPhone" value="">
+
+    <label for="editAddress">Sua dia chi</label>
+    <input class="form-control" type="text" formControlName="address" name="editAddress" value="">
+
+    <label for="editDoB">Sua ngay sinh</label>
+    <input class="form-control" type="text" formControlName="DoB" name="editDoB" value="">
+
+    <label for="editDescription">Sua mo ta</label>
+    <input class="form-control" type="text" formControlName="description" name="editDescription" value="">
+
+    <label for="editGender">Sua gioi tinh</label>
+    <input class="form-control" type="text" formControlName="gender" name="editGender" value="">
+
+    <button type="submit" mat-flat-button style="background-color:green; color:white; margin-top: 20px; width:100%" name="buttonSubmit">Gửi</button>
+  </form>
+</div>

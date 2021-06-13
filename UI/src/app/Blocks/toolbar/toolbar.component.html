@@ -1,10 +1,21 @@
 <mat-toolbar class="mat-elevation-z8">
   <a mat-button routerLink="/" class="Logo"> <mat-icon routerLink="/"> public </mat-icon> TSN </a>
-  <span>
-    <!-- Search form -->
-      <button mat-button (click)="Search()" [routerLink]="['/search']"><mat-icon class="mat-icon-rtl-mirror" aria-hidden="true"> search </mat-icon></button>
-      <input matInput name="searchBar" class="searchBox" type="text" placeholder="Tìm Kiếm" aria-label="Search" [(ngModel)]="searchBar.searchBar">
-  </span>
+    <span class=search *ngIf="_authService.loggedIn()">
+      <!-- Search form -->
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Tìm kiếm</mat-label>
+            <input type="text" matInput [formControl]="searchForm" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let option of options" [value]="options">
+                {{option.content}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+    </span>
+    <button mat-button (click)="Search()" [routerLink]="['/search']"><mat-icon class="mat-icon-rtl-mirror" aria-hidden="true" *ngIf="_authService.loggedIn()"> search </mat-icon></button>
+
   <div class="spacer"></div>
 
   <!-- Center -->

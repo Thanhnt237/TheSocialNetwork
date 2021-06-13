@@ -4,6 +4,10 @@ import { Router } from "@angular/router";
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators } from "@angular/forms";
 
+import { NewsService } from "../../Services/news.service";
+import { AuthService } from "../../Services/auth.service";
+import { ProfileService } from "../../Services/profile.service";
+
 @Component({
   selector: 'app-news',
   templateUrl: './news.component.html',
@@ -11,24 +15,43 @@ import { FormGroup, FormBuilder, FormControl, Validators } from "@angular/forms"
 })
 export class NewsComponent implements OnInit {
 
+  isAdmin: Boolean = false;
+
+  newsNoImage = {
+    "content": ""
+  }
+
+  getPost = [{
+    UserName: String,
+    Post_ID: String,
+    UserAvatar: String,
+    title: String,
+    content: String,
+    images: String,
+    Comments: [{
+      UserName: String,
+      avatar: String,
+      content: String
+    }],
+    isLiked: Boolean,
+    like: 0,
+    date: Date
+  }]
+
   userProfile = {
-    DoB: String,
-    address: String,
-    avatar: String,
-    cover: String,
-    description: String,
-    email: String,
-    "gender": "",
+    userId: String,
     name: String,
-    phone: String
+    avatar: String
   };
 
 
   constructor(
     private _formBuilder: FormBuilder,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute
-
+    private _activatedRoute: ActivatedRoute,
+    public _auth: AuthService,
+    private _news: NewsService,
+    private _profile: ProfileService
   ) { }
 
   NewsForm: FormGroup = this._formBuilder.group({
@@ -38,10 +61,53 @@ export class NewsComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.getAdminProfile()
+    this.CheckAdmin()
+    this.getAllNews();
   }
 
   onAddNewNews(){
 
+  }
+
+  getAllNews(){
+    this._news.getAllNews()
+      .subscribe(
+        res => this.getPost = res,
+        err => console.log(err)
+      )
+  }
+
+  getAdminProfile(){
+    this._profile.getToolbarProfile()
+      .subscribe(
+        res => this.userProfile = res,
+        err => console.log(err)
+      )
+  }
+
+  CheckAdmin(){
+    if(this._auth.loggedIn()){
+      this._news.CheckAdmin()
+      .subscribe(
+        res => this.isAdmin = res,
+        err => console.log(err)
+      )
+    }
+  }
+
+  NewsNoImage(){
+    this._news.AddNewNewsNoImage(this.newsNoImage)
+      .subscribe(
+        res => {
+          this.ngOnInit()
+          this.newsNoImage.content = ""
+        },
+        err => {
+          this.ngOnInit()
+          this.newsNoImage.content = ""
+        }
+      )
   }
 
   UploadImages(event: any){

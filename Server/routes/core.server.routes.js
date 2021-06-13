@@ -15,6 +15,7 @@ const coreCtrl = require('../controllers').Core;
   router.route('/api/change-password').post(coreCtrl.ChangePassword);
 
   router.route('/api/profile/:userId').get(coreCtrl.GetUserProfile);
+  router.route('/api/profile/checkPermission/:userId').get(coreCtrl.verifyToken,coreCtrl.CheckPermission)
   router.route('/api/toolbar-profile').get(coreCtrl.verifyToken,coreCtrl.ToolbarProfile);
   router.route('/api/edit-profile').post(coreCtrl.verifyToken,coreCtrl.EditProfile);
   router.route('/api/edit-profile/description').post(coreCtrl.verifyToken,coreCtrl.EditDescription);
@@ -43,8 +44,14 @@ const coreCtrl = require('../controllers').Core;
   router.route('/api/Count/CountLike/:userId').get(coreCtrl.CountLike);
   router.route('/api/Count/CountFriend/:userId').get(coreCtrl.CountFriend);
 
-  router.route('/api/SearchBar').post(coreCtrl.SearchBar)
+  router.route('/api/SearchBarNoLogin').post(coreCtrl.verifyToken,coreCtrl.SearchBarNoLogin)
+  router.route('/api/SearchBarLoggedIn').post(coreCtrl.verifyToken,coreCtrl.SearchBarLoggedIn)
+  router.route('/api/getSearchHistories').get(coreCtrl.verifyToken,coreCtrl.getSearchHistories)
+
+  router.route('/api/News/CheckAdmin').get(coreCtrl.verifyToken, coreCtrl.CheckAdmin)
   router.route('/api/News/new').post(coreCtrl.verifyToken, coreCtrl.AddNewNews)
+  router.route('/api/News/new/newsNoImage').post(coreCtrl.verifyToken, coreCtrl.AddNewNewsNoImage)
+  router.route('/api/News/getAllNews').get(coreCtrl.getAllNews)
 
   router.route('/api/Friend/FriendRequest/:userId').post(coreCtrl.verifyToken, coreCtrl.FriendRequest);
   router.route('/api/Friend/AcceptFriend/:userId').post(coreCtrl.verifyToken, coreCtrl.AcceptFriend);

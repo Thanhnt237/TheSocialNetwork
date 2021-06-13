@@ -27,6 +27,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { HomeComponent } from './Pages/home/home.component';
 import { LoginComponent } from './Pages/login/login.component';
@@ -62,7 +63,8 @@ let angularMaterialModule = [
   MatChipsModule,
   MatTableModule,
   MatNativeDateModule,
-  MatSelectModule
+  MatSelectModule,
+  MatAutocompleteModule
 ];
 
 const routes: Routes = [

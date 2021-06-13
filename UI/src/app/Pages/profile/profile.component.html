@@ -14,7 +14,7 @@
       <span class="UserName"> {{userProfile.name}} </span>
     </div>
     <div class="divBiology">
-      <span class="Biology" *ngIf="!editBiology">{{userProfile.description}} <mat-icon style="color:green; margin-left:10px;" (click) = "editBiology = !editBiology">border_color</mat-icon> </span>
+      <span class="Biology" *ngIf="!editBiology">{{userProfile.description}} <mat-icon *ngIf="_auth.loggedIn() && checkPermission" style="color:green; margin-left:10px;" (click) = "editBiology = !editBiology">border_color</mat-icon> </span>
       <form class="form" *ngIf="editBiology">
         <div class="form-group">
             <input class="form-control" id="editBiology" type="text" name="description" placeholder="{{userProfile.description}}" value="{{userProfile.description}}" [(ngModel)]="editProfile.description">
@@ -180,13 +180,13 @@
                   <img mat-card-avatar class="example-header-image" src="http://localhost:8080/public/upload/{{post.UserAvatar}}"/>
                   <mat-card-title>{{post.UserName}}</mat-card-title>
                   <mat-card-subtitle>{{post.date}}</mat-card-subtitle>
-                  <button mat-button (click)="DeletePost(post.Post_ID)" class="DeleteBtn">X</button>
+                  <button *ngIf="_auth.loggedIn()" mat-button (click)="DeletePost(post.Post_ID)" class="DeleteBtn">X</button>
                 </mat-card-header>
                 <mat-card-content>
                   <textarea autosize name="name" class="textAreaPost" disabled>{{post.content}}</textarea>
                 </mat-card-content>
                 <img mat-card-image *ngIf="post.images != null" src="http://localhost:8080/public/upload/{{post.images}}" >
-                <mat-card-actions>
+                <mat-card-actions *ngIf="_auth.loggedIn()">
                   <div class="PostLayoutLikeCount">
                     <mat-icon>favorite</mat-icon>{{post.like}}
                     <mat-icon>comment</mat-icon>
@@ -215,7 +215,7 @@
                       </div>
                     </div>
                   </div>
-                  <form (ngSubmit)="onAddNewComment(post.Post_ID)" name="CommentForm" [formGroup]="CommentForm">
+                  <form (ngSubmit)="onAddNewComment(post.Post_ID)" name="CommentForm" [formGroup]="CommentForm" *ngIf="_auth.loggedIn()">
                     <img src="http://localhost:8080/public/upload/{{userProfile.avatar}} " mat-card-avatar >
                     <mat-form-field class="full-width" style="margin-left:10px; margin-right:10px; width:65%" >
                       <mat-label>Để lại bình luận...</mat-label>
@@ -255,7 +255,7 @@
                     <button mat-flat-button class="submitPostBtn" style="width:5%; margin:10px 10px;" (click)="EditName()"> Lưu </button>
                     <button mat-stroked-button style="width:5%; margin:10px 10px;" (click)="editName = !editName"> Hủy </button>
                   </form>
-                  <span class="RightContentElement col-md-2" *ngIf="!editName"><mat-icon style="color:green; margin-left:10px;" (click) = "editName = !editName">border_color</mat-icon></span><br>
+                  <span class="RightContentElement col-md-2" *ngIf="!editName && _auth.loggedIn() && checkPermission"><mat-icon style="color:green; margin-left:10px;" (click) = "editName = !editName">border_color</mat-icon></span><br>
                 </div>
                 <div class="ContentElement row">
                   <span class="LeftContentElement col-md-2">Giới tính</span><br>
@@ -272,7 +272,7 @@
                     <button mat-flat-button class="submitPostBtn" style="width:5%; margin:10px 10px;" (click)="EditGender()"> Lưu </button>
                     <button mat-stroked-button style="width:5%; margin:10px 10px;" (click)="editGender = !editGender"> Hủy </button>
                   </form>
-                  <span class="RightContentElement col-md-2" *ngIf="!editGender"><mat-icon style="color:green; margin-left:10px;" (click) = "editGender = !editGender">border_color</mat-icon></span><br>
+                  <span class="RightContentElement col-md-2" *ngIf="!editGender  && _auth.loggedIn() && checkPermission"><mat-icon style="color:green; margin-left:10px;" (click) = "editGender = !editGender">border_color</mat-icon></span><br>
                 </div>
                 <div class="LastContentElement row">
                   <span class="LeftContentElement col-md-2">Ngày sinh</span><br>
@@ -289,7 +289,7 @@
                     <button mat-flat-button class="submitPostBtn" style="width:5%; margin:10px 10px;" (click)="EditDoB()"> Lưu </button>
                     <button mat-stroked-button style="width:5%; margin:10px 10px;" (click)="editDoB = !editDoB"> Hủy </button>
                   </form>
-                  <span class="RightContentElement col-md-2" *ngIf="!editDoB"><mat-icon style="color:green; margin-left:10px;" (click) = "editDoB = !editDoB">border_color</mat-icon></span><br>
+                  <span class="RightContentElement col-md-2" *ngIf="!editDoB && _auth.loggedIn() && checkPermission"><mat-icon style="color:green; margin-left:10px;" (click) = "editDoB = !editDoB">border_color</mat-icon></span><br>
                 </div>
               </div>
               <div class="HeadingDisplayProfile">
@@ -306,7 +306,7 @@
                     <button mat-flat-button class="submitPostBtn" style="width:5%; margin:10px 10px;" (click)="EditAddress()"> Lưu </button>
                     <button mat-stroked-button style="width:5%; margin:10px 10px;" (click)="editAddress = !editAddress"> Hủy </button>
                   </form>
-                  <span class="RightContentElement col-md-2" *ngIf="!editAddress"><mat-icon style="color:green; margin-left:10px;" (click) = "editAddress = !editAddress">border_color</mat-icon></span><br>
+                  <span class="RightContentElement col-md-2" *ngIf="!editAddress  && _auth.loggedIn() && checkPermission"><mat-icon style="color:green; margin-left:10px;" (click) = "editAddress = !editAddress">border_color</mat-icon></span><br>
                 </div>
                 <div class="LastContentElement row">
                   <span class="LeftContentElement col-md-2">Số điện thoại</span><br>
@@ -318,7 +318,7 @@
                     <button mat-flat-button class="submitPostBtn" style="width:5%; margin:10px 10px;" (click)="EditPhone()"> Lưu </button>
                     <button mat-stroked-button style="width:5%; margin:10px 10px;" (click)="editPhone = !editPhone"> Hủy </button>
                   </form>
-                  <span class="RightContentElement col-md-2" *ngIf="!editPhone"><mat-icon style="color:green; margin-left:10px;" (click) = "editPhone = !editPhone">border_color</mat-icon></span><br>
+                  <span class="RightContentElement col-md-2" *ngIf="!editPhone  && _auth.loggedIn() && checkPermission"><mat-icon style="color:green; margin-left:10px;" (click) = "editPhone = !editPhone">border_color</mat-icon></span><br>
                 </div>
               </div>
               <div class="HeadingDisplayProfile">
@@ -338,7 +338,7 @@
             <div class="">
               <img src="http://localhost:8080/public/upload/{{friend.avatar}}" routerLink="/profile/{{friend.Friend_ID}}"  mat-card-avatar >
               <span routerLink="/profile/{{friend.Friend_ID}}" >{{friend.name}}</span>
-              <button mat-button style="float: right;" (click)="UnFriend(friend.Friend_ID)"><mat-icon>clear</mat-icon></button>
+              <button mat-button style="float: right;" (click)="UnFriend(friend.Friend_ID)" *ngIf="_auth.loggedIn() && checkPermission"><mat-icon>clear</mat-icon></button>
             </div>
           </mat-card>
         </div>

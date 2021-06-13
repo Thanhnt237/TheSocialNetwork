@@ -24,6 +24,7 @@ const FriendQueue = require('../db/models/FriendQueue');
 const Chats = require('../db/models/Chats');
 const News = require('../db/models/News');
 const Test = require('../db/models/Test');
+const SearchHistories = require('../db/models/SearchHistories');
 
 module.exports = {
   renderHomePage: renderHomePage,
@@ -66,10 +67,16 @@ module.exports = {
   getProfileFriend: getProfileFriend,
   getChatService: getChatService,
   AddNewNews: AddNewNews,
+  AddNewNewsNoImage:AddNewNewsNoImage,
+  getAllNews: getAllNews,
   CountPost: CountPost,
   CountLike: CountLike,
   CountFriend: CountFriend,
-  SearchBar: SearchBar,
+  SearchBarLoggedIn: SearchBarLoggedIn,
+  getSearchHistories: getSearchHistories,
+  SearchBarNoLogin: SearchBarNoLogin,
+  CheckAdmin: CheckAdmin,
+  CheckPermission: CheckPermission,
   GetTest:GetTest
 };
 
@@ -958,7 +965,13 @@ async function DeleteFriendRequest(req, res) {
           if(err){
             console.log(err)
           }else{
-            res.status(200).send("Xóa yêu cầu kết bạn thành công")
+            FriendQueue.findOneAndDelete({FriendQueue_ID:req.userId, User_ID:req.params.userId},(err)=>{
+              if(err){
+                console.log(err)
+              }else{
+                res.status(200).send("Xóa yêu cầu kết bạn thành công")
+              }
+            })
           }
         })
       }else{
@@ -1202,8 +1215,8 @@ async function getChatService(req,res) {
 */
 
 async function AddNewNews(req,res) {
-  let user = await User.findOne({_id: req.userId})
-  if(user.Role == "ADMIN"){
+  let checkAdmin = await User.findOne({_id: req.userId})
+  if(checkAdmin.Role == "ADMIN"){
     let createNews = new News();
 
     await multerUpload.upload(req,res, (err)=>{
@@ -1241,17 +1254,157 @@ async function AddNewNews(req,res) {
   }
 }
 
-
 /**
-* @name SearchBar
+* @name AddNewNewsNoImage
 * @param  {object} req HTTP request
 * @param  {object} res HTTP response
 */
 
-async function SearchBar(req,res) {
+async function AddNewNewsNoImage(req, res) {
+  let checkAdmin = await User.findOne({_id: req.userId})
+  if(checkAdmin.Role == "ADMIN"){
+    let createPost = new News();
+
+    Informations.findOne({User_ID:req.userId},(err,user)=>{
+      let createPostLayouts = new PostLayouts({
+        Post_ID: createPost._id,
+        UserName: user.name,
+        UserAvatar: user.avatar,
+        title: req.body.title,
+        content: req.body.content,
+      });
+      createPostLayouts.save((err)=>{
+        if(err){
+          console.log(err);
+        }else{
+          createPost.save();
+          res.status(200).send("Đăng bài viết thành công!");
+        }
+      })
+    })
+  }
+}
+
+
+/**
+* @name SearchBarNoLogin
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function SearchBarNoLogin(req,res) {
   try{
-    let user = await Informations.find({name:req.body.search});
-    res.status(200).send(user);
+    let count1 = await Informations.countDocuments({name:req.body.search});
+    if(count1 == 0){
+      res.status(404).send("Không tìm thấy người dùng")
+    }else{
+      let user = await Informations.find({name:req.body.search});
+      res.status(200).send(user)
+    }
+  }catch(err){
+    console.log(err)
+  };
+}
+
+/**
+* @name SearchBarLoggedIn
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function SearchBarLoggedIn(req,res) {
+  try{
+    let count1 = await Informations.countDocuments({name:req.body.search});
+    if(count1 == 0){
+      res.status(404).send("Không tìm thấy người dùng")
+    }else{
+      let user = await Informations.find({name:req.body.search});
+      let count2 = await SearchHistories.countDocuments({User_ID: req.userId, content: req.body.search})
+      if(count2>0){
+        res.status(200).send(user);
+      }else{
+        let history = new SearchHistories({
+          User_ID: req.userId,
+          content: req.body.search
+        })
+        history.save((err)=>{
+          if(err){
+            console.log(err)
+          }else{
+            res.status(200).send(user)
+          }
+        })
+      }
+    }
+  }catch(err){
+    console.log(err)
+  };
+}
+
+/**
+* @name getSearchHistories
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function getSearchHistories(req,res) {
+  try{
+    let history = await SearchHistories.find({User_ID: req.userId});
+    res.status(200).send(history);
+  }catch(err){
+    console.log(err)
+  };
+}
+
+/**
+* @name CheckAdmin
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function CheckAdmin(req,res) {
+  try{
+    let user = await User.findOne({_id: req.userId});
+    if(user.Role == "ADMIN"){
+      res.status(200).send(true);
+    }else{
+      res.status(200).send(false);
+    }
+  }catch(err){
+    console.log(err)
+  };
+}
+
+/**
+* @name getAllNews
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function getAllNews(req,res) {
+  try{
+    let news = await News.find();
+    let layout = await PostLayouts.find({Post_ID: {$in: news}})
+    layout.reverse();
+    res.status(200).send(layout);
+  }catch(err){
+    console.log(err)
+  };
+}
+
+/**
+* @name CheckPermission
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function CheckPermission(req,res) {
+  try{
+    if(req.userId == req.params.userId){
+      res.status(200).send(true)
+    }else{
+      res.status(200).send(false)
+    }
   }catch(err){
     console.log(err)
   };

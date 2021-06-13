@@ -1,9 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
 
 import { AuthService } from "../../Services/auth.service";
 import { ProfileService } from "../../Services/profile.service";
 import { FriendService } from "../../Services/friend.service";
 import { CountService } from "../../Services/count.service";
+import { SearchService } from "../../Services/search.service";
+
 
 import { Router } from "@angular/router";
 
@@ -13,12 +18,16 @@ import { Router } from "@angular/router";
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent implements OnInit {
+
+  options: any = [{
+    "content": ""
+  }];
+
+  searchForm = new FormControl();
   noFriendQueue: boolean = false;
   noFriendQueueCatching = '';
 
-  searchBar = {
-    "searchBar": ""
-  };
+  checkResult: any;
 
   userProfile = {
     userId: String,
@@ -33,18 +42,26 @@ export class ToolbarComponent implements OnInit {
     avatar: String
   }]
 
-
-
   constructor(
     public _authService: AuthService,
     public _getUserId: ProfileService,
     private _friend: FriendService,
-    private _count: CountService
+    private _count: CountService,
+    private _search: SearchService
   ) { }
 
   ngOnInit(): void {
     this.refreshToolbar();
     this.getFriendRequest();
+    this.getSearchHistories();
+  }
+
+  getSearchHistories(){
+    this._search.getSearchHistories()
+      .subscribe(
+        res => this.options = res,
+        err => console.log(err)
+      )
   }
 
   refreshToolbar(){
@@ -98,10 +115,22 @@ export class ToolbarComponent implements OnInit {
   }
 
   Search(){
-    this._count.Search({"search": this.searchBar.searchBar})
+    this._search.Search({"search": this.searchForm.value})
       .subscribe(
-        res => console.log(res),
-        err => console.log(err)
+        res => {
+          this.checkResult = res
+          this._search.sendResult(this.checkResult)
+        },
+        err => {
+          console.log(err)
+          this.checkResult = [];
+          this._search.sendResult(this.checkResult);
+        }
       )
   }
+
+  displayFn(user: any): string {
+  return user && user.name ? user.name : '';
+  }
+
 }
