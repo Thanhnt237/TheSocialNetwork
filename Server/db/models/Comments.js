@@ -5,6 +5,10 @@ const CommentsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
+    User_ID:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
     UserName:{
         type: String,
         required: true

@@ -15,7 +15,7 @@ export class CommentService {
     private _router: Router
   ) { }
 
-  GetAllComment(postId:any){
+  getAllComment(postId:any){
     return this.http.get<any>(this._getCommentUrl + postId)
   }
 

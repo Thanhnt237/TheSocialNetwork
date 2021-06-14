@@ -120,7 +120,7 @@ module.exports = function(io) {
 
   });
 
-  io.of('/')on('connection', function(socket){
+  io.of('/').on('connection', function(socket){
     //Non MiddleWare
       //Sent Time And Date
       io.emit("Server-Sent-Date", moment().format('MMM DD, YYYY'));

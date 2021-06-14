@@ -358,7 +358,7 @@ async function EditName(req,res) {
             }else{
               await Comments.updateMany(
                 {User_ID: req.userId},
-                {$set:{ UserName: user.name}},
+                {$set:{UserName: user.name}},
                 (err)=>{
                   if(err){
                     console.log(err)

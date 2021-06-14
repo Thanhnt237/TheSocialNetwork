@@ -5,6 +5,10 @@ const PostLayoutsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
+    User_ID:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
     UserName:{
         type: String,
         required: true
@@ -32,18 +36,7 @@ const PostLayoutsSchema = new mongoose.Schema({
         default: moment().format('dddd, DD-MM-YYYY LTS'),
         required:true
     },
-    Comments: [
-      {
-      UserName:{
-        type: String
-      },
-      avatar:{
-        type: String
-      },
-      content:{
-        type: String
-      }
-      }]
+    Comments: []
 
 })
 

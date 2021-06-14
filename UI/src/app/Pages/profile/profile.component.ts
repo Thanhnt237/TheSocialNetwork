@@ -151,6 +151,10 @@ export class ProfileComponent implements OnInit {
                 res => post.like = res,
                 err => console.log(err)
               )
+              this._comment.getAllComment(post.Post_ID).subscribe(
+                res => post.Comments =res,
+                err => console.log(err)
+              )
             });
             console.log(res);
           },
