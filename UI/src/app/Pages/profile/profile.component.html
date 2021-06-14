@@ -2,12 +2,12 @@
   <!--Heading -->
     <div class="image">
         <img class="cover" mat-card-cover src="http://localhost:8080/public/upload/{{userProfile.cover}}" alt="">
-        <label for="change-cover" class="changeCover"> <mat-icon>photo_camera</mat-icon> Đổi ảnh bìa </label>
+        <label for="change-cover" class="changeCover" *ngIf="_auth.loggedIn() && checkPermission" > <mat-icon>photo_camera</mat-icon> Đổi ảnh bìa </label>
       <input class = "changeCover" id="change-cover" type="file" (change)= "changeCover($event)" hidden=true>
     </div>
     <div class="image">
       <img class="avatar" src="http://localhost:8080/public/upload/{{userProfile.avatar}} " mat-card-avatar >
-      <label for="change-avatar" class="changeAvatar"> <mat-icon>photo_camera</mat-icon> </label>
+      <label for="change-avatar" class="changeAvatar" *ngIf="_auth.loggedIn() && checkPermission" > <mat-icon>photo_camera</mat-icon> </label>
       <input class = "changeAvatar" id="change-avatar" type="file" (change)= "changeAvatar($event)" hidden=true>
     </div>
     <div class="divUserName">
