@@ -199,28 +199,33 @@ function UserRegister(req, res) {
 * @param  {object} res HTTP response
 */
 function UserLogin(req,res) {
-  let userData = req.body;
+  try{
+    let userData = req.body;
 
-if(userData.email === '' || userData.password === ''){
-  res.status(401).send('Tài khoản và mật khẩu không được để là khoảng trắng');
-}else {
-  Authentication.findOne({email: userData.email}, (err,user) => {
-    if(err){
-      console.log("err" + err);
-    }else{
-      if(!user){
-        res.status(401).send('Invalid Email');
-      }else
-      if(!user.comparePassword(userData.password)){
-        res.status(401).send('Invalid Password');
-      }else {
-        let payload = { subject:user.User_ID}
-        let token = jwt.sign(payload, 'secretKey')
-        res.status(200).send({token});
+  if(userData.email === '' || userData.password === ''){
+    res.status(401).send('Tài khoản và mật khẩu không được để là khoảng trắng');
+  }else {
+    await Authentication.findOne({email: userData.email}, (err,user) => {
+      if(err){
+        console.log("err" + err);
+      }else{
+        if(!user){
+          res.status(401).send('Invalid Email');
+        }else
+        if(!user.comparePassword(userData.password)){
+          res.status(401).send('Invalid Password');
+        }else {
+          let payload = { subject:user.User_ID}
+          let token = jwt.sign(payload, 'secretKey')
+          res.status(200).send({token});
+        }
       }
-    }
-  })
+    })
+  }
+}catch(err){
+  console.log(err)
 }
+
 }
 
 /**
