@@ -198,7 +198,7 @@ function UserRegister(req, res) {
 * @param  {object} req HTTP request
 * @param  {object} res HTTP response
 */
-function UserLogin(req,res) {
+async function UserLogin(req,res) {
   try{
     let userData = req.body;
 
