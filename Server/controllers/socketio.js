@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-var bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
+const moment = require('moment');
 
 const Authentication = require('../db/models/Authentication');
 const User = require('../db/models/User');
@@ -43,81 +44,111 @@ function getOnline(socket){
 
 module.exports = function(io) {
   //IO MiddleWare
-    io.use(function(socket,next){
-      if(!socket.handshake.query.token){
-        return console.log('Unauthorized request');
+  io.of('/api/chat').use(function(socket,next){
+    console.log("Starting MiddleWare ...")
+
+    if(!socket.handshake.query.token){
+      return console.log('Unauthorized request');
+    }
+
+    let token = socket.handshake.query.token;
+
+    if (token == 'null'){
+      return console.log('Unauthorized request');
+    }
+
+    let payload = jwt.verify(token, 'secretKey');
+
+    if(!payload){
+      return console.log('Unauthorized request');
+    }
+    console.log("MiddleWare Running...")
+    socket.userId = payload.subject;
+    next();
+  }).
+  on('connection', function(socket,res) {
+
+    //Set online state for user
+    User.findByIdAndUpdate({_id: socket.userId}, {$set:{State: "Online"}}, (err)=>{
+      if(err){
+        console.log(err)
+      }else{
+        User.findById({_id: socket.userId},(err,user)=>{
+          if(err){
+            console.log(err)
+          }else{
+            //console.log(user)
+            getOnline(socket)
+          }
+        })
       }
-
-      let token = socket.handshake.query.token;
-
-      if (token == 'null'){
-        return console.log('Unauthorized request');
-      }
-
-      let payload = jwt.verify(token, 'secretKey');
-
-      if(!payload){
-        return console.log('Unauthorized request');
-      }
-
-      socket.userId = payload.subject;
-      next();
-    }).
-    on('connection', function(socket,res) {
-
-      //Set online state for user
-      User.findByIdAndUpdate({_id: socket.userId}, {$set:{State: "Online"}}, (err)=>{
-        if(err){
-          console.log(err)
-        }else{
-          User.findById({_id: socket.userId},(err,user)=>{
-            if(err){
-              console.log(err)
-            }else{
-              //console.log(user)
-              getOnline(socket)
-            }
-          })
-        }
-      })
-
-      //Find user informations to put on right side
-      Informations.findOne({User_ID: socket.userId},(err,userInfor)=>{
-        if(err){
-          console.log(err)
-        }else{
-          //console.log(userInfor);
-        }
-      })
-
-    //Set Offline state for user
-    socket.on("disconnect", () => {
-      User.findByIdAndUpdate({_id: socket.userId}, {$set:{State: "Offline"}}, (err)=>{
-        if(err){
-          console.log(err)
-        }else{
-          User.findById({_id: socket.userId},(err,user)=>{
-            if(err){
-              console.log(err)
-            }else{
-              //console.log(user)
-              getOnline(socket)
-            }
-          })
-        }
-      })
-    });
-
-    // Get online friend and put on right side
-    getOnline(socket)
-
-    socket.on("Client-is-typing", (data)=>{
-      io.emit("Server-reply-typing-event", socket.id + data);
     })
 
-    });
-
-    io.on('connection', function(socket){
-      //console.log(socket.id + " connected!")
+    //Find user informations to put on right side
+    Informations.findOne({User_ID: socket.userId},(err,userInfor)=>{
+      if(err){
+        console.log(err)
+      }else{
+        //console.log(userInfor);
+      }
     })
+
+  //Set Offline state for user
+  socket.on("disconnect", () => {
+    User.findByIdAndUpdate({_id: socket.userId}, {$set:{State: "Offline"}}, (err)=>{
+      if(err){
+        console.log(err)
+      }else{
+        User.findById({_id: socket.userId},(err,user)=>{
+          if(err){
+            console.log(err)
+          }else{
+            //console.log(user)
+            getOnline(socket)
+          }
+        })
+      }
+    })
+  });
+
+  // Get online friend and put on right side
+  getOnline(socket)
+
+  socket.on("Client-is-typing", (data)=>{
+    io.emit("Server-reply-typing-event", socket.id + data);
+  })
+
+  });
+
+  io.of('/')on('connection', function(socket){
+    //Non MiddleWare
+      //Sent Time And Date
+      io.emit("Server-Sent-Date", moment().format('MMM DD, YYYY'));
+
+      setInterval(()=>{
+        io.emit("Server-Sent-Time",moment().format('h:mm:ss'));
+      }, 1000);
+
+      //Send ESP Data+
+      socket.on("ESP-SENT-Temperature", (data)=>{
+        io.emit("Server-Sent-Temperature", data)
+      })
+
+      socket.on("ESP-SENT-Humidity", (data)=>{
+        io.emit("Server-Sent-Humidity", data)
+      })
+
+      socket.on("ESP-SENT-RainState", (data)=>{
+        io.emit("Server-Sent-RainState", data)
+      })
+
+      socket.on("ESP-SENT-UVLevel", (data)=>{
+        io.emit("Server-Sent-UVLevel", data)
+      })
+
+      socket.on("ESP-SENT-Value", (data)=>{
+        io.emit("Server-Sent-Value", data)
+      })
+    })
+
 };

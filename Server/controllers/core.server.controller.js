@@ -51,6 +51,7 @@ module.exports = {
   AddNewPost: AddNewPost,
   AddNewPostNoImage:AddNewPostNoImage,
   DeletePost: DeletePost,
+  EditPost: EditPost,
   AddNewComment: AddNewComment,
   GetPost: GetPost,
   GetComment: GetComment,
@@ -343,11 +344,32 @@ async function EditName(req,res) {
   Informations.findOneAndUpdate(
     {User_ID: req.userId},
     {$set: {name: req.body.name}},
-    (err)=>{
+    async (err)=>{
       if(err){
         console.log(err)
       }else{
-        res.status(200).send("Chỉnh sửa tên thành công!");
+        let user = await Informations.findOne({User_ID: req.userId})
+        await PostLayouts.updateMany(
+          {User_ID:req.userId},
+          {$set:{ UserName: user.name}},
+          async (err)=>{
+            if(err){
+              console.log(err)
+            }else{
+              await Comments.updateMany(
+                {User_ID: req.userId},
+                {$set:{ UserName: user.name}},
+                (err)=>{
+                  if(err){
+                    console.log(err)
+                  }else{
+                    res.status(200).send("Đổi tên thành công")
+                  }
+                }
+              )
+            }
+          }
+        )
       }
     }
   )
@@ -447,10 +469,21 @@ await multerUpload.upload(req,res, (err)=>{
         Informations.findOneAndUpdate(
           {User_ID: req.userId},
           {$set: {avatar: req.file.filename}},
-        (err) => {
+        async (err) => {
           if(err){
             res.status(401).send("err"+err);
           }else {
+            let user = await Informations.findOne({User_ID:req.userId})
+            await PostLayouts.updateMany(
+              {User_ID: req.userId},
+              {$set: { UserAvatar: req.file.filename }}, (err)=>{
+                if(err){console.log(err)}
+              })
+            await Comments.updateMany(
+              {User_ID: req.userId},
+              {$set: {avatar: req.file.filename}}, (err) => {
+                if(err){console.log(err)}
+              })
             res.status(200).send("Đổi ảnh đại diện thành công");
           }
         });
@@ -639,6 +672,7 @@ async function AddNewPost(req, res) {
           Informations.findOne({User_ID:req.userId},(err,user)=>{
             let createPostLayouts = new PostLayouts({
               Post_ID: createPost._id,
+              User_ID: user.User_ID,
               UserName: user.name,
               UserAvatar: user.avatar,
               title: req.body.title,
@@ -672,6 +706,7 @@ async function AddNewPostNoImage(req, res) {
     Informations.findOne({User_ID:req.userId},(err,user)=>{
     let createPostLayouts = new PostLayouts({
       Post_ID: createPost._id,
+      User_ID: user.User_ID,
       UserName: user.name,
       UserAvatar: user.avatar,
       title: req.body.title,
@@ -686,6 +721,28 @@ async function AddNewPostNoImage(req, res) {
           }
         })
     })
+}
+
+/**
+* @name EditPost
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+// TODO: here
+async function EditPost(req, res) {
+  try{
+    let user = await Informations.findOne({User_ID: req.userId})
+    let post = await PostLayouts.findOne({Post_ID: req.params.postId})
+
+    if(user.name != post.UserName){
+      res.status(401).send("Bạn không đủ quyền làm việc này")
+    }else{
+      await PostLayouts.findOneAndUpdate({Post_ID: req.params.postId}, {$set:{content: req.body.content}})
+      res.status(200).send("Sửa bài viết thành công!")
+    }
+  }catch(err){
+    console.log(err)
+  }
 }
 
 /**
@@ -712,7 +769,6 @@ async function DeletePost(req, res) {
               })
             }
           })
-
         }
         else{
           res.status(401).send("Bạn không có quyền làm việc này!");
@@ -766,25 +822,19 @@ async function AddNewComment(req, res) {
 
   let createComment = await new Comments({
     Parent_ID: req.params.postId,
+    User_ID: user.User_ID,
     UserName: user.name,
     avatar: user.avatar,
     content: req.body.content
   });
 
-  PostLayouts.findOneAndUpdate({Post_ID: req.params.postId},
-    {$push:{Comments: createComment}}, (err)=>{
-      if(err){
-        console.log(err)
-      }else{
-        createComment.save((err)=>{
-          if(err){
-            console.log(err);
-          }else{
-            res.status(200).send("Bình luận thành công")
-          }
-        })
-      }
-    })
+  await createComment.save( async (err)=>{
+    if(err){
+      console.log(err)
+    }else{
+      res.status(200).send("Bình luận thành công!")
+    }
+  })
 }
 
 /**
@@ -795,7 +845,7 @@ async function AddNewComment(req, res) {
 
 async function GetPost(req, res) {
   try{
-    let postId = await Posts.find({TimeLine_ID: req.params.userId});
+    let postId = await Posts.find({TimeLine_ID: req.params.userId})
     let postLayout = await PostLayouts.find({Post_ID: postId})
     postLayout.reverse();
     res.status(200).send(postLayout);
@@ -953,8 +1003,6 @@ async function AcceptFriend(req, res) {
 * @param  {object} req HTTP request
 * @param  {object} res HTTP response
 */
-
-// TODO: Nhớ làm cái này
 async function DeleteFriendRequest(req, res) {
   FriendQueue.countDocuments({User_ID:req.userId, FriendQueue_ID:req.params.userId},(err,count)=>{
     if(err){
@@ -1066,7 +1114,6 @@ async function getProfileFriend(req, res) {
 * @param  {object} req HTTP request
 * @param  {object} res HTTP response
 */
-// TODO: Handle this
 async function CheckLiked(req,res) {
   try{
     let count = await Reactions.countDocuments({Post_ID: req.params.postId, User_ID:req.userId})
@@ -1087,7 +1134,6 @@ async function CheckLiked(req,res) {
 * @param  {object} req HTTP request
 * @param  {object} res HTTP response
 */
-// TODO: Handle this
 async function LikePost(req,res) {
   try{
     let count = await Reactions.countDocuments({Post_ID:req.params.postId, User_ID:req.userId});
@@ -1111,7 +1157,6 @@ async function LikePost(req,res) {
 * @param  {object} req HTTP request
 * @param  {object} res HTTP response
 */
-// TODO: Handle this
 async function unLikePost(req,res) {
   try{
     let count = await Reactions.countDocuments({Post_ID:req.params.postId, User_ID:req.userId})

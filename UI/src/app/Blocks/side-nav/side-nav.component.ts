@@ -11,7 +11,17 @@ import { WebsocketService } from "../../Services/websocket.service";
   styleUrls: ['./side-nav.component.css']
 })
 export class SideNavComponent implements OnInit {
-  opened = true;
+  rightOpened = true;
+  leftOpened = true;
+
+  time: any;
+  date:any;
+
+  temperature: any = '0';
+  humidity:any = '0';
+  rainState: any = '0';
+  UVLevel: any = '0';
+  plasticBottle: any = '0';
 
   alertError: boolean = false;
   errCatching = '';
@@ -32,9 +42,33 @@ export class SideNavComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this._websocketService.listen("Server-Sent-UserOnline").subscribe((data:any)=>{
+    this._websocketService.ChatListen("Server-Sent-UserOnline").subscribe((data:any)=>{
     this.listUser = data;
     console.log(this.listUser);
+    })
+
+    this._websocketService.listen("Server-Sent-Time").subscribe((data:any)=>{
+    this.time = data;
+    })
+
+    this._websocketService.listen("Server-Sent-Date").subscribe((data:any)=>{
+    this.date = data;
+    })
+
+    this._websocketService.listen("Server-Sent-Temperature").subscribe((data:any)=>{
+    this.temperature = data;
+    })
+
+    this._websocketService.listen("Server-Sent-Humidity").subscribe((data:any)=>{
+    this.humidity = data;
+    })
+
+    this._websocketService.listen("Server-Sent-UVLevel").subscribe((data:any)=>{
+    this.UVLevel = data;
+    })
+
+    this._websocketService.listen("Server-Sent-Value").subscribe((data:any)=>{
+    this.plasticBottle = data;
     })
 
     this.getAllFriend();
