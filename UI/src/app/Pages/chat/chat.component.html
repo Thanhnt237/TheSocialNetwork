@@ -1,15 +1,15 @@
 <mat-card class="example-card">
   <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
+    <img src="http://localhost:8080/public/upload/{{friend.avatar}}" mat-card-avatar alt="">
     <mat-card-title>{{friend.name}}</mat-card-title>
   </mat-card-header>
-  <mat-card-content style="min-height: 400px;">
+  <mat-card-content style="min-height: 400px; border: 1px green solid; margin: 10px auto;">
     <p>
 
     </p>
   </mat-card-content>
   <mat-card-actions>
-    <input matInput type="text" name="" value="" style="width: 75%; height: 35px;">
+    <input matInput type="text" name="" value="" style="width: 75%; height: 35px; border: 1px green solid; margin-left:10px;">
     <button mat-button style="color: white; background-color:green;">Gửi</button>
   </mat-card-actions>
 </mat-card>

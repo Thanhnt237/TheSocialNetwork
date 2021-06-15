@@ -15,38 +15,41 @@ const FriendQueue = require('../db/models/FriendQueue');
 const Chats = require('../db/models/Chats');
 
 function getOnline(socket){
-  FriendList.find({User_ID: socket.userId}, (err,getFriendListOfOnlineUser)=>{
-    if(err){
-      console.log(err)
-    }else{
-      let friendListOfOnlineUser = [];
-      getFriendListOfOnlineUser.forEach((element)=>{friendListOfOnlineUser.push(element.Friend_ID)})
+  try{
+    FriendList.find({User_ID: socket.userId}, (err,getFriendListOfOnlineUser)=>{
+      if(err){
+        console.log(err)
+      }else{
+        let friendListOfOnlineUser = [];
+        getFriendListOfOnlineUser.forEach((element)=>{friendListOfOnlineUser.push(element.Friend_ID)})
 
-      User.find({_id: {$in: friendListOfOnlineUser}, State:"Online"}, (err,onlineFriend)=>{
-        if(err){
-          console.log(err)
-        }else{
-          let InforOfOnlineUser = [];
-          onlineFriend.forEach((element)=>{InforOfOnlineUser.push(element._id)})
+        User.find({_id: {$in: friendListOfOnlineUser}, State:"Online"}, (err,onlineFriend)=>{
+          if(err){
+            console.log(err)
+          }else{
+            let InforOfOnlineUser = [];
+            onlineFriend.forEach((element)=>{InforOfOnlineUser.push(element._id)})
 
-          Informations.find({User_ID: {$in: InforOfOnlineUser}}, (err,onlineFriendInfor)=>{
-            if(err){
-              console.log(err)
-            }else{
-              socket.emit("Server-Sent-UserOnline",onlineFriendInfor)
-            }
-          })
-        }
-      })
-    }
-  })
+            Informations.find({User_ID: {$in: InforOfOnlineUser}}, (err,onlineFriendInfor)=>{
+              if(err){
+                console.log(err)
+              }else{
+                socket.emit("Server-Sent-UserOnline",onlineFriendInfor)
+              }
+            })
+          }
+        })
+      }
+    })
+  }catch(err){
+    console.log(err)
+  }
 }
 
 module.exports = function(io) {
-  //IO MiddleWare
-  io.of('/api/chat').use(function(socket,next){
-    console.log("Starting MiddleWare ...")
-
+  //Right Navbar
+  io.of('/api/right-nav/123').use(function(socket,next){
+    console.log("MiddleWare Running")
     if(!socket.handshake.query.token){
       return console.log('Unauthorized request');
     }
@@ -62,7 +65,6 @@ module.exports = function(io) {
     if(!payload){
       return console.log('Unauthorized request');
     }
-    console.log("MiddleWare Running...")
     socket.userId = payload.subject;
     next();
   }).
@@ -112,14 +114,10 @@ module.exports = function(io) {
   });
 
   // Get online friend and put on right side
-  getOnline(socket)
+  setInterval((socket)=>{getOnline(socket)}, 10000)
+});
 
-  socket.on("Client-is-typing", (data)=>{
-    io.emit("Server-reply-typing-event", socket.id + data);
-  })
-
-  });
-
+  //Left Navbar
   io.of('/').on('connection', function(socket){
     //Non MiddleWare
       //Sent Time And Date

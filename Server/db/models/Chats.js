@@ -14,7 +14,7 @@ const ChatsSchema = new mongoose.Schema({
     content:[{
         User_ID:{
           type: String
-        },
+        },        
         content:{
           type: String
         }

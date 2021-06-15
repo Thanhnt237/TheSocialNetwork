@@ -11,39 +11,41 @@ export class WebsocketService {
   token: any = localStorage.getItem("token");
 
   chatSocket: any;
-  socket: any;
+  leftSocket: any;
+  rightSocket: any;
 
-  readonly _url: string = "localhost:8080"
+  readonly _rightNavUrl: string = "localhost:8080/api/right-nav"
+  readonly _leftNavUrl: string = "localhost:8080"
   readonly _chatUrl: string = "localhost:8080/api/chat"
 
   constructor(){
-    this.socket = io(this._url);
+    this.leftSocket = io(this._leftNavUrl);
 
-    this.chatSocket = io(this._chatUrl, {
+    this.rightSocket = io(this._rightNavUrl, {
       query: {
         token: this.token
       }
     });
   }
 
-  listen(eventName: string){
+  listenLeftNav(eventName: string){
     return Rx.Observable.create((subscriber:any)=>{
-      this.socket.on(eventName, (data: any)=>{
+      this.leftSocket.on(eventName, (data: any)=>{
         subscriber.next(data);
       })
     });
   }
 
-  ChatListen(eventName: string){
+  listenFriendOnline(eventName: string){
     return Rx.Observable.create((subscriber:any)=>{
-      this.chatSocket.on(eventName, (data: any)=>{
+      this.rightSocket.on(eventName, (data: any)=>{
         subscriber.next(data);
       })
     });
   }
 
   emit(eventName: string, data: any){
-    this.socket.emit(eventName, data);
+    this.leftSocket.emit(eventName, data);
   }
 
   chatEmit(eventName: string, data: any){

@@ -30,6 +30,8 @@ export class SideNavComponent implements OnInit {
 
   friendList = [{
     User_ID: String,
+    Friend_ID: String,
+    avatar: String,
     name: String
   }]
 
@@ -42,32 +44,31 @@ export class SideNavComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this._websocketService.ChatListen("Server-Sent-UserOnline").subscribe((data:any)=>{
+    this._websocketService.listenFriendOnline("Server-Sent-UserOnline").subscribe((data:any)=>{
     this.listUser = data;
-    console.log(this.listUser);
     })
 
-    this._websocketService.listen("Server-Sent-Time").subscribe((data:any)=>{
+    this._websocketService.listenLeftNav("Server-Sent-Time").subscribe((data:any)=>{
     this.time = data;
     })
 
-    this._websocketService.listen("Server-Sent-Date").subscribe((data:any)=>{
+    this._websocketService.listenLeftNav("Server-Sent-Date").subscribe((data:any)=>{
     this.date = data;
     })
 
-    this._websocketService.listen("Server-Sent-Temperature").subscribe((data:any)=>{
+    this._websocketService.listenLeftNav("Server-Sent-Temperature").subscribe((data:any)=>{
     this.temperature = data;
     })
 
-    this._websocketService.listen("Server-Sent-Humidity").subscribe((data:any)=>{
+    this._websocketService.listenLeftNav("Server-Sent-Humidity").subscribe((data:any)=>{
     this.humidity = data;
     })
 
-    this._websocketService.listen("Server-Sent-UVLevel").subscribe((data:any)=>{
+    this._websocketService.listenLeftNav("Server-Sent-UVLevel").subscribe((data:any)=>{
     this.UVLevel = data;
     })
 
-    this._websocketService.listen("Server-Sent-Value").subscribe((data:any)=>{
+    this._websocketService.listenLeftNav("Server-Sent-Value").subscribe((data:any)=>{
     this.plasticBottle = data;
     })
 

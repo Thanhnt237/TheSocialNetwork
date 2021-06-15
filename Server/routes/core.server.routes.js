@@ -29,6 +29,7 @@ const coreCtrl = require('../controllers').Core;
 
   router.route('/api/Post/new/:userId').post(coreCtrl.verifyToken,coreCtrl.AddNewPost);
   router.route('/api/Post/new/noImage/:userId').post(coreCtrl.verifyToken,coreCtrl.AddNewPostNoImage)
+  router.route('/api/Post/edit/:postId').post(coreCtrl.verifyToken, coreCtrl.EditPost)
   router.route('/api/Post/delete/:postId').delete(coreCtrl.verifyToken,coreCtrl.DeletePost);
   router.route('/api/Post/getPost/:userId').get(coreCtrl.GetPost);
 

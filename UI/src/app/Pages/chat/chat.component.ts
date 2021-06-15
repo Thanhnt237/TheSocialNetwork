@@ -77,9 +77,6 @@ export class ChatComponent implements OnInit {
       })
 
 
-    this.websocketService.listen("Server-Reply-Message").subscribe((data:any)=>{
-
-    })
 
 
   }

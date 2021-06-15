@@ -38,12 +38,17 @@
   <!--Right menu -->
   <mat-sidenav #left position="end" #sidenav mode = "side" [(opened)] = "rightOpened" style="width:350px;" *ngIf="_authService.loggedIn()">
     <a mat-button *ngIf="alertError">{{errCatching}}</a>
-    <div class="GetAllFriend" *ngIf="!alertError">
-      <a mat-button *ngFor="let friend of friendList" routerLink="/chat/{{friend.User_ID}}">{{friend.name}}</a>
-    </div>
-    <br><span>Online user</span>
-    <div class="getOnlineFriendOnly" *ngIf="!alertError">
-      <a mat-button *ngFor="let friend of listUser" routerLink="/chat/{{friend.User_ID}}">{{friend.name}}</a>
-    </div>
+    <mat-card *ngFor="let friend of friendList">
+      <div class="GetAllFriend" *ngIf="!alertError">
+        <img src="http://localhost:8080/public/upload/{{friend.avatar}}" mat-card-avatar>
+        <a mat-button  routerLink="/chat/{{friend.Friend_ID}}">{{friend.name}}</a>
+      </div>
+    </mat-card>
+    <span>Online user</span>
+    <mat-card *ngFor="let friend of listUser">
+      <div class="getOnlineFriendOnly" *ngIf="!alertError">
+        <a mat-button  routerLink="/chat/{{friend.User_ID}}">{{friend.name}}</a>
+      </div>
+    </mat-card>
   </mat-sidenav>
 </mat-sidenav-container>

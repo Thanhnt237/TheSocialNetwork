@@ -41,6 +41,7 @@ import { NewsComponent } from './Pages/news/news.component';
 import { ChatComponent } from './Pages/chat/chat.component';
 import { EditProfileComponent } from './Pages/edit-profile/edit-profile.component';
 import { SearchComponent } from './Pages/search/search.component';
+import { ChatRoomComponent } from './Pages/chat-room/chat-room.component';
 
 
 let angularMaterialModule = [
@@ -111,7 +112,13 @@ const routes: Routes = [
   },
   {
     path:'setting',
-    component: EditProfileComponent
+    component: EditProfileComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'chat-room',
+    component: ChatRoomComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:'**',
@@ -133,7 +140,8 @@ const routes: Routes = [
     NewsComponent,
     ChatComponent,
     SearchComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    ChatRoomComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

@@ -23,7 +23,7 @@
         <button mat-stroked-button style="width:5%; margin:10px 10px;" (click)="editBiology = !editBiology"> Hủy </button>
       </form>
     </div>
-    <a mat-stroked-button (click)="onAddNewFriend()" class="AddFriendButtonHeading"> Thêm bạn </a>
+    <a mat-stroked-button (click)="onAddNewFriend()" class="AddFriendButtonHeading" *ngIf="_auth.loggedIn()"> Thêm bạn </a>
 
 <!--Routing button-->
     <mat-tab-group style="padding-top:20px; width:100%;" mat-align-tabs="center">
