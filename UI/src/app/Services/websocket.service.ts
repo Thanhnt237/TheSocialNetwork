@@ -20,12 +20,15 @@ export class WebsocketService {
 
   constructor(){
     this.leftSocket = io(this._leftNavUrl);
-
     this.rightSocket = io(this._rightNavUrl, {
       query: {
         token: this.token
       }
     });
+  }
+
+  StartChatConnection(){
+    return this.chatSocket = io(this._chatUrl);
   }
 
   listenLeftNav(eventName: string){
@@ -44,8 +47,8 @@ export class WebsocketService {
     });
   }
 
-  emit(eventName: string, data: any){
-    this.leftSocket.emit(eventName, data);
+  RightNavEmit(eventName: string){
+    this.rightSocket.emit(eventName);
   }
 
   chatEmit(eventName: string, data: any){

@@ -8,7 +8,7 @@ import { ProfileService } from "../../Services/profile.service";
 import { FriendService } from "../../Services/friend.service";
 import { CountService } from "../../Services/count.service";
 import { SearchService } from "../../Services/search.service";
-
+import { WebsocketService } from "../../Services/websocket.service";
 
 import { Router } from "@angular/router";
 
@@ -47,13 +47,19 @@ export class ToolbarComponent implements OnInit {
     public _getUserId: ProfileService,
     private _friend: FriendService,
     private _count: CountService,
-    private _search: SearchService
+    private _search: SearchService,
+    private _socket: WebsocketService
   ) { }
 
   ngOnInit(): void {
     this.refreshToolbar();
     this.getFriendRequest();
     this.getSearchHistories();
+    if(this._authService.loggedIn()){
+      this._socket.RightNavEmit("Client-LoggedIn")
+    }else{
+      this._socket.RightNavEmit("disconnect")
+    }
   }
 
   getSearchHistories(){

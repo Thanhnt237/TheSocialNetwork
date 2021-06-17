@@ -17,6 +17,10 @@ const UserSchema = new mongoose.Schema({
       type: String,
       require: true,
       default: "MEMBER"
+    },
+    Socket_ID:{
+      type:String,
+      default: "NULL"
     }
 })
 module.exports = mongoose.model('User',UserSchema)

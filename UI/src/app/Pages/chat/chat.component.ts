@@ -32,7 +32,7 @@ export class ChatComponent implements OnInit {
   messageFromClient: any;
 
   constructor(
-    private websocketService: WebsocketService,
+    private _socket: WebsocketService,
     private _profile: ProfileService,
     private _chat: ChatService,
     private _activatedRoute: ActivatedRoute
@@ -76,17 +76,13 @@ export class ChatComponent implements OnInit {
           )
       })
 
-
-
-
+    this._socket.StartChatConnection();
   }
 
   SendMessage(data: any){
-      this.websocketService.emit(this.you.User_ID + "-Sent-Message-To-" + this.friend.User_ID, data);
   }
 
   TypingEvent(){
-  this.websocketService.emit("Client-is-typing", " is typing...")
   }
 
 }

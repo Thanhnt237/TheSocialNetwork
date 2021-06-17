@@ -46,80 +46,34 @@ function getOnline(socket){
   }
 }
 
+listSocket = []
+let room = "Global"
+
 module.exports = function(io) {
   //Right Navbar
-  io.of('/api/right-nav/123').use(function(socket,next){
-    console.log("MiddleWare Running")
-    if(!socket.handshake.query.token){
-      return console.log('Unauthorized request');
-    }
-
-    let token = socket.handshake.query.token;
-
-    if (token == 'null'){
-      return console.log('Unauthorized request');
-    }
-
-    let payload = jwt.verify(token, 'secretKey');
-
-    if(!payload){
-      return console.log('Unauthorized request');
-    }
-    socket.userId = payload.subject;
-    next();
-  }).
-  on('connection', function(socket,res) {
-
-    //Set online state for user
-    User.findByIdAndUpdate({_id: socket.userId}, {$set:{State: "Online"}}, (err)=>{
-      if(err){
-        console.log(err)
-      }else{
-        User.findById({_id: socket.userId},(err,user)=>{
-          if(err){
-            console.log(err)
-          }else{
-            //console.log(user)
-            getOnline(socket)
-          }
-        })
-      }
-    })
-
-    //Find user informations to put on right side
-    Informations.findOne({User_ID: socket.userId},(err,userInfor)=>{
-      if(err){
-        console.log(err)
-      }else{
-        //console.log(userInfor);
-      }
-    })
-
-  //Set Offline state for user
-  socket.on("disconnect", () => {
-    User.findByIdAndUpdate({_id: socket.userId}, {$set:{State: "Offline"}}, (err)=>{
-      if(err){
-        console.log(err)
-      }else{
-        User.findById({_id: socket.userId},(err,user)=>{
-          if(err){
-            console.log(err)
-          }else{
-            //console.log(user)
-            getOnline(socket)
-          }
-        })
-      }
-    })
+  io.of('/api/right-nav').on('connection', function(socket,res) {
+    //console.log(socket.id)
   });
 
-  // Get online friend and put on right side
-  setInterval((socket)=>{getOnline(socket)}, 10000)
-});
+  io.of('/api/chat-room').on('connection', function(socket,res) {
+    /*
+    listSocket.push(socket.id)
+    socket.join("Global")
+    io.to("Global").emit("Client-Join", ()=>{
+      console.log("Socket" + socket.id + "Connected!")
+    })
+    socket.on("disconnect", ()=>{
+      socket.leave("Global").emit("Client-Leave", ()=>{
+        console.log("Socket" + socket.id + "disconnected!")
+      })
+    })
+    */
+  })
 
   //Left Navbar
   io.of('/').on('connection', function(socket){
     //Non MiddleWare
+    //console.log(socket.id)
       //Sent Time And Date
       io.emit("Server-Sent-Date", moment().format('MMM DD, YYYY'));
 
