@@ -638,12 +638,12 @@ async function PostResetConfirm(req,res){
 async function SendResetPasswordLink(req, res) {
   try {
     // Lấy data truyền lên từ form phía client
-    let subject = "Link Reset mật khẩu cho mạng xã hội mà chưa được đặt tên";
-    let body = "ma token minh se de vao day de cho ae reset mat khau nhe";
+    let subject = "Đường dẫn lấy lại mật khẩu cho Mạng xã hội The Social Network ";
+    let body = "Drop token here";
     // Thực hiện gửi email
     await mailer.sendMail(req.body.email, subject, body)
     // Quá trình gửi email thành công thì gửi về thông báo success cho người dùng
-    res.json('Your email has been sent successfully.')
+    res.json('Email của bạn đã được gửi đi thành công')
   } catch (error) {
     // Nếu có lỗi thì log ra để kiểm tra và cũng gửi về client
     console.log(error)
