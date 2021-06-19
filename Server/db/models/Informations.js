@@ -18,15 +18,15 @@ const InformationsSchema = new mongoose.Schema({
     },
     name:{
         type:String,
-        default: "Aries"
+        default: "Chưa rõ"
     },
     phone:{
         type:String,
-        default: "0912345678"
+        default: "Chưa rõ"
     },
     address:{
         type:String,
-        default: "Phố Wall"
+        default: "Việt Nam"
     },
     DoB:{
         type:Date,
@@ -35,7 +35,7 @@ const InformationsSchema = new mongoose.Schema({
     },
     description:{
         type:String,
-        default: "Một anh chàng đẹp trai"
+        default: "Hãy bảo vệ môi trường"
     },
     gender:{
         type:String,

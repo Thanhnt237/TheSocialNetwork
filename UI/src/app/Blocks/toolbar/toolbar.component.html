@@ -4,8 +4,8 @@
       <!-- Search form -->
         <form class="example-form">
           <mat-form-field class="example-full-width">
-            <mat-label>Tìm kiếm</mat-label>
-            <input type="text" matInput [formControl]="searchForm" [matAutocomplete]="auto">
+
+            <input class= "b" type="text" matInput [formControl]="searchForm" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
               <mat-option *ngFor="let option of options" [value]="options">
                 {{option.content}}
@@ -21,8 +21,8 @@
   <!-- Center -->
   <div class="center">
     <a mat-button [routerLink]="['/']" >     <mat-icon style="margin-top:15px;"> home </mat-icon> <br> <span> Trang chủ </span></a>
-    <a mat-button [routerLink]="['/news']" > <mat-icon style="margin-top:15px;"> feed </mat-icon> <br> <span> tin tức </span></a>
-    <a mat-button [routerLink]="['/chat-room']" > <mat-icon style="margin-top:15px;"> chat </mat-icon> <br> <span> Trò chuyện </span> </a>
+    <a mat-button [routerLink]="['/news']" > <mat-icon style="margin-top:15px;"> feed </mat-icon> <br> <span> Tin tức </span></a>
+    <a mat-button [routerLink]="['/chat-room']" > <mat-icon style="margin-top:15px;"> chat </mat-icon> <br> <span> Trạm cứu hộ động vật  </span> </a>
   </div>
 
   <!-- Right -->

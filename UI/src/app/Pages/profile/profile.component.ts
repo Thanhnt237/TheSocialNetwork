@@ -405,7 +405,7 @@ export class ProfileComponent implements OnInit {
   }
   EditAddress(){
     if(this._auth.loggedIn()){
-      this._profile.EditAddress({"phone": this.editProfile.address})
+      this._profile.EditAddress({"address": this.editProfile.address})
       .subscribe(
         res=> console.log(res),
         err => {

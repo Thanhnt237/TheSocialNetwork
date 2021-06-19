@@ -26,7 +26,7 @@
       </mat-card>
     </mat-nav-list>
     <mat-card class="mat-elevation-z1 bottom">
-      <div class="">Saved </div>
+      <div class="a">Số lượng chai nhựa tiết kiệm  </div>
       <div class="clock inactive waves-effect">{{plasticBottle}}</div>
     </mat-card>
   </mat-sidenav>
@@ -36,19 +36,28 @@
     </div>
   </mat-sidenav-content>
   <!--Right menu -->
-  <mat-sidenav #left position="end" #sidenav mode = "side" [(opened)] = "rightOpened" style="width:350px;" *ngIf="_authService.loggedIn()">
+  <mat-sidenav #left position="end" #sidenav mode = "side" [(opened)] = "rightOpened" style="width:300px;" *ngIf="_authService.loggedIn()">
     <a mat-button *ngIf="alertError">{{errCatching}}</a>
-    <mat-card *ngFor="let friend of friendList">
-      <div class="GetAllFriend" *ngIf="!alertError">
-        <img src="http://localhost:8080/public/upload/{{friend.avatar}}" mat-card-avatar>
-        <a mat-button  routerLink="/chat/{{friend.Friend_ID}}">{{friend.name}}</a>
-      </div>
-    </mat-card>
-    <span>Online user</span>
-    <mat-card *ngFor="let friend of listUser">
-      <div class="getOnlineFriendOnly" *ngIf="!alertError">
-        <a mat-button  routerLink="/chat/{{friend.User_ID}}">{{friend.name}}</a>
-      </div>
-    </mat-card>
+    <div class="GetAllFriend" *ngIf="!alertError">
+      <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+      <a mat-button class="Friend"> <mat-icon class="Icon" routerLink="/"> assignment_ind </mat-icon> Danh sách bạn bè </a>
+        </mat-panel-title>
+        </mat-expansion-panel-header>
+      <a mat-button *ngFor="let friend of friendList" routerLink="/chat/{{friend.User_ID}}">{{friend.name}}</a>
+      </mat-expansion-panel>
+    </div>
+    <br>
+    <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <a mat-button class="Friend"> <mat-icon class="Icon" routerLink="/"> face </mat-icon> Bạn bè trực tuyến </a>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="getOnlineFriendOnly" *ngIf="!alertError">
+      <a mat-button *ngFor="let friend of listUser" routerLink="/chat/{{friend.User_ID}}">{{friend.name}}</a>
+    </div>
+  </mat-expansion-panel>
   </mat-sidenav>
 </mat-sidenav-container>

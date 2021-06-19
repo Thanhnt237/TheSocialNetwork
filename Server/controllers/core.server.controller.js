@@ -807,11 +807,11 @@ async function UpdatePost(req, res) {
           })
         }
         else{
-          res.status(401).send("May khong du tuoi lam viec nay");
+          res.status(401).send("Bạn không có quyền làm điều này");
         }
       })
     }else{
-      res.status(404).send("ko co post nao o day car")
+      res.status(404).send("Không có bài đăng nào ở đây cả")
     }
   })
 }
@@ -1282,6 +1282,7 @@ async function AddNewNews(req,res) {
             Informations.findOne({User_ID:req.userId},(err,user)=>{
               let createPostLayouts = new PostLayouts({
                 Post_ID: createNews._id,
+                User_ID: req.userId,
                 UserName: user.name,
                 UserAvatar: user.avatar,
                 title: req.body.title,
@@ -1318,6 +1319,7 @@ async function AddNewNewsNoImage(req, res) {
     Informations.findOne({User_ID:req.userId},(err,user)=>{
       let createPostLayouts = new PostLayouts({
         Post_ID: createPost._id,
+        User_ID: req.userId,
         UserName: user.name,
         UserAvatar: user.avatar,
         title: req.body.title,
