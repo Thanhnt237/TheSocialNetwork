@@ -11,6 +11,7 @@ const coreCtrl = require('../controllers').Core;
 
   router.route('/api/home').get(coreCtrl.verifyToken, coreCtrl.renderHomePage);
   router.route('/api/login').post(coreCtrl.UserLogin);
+  router.route('/api/logout').get(coreCtrl.SetOfflineState);
   router.route('/api/register').post(coreCtrl.UserRegister);
   router.route('/api/change-password').post(coreCtrl.ChangePassword);
 
@@ -64,6 +65,7 @@ const coreCtrl = require('../controllers').Core;
 
   router.route('/socket-chating').get((req,res)=>{res.render('socket-chating')});
   router.route('/api/Chat/:userId').get(coreCtrl.verifyToken, coreCtrl.getChatService);
+  router.route('/api/Chat/send-message/:userId').get(coreCtrl.verifyToken, coreCtrl.SendChatMessage);
 
   router.route("/send-email").get((req,res)=>{res.render('reset')});
   router.route("/send-email").post(coreCtrl.SendMail);

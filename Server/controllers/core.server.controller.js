@@ -78,6 +78,8 @@ module.exports = {
   SearchBarNoLogin: SearchBarNoLogin,
   CheckAdmin: CheckAdmin,
   CheckPermission: CheckPermission,
+  SetOfflineState: SetOfflineState,
+  SendChatMessage: SendChatMessage,
   GetTest:GetTest
 };
 
@@ -182,9 +184,15 @@ function UserRegister(req, res) {
         if(err){
           console.log("err" + err);
         }else {
-          let payload = { subject: userRegisted.User_ID};
-          let token = jwt.sign(payload, 'secretKey');
-          res.status(200).send({token});
+          User.findOneAndUpdate({_id:userRegisted.User_ID}, {$set:{State: "Online"}}, (err)=>{
+            if(err){
+              console.log(err)
+            }else{
+              let payload = { subject: userRegisted.User_ID};
+              let token = jwt.sign(payload, 'secretKey');
+              res.status(200).send({token});
+            }
+          });
         }
       })
       createUser.save();
@@ -205,7 +213,7 @@ async function UserLogin(req,res) {
   if(userData.email === '' || userData.password === ''){
     res.status(401).send('Tài khoản và mật khẩu không được để là khoảng trắng');
   }else {
-    await Authentication.findOne({email: userData.email}, (err,user) => {
+    await Authentication.findOne({email: userData.email}, async (err,user) => {
       if(err){
         console.log("err" + err);
       }else{
@@ -215,9 +223,15 @@ async function UserLogin(req,res) {
         if(!user.comparePassword(userData.password)){
           res.status(401).send('Invalid Password');
         }else {
-          let payload = { subject:user.User_ID}
-          let token = jwt.sign(payload, 'secretKey')
-          res.status(200).send({token});
+          User.findOneAndUpdate({_id:user.User_ID}, {$set:{State: "Online"}}, (err)=>{
+            if(err){
+              console.log(err)
+            }else{
+              let payload = { subject:user.User_ID}
+              let token = jwt.sign(payload, 'secretKey')
+              res.status(200).send({token});
+            }
+          });
         }
       }
     })
@@ -1259,6 +1273,23 @@ async function getChatService(req,res) {
 }
 
 /**
+* @name SendChatMessage
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function SendChatMessage(req,res) {
+  try{
+    let userInfor = await Informations.findOne({User_ID: req.params.userId})
+    let chat = await Chats.findOne({User_ID: req.userId, Friend_ID: req.params.userId})
+
+    res.status(200).send(chat)
+  }catch(err){
+    console.log(err)
+  };
+}
+
+/**
 * @name AddNewNews
 * @param  {object} req HTTP request
 * @param  {object} res HTTP response
@@ -1455,6 +1486,20 @@ async function CheckPermission(req,res) {
     }else{
       res.status(200).send(false)
     }
+  }catch(err){
+    console.log(err)
+  };
+}
+
+/**
+* @name SetOfflineState
+* @param  {object} req HTTP request
+* @param  {object} res HTTP response
+*/
+
+async function SetOfflineState(req,res) {
+  try{
+    await User.findOneAndUpdate({_id:req.userId},{$set:{State: "Offline"}});
   }catch(err){
     console.log(err)
   };

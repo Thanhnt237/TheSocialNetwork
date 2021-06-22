@@ -9,7 +9,9 @@ export class AuthService {
 
   readonly _registerUrl = "http://localhost:8080/api/register";
   readonly _loginUrl = "http://localhost:8080/api/login";
+  readonly _logoutUrl = "http://localhost:8080/api/logout";
   readonly _changePasswordUrl = "http://localhost:8080/api/change-password"
+
   constructor(
     private http: HttpClient,
     private _router: Router
@@ -34,6 +36,10 @@ export class AuthService {
   logoutUser(){
     localStorage.removeItem('token');
     this._router.navigate(['/login']);
+  }
+
+  setOfflineState(){
+    return this.http.get<any>(this._logoutUrl);
   }
 
   getToken(){

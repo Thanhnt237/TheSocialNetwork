@@ -52,7 +52,7 @@
         {{userProfile.name}}
       </a>
       <button mat-menu-item [routerLink]="['/setting']">Cài đặt</button>
-      <button mat-menu-item (click)="_authService.logoutUser()" *ngIf="_authService.loggedIn()">Đăng xuất</button>
+      <button mat-menu-item (click)="Logout()" *ngIf="_authService.loggedIn()">Đăng xuất</button>
     </mat-menu>
   </span>
 

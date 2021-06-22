@@ -139,4 +139,14 @@ export class ToolbarComponent implements OnInit {
   return user && user.name ? user.name : '';
   }
 
+  Logout(){
+    this._authService.setOfflineState()
+      .subscribe(
+        res => console.log(res),
+        err => console.log(err)
+      )
+
+    this._authService.logoutUser();
+  }
+
 }
