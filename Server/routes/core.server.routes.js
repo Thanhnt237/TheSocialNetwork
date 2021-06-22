@@ -65,7 +65,7 @@ const coreCtrl = require('../controllers').Core;
 
   router.route('/socket-chating').get((req,res)=>{res.render('socket-chating')});
   router.route('/api/Chat/:userId').get(coreCtrl.verifyToken, coreCtrl.getChatService);
-  router.route('/api/Chat/send-message/:userId').get(coreCtrl.verifyToken, coreCtrl.SendChatMessage);
+  router.route('/api/Chat/send-message/:userId').post(coreCtrl.verifyToken, coreCtrl.SendChatMessage);
 
   router.route("/send-email").get((req,res)=>{res.render('reset')});
   router.route("/send-email").post(coreCtrl.SendMail);

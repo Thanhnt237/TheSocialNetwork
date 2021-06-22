@@ -1280,10 +1280,15 @@ async function getChatService(req,res) {
 
 async function SendChatMessage(req,res) {
   try{
-    let userInfor = await Informations.findOne({User_ID: req.params.userId})
-    let chat = await Chats.findOne({User_ID: req.userId, Friend_ID: req.params.userId})
+    if(req.body.message == '' || req.body.message == null){
+      res.status(500).send("Tin nhắn không được để trống")
+    }else{
+      let userInfor = await Informations.findOne({User_ID: req.params.userId})
+      await Chats.findOneAndUpdate({User_ID: req.userId, Friend_ID: req.params.userId}, {$push:{content: {User_ID: req.userId, content: req.body.message}}})
+      await Chats.findOneAndUpdate({User_ID: req.params.userId, Friend_ID: req.userId}, {$push:{content: {User_ID: req.userId, content: req.body.message}}})
 
-    res.status(200).send(chat)
+      res.status(200).send("Thành công")
+    }
   }catch(err){
     console.log(err)
   };

@@ -28,10 +28,11 @@ app.set('views', './views');
 // Website routes
 app.use('/', routes);
 
-
+/*
 app.all('/*', function(req, res) {
    res.sendFile('index.html', { root: __dirname });
 });
+*/
 
 server.listen(PORT, () => {
   console.log("Server running on PORT -> " + PORT);

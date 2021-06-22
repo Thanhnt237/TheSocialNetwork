@@ -7,7 +7,7 @@ import { Router } from "@angular/router";
 })
 export class AboutService {
 
-  readonly _editProfileUrl = "https://the-social-network1.herokuapp.com//api/edit-profile";
+  readonly _editProfileUrl = "http://localhost:8080//api/edit-profile";
 
   constructor(
     private http: HttpClient,

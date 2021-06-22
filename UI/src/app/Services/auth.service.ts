@@ -7,10 +7,10 @@ import { Router } from "@angular/router";
 
 export class AuthService {
 
-  readonly _registerUrl = "https://the-social-network1.herokuapp.com/api/register";
-  readonly _loginUrl = "https://the-social-network1.herokuapp.com/api/login";
-  readonly _logoutUrl = "https://the-social-network1.herokuapp.com/api/logout";
-  readonly _changePasswordUrl = "https://the-social-network1.herokuapp.com/api/change-password"
+  readonly _registerUrl = "http://localhost:8080/api/register";
+  readonly _loginUrl = "http://localhost:8080/api/login";
+  readonly _logoutUrl = "http://localhost:8080/api/logout";
+  readonly _changePasswordUrl = "http://localhost:8080/api/change-password"
 
   constructor(
     private http: HttpClient,

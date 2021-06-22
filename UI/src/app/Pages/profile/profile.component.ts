@@ -434,7 +434,7 @@ export class ProfileComponent implements OnInit {
     post.isLiked = !post.isLiked;
     post.like += 1;
     this._reaction.Like(post.Post_ID).subscribe(
-      res => console.log(res),
+      //res => console.log(res),
       err => this.ngOnInit()
     )
   }
@@ -443,7 +443,7 @@ export class ProfileComponent implements OnInit {
     post.isLiked = !post.isLiked;
     post.like -= 1;
     this._reaction.unLike(post.Post_ID).subscribe(
-      res => console.log(res),
+      //res => console.log(res),
       err => this.ngOnInit()
     )
   }

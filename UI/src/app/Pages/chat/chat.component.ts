@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, FormControl, Validators } from "@angular/forms";
 
 import { WebsocketService } from "../../Services/websocket.service";
 import { ProfileService } from "../../Services/profile.service";
@@ -13,9 +15,13 @@ import { ChatService } from "../../Services/chat.service";
 export class ChatComponent implements OnInit {
   title = 'app';
 
+  message: FormControl = new FormControl('', [Validators.required, Validators.minLength(1),]);
+
   showSomething: any[] = [];
   you: any = {
-    User_ID: String
+    User_ID: String,
+    name: String,
+    avatar: String
   };
   friend: any ={
     User_ID: String,
@@ -23,6 +29,8 @@ export class ChatComponent implements OnInit {
     avatar: String
   };
   listMessages= {
+    User_ID: String,
+    Friend_ID:String,
     content: [{
       User_ID: String,
       content: String
@@ -79,7 +87,35 @@ export class ChatComponent implements OnInit {
     this._socket.StartChatConnection();
   }
 
-  SendMessage(data: any){
+  SendMessage(){
+    let userId = this._activatedRoute.snapshot.paramMap.get('friendId')
+    this._chat.SendMessage(userId, {"message": this.message.value})
+      .subscribe(
+        res => {
+          this.ngOnInit()
+          this.message.reset();
+        },
+        err => {
+          this.ngOnInit();
+          this.message.reset();
+        }
+      )
+  }
+
+  isYou(message: any){
+    if(message.User_ID == this.listMessages.User_ID){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  isFriend(message: any){
+    if(message.User_ID == this.listMessages.Friend_ID){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   TypingEvent(){

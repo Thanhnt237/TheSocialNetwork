@@ -7,7 +7,7 @@ import { Router } from "@angular/router";
 })
 export class ForgotPasswordService {
 
-    readonly _resetPasswordUrl = "https://the-social-network1.herokuapp.com/api/reset";
+    readonly _resetPasswordUrl = "http://localhost:8080/api/reset";
 
     constructor(
       private http: HttpClient,

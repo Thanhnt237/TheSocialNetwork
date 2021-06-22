@@ -9,7 +9,7 @@ class Database {
     }
 
     _connect() {
-        mongoose.connect(monggoOnline_url, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false})
+        mongoose.connect(mongodb_url, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false})
             .then(() => {
                 console.log("Database connection successfully!");
             })

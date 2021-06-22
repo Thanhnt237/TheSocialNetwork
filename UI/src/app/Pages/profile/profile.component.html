@@ -1,12 +1,12 @@
 <div class="container">
   <!--Heading -->
     <div class="image">
-        <img class="cover" mat-card-cover src="https://the-social-network1.herokuapp.com/public/upload/{{userProfile.cover}}" alt="">
+        <img class="cover" mat-card-cover src="http://localhost:8080/public/upload/{{userProfile.cover}}" alt="">
         <label for="change-cover" class="changeCover" *ngIf="_auth.loggedIn() && checkPermission" > <mat-icon>photo_camera</mat-icon> Đổi ảnh bìa </label>
       <input class = "changeCover" id="change-cover" type="file" (change)= "changeCover($event)" hidden=true>
     </div>
     <div class="image">
-      <img class="avatar" src="https://the-social-network1.herokuapp.com/public/upload/{{userProfile.avatar}} " mat-card-avatar >
+      <img class="avatar" src="http://localhost:8080/public/upload/{{userProfile.avatar}} " mat-card-avatar >
       <label for="change-avatar" class="changeAvatar" *ngIf="_auth.loggedIn() && checkPermission" > <mat-icon>photo_camera</mat-icon> </label>
       <input class = "changeAvatar" id="change-avatar" type="file" (change)= "changeAvatar($event)" hidden=true>
     </div>
@@ -109,7 +109,7 @@
                     <div *ngIf="countFriend > 0">
                       <mat-card class="FriendListCard" *ngFor="let friend of getProfileFriend">
                         <div class="">
-                          <img src="https://the-social-network1.herokuapp.com/public/upload/{{friend.avatar}}" routerLink="/profile/{{friend.Friend_ID}}"  mat-card-avatar >
+                          <img src="http://localhost:8080/public/upload/{{friend.avatar}}" routerLink="/profile/{{friend.Friend_ID}}"  mat-card-avatar >
                           <span routerLink="/profile/{{friend.Friend_ID}}" >{{friend.name}}</span>
                         </div>
                       </mat-card>
@@ -129,7 +129,7 @@
                   <mat-tab-group mat-align-tabs="center">
                     <mat-tab label="Đăng bài viết">
                       <form class="form-group">
-                        <img src="https://the-social-network1.herokuapp.com/public/upload/{{userProfile.avatar}} " mat-card-avatar >
+                        <img src="http://localhost:8080/public/upload/{{userProfile.avatar}} " mat-card-avatar >
                         <mat-form-field class="full-width" appearance="outline" style="margin-top:10px;margin-left:10px;width:80%">
                           <mat-label>Bạn muốn chia sẻ điều gì?</mat-label>
                             <textarea
@@ -148,7 +148,7 @@
 
                     <mat-tab label="Đăng ảnh">
                       <form (ngSubmit)="onAddNewPost()" name="PostForm" [formGroup]="PostForm">
-                        <img src="https://the-social-network1.herokuapp.com/public/upload/{{userProfile.avatar}} " mat-card-avatar >
+                        <img src="http://localhost:8080/public/upload/{{userProfile.avatar}} " mat-card-avatar >
                         <mat-form-field class="full-width" appearance="outline" style="margin-top:10px;margin-left:10px;width:75%">
                           <mat-label>Bạn muốn chia sẻ điều gì?</mat-label>
                             <textarea
@@ -177,7 +177,7 @@
               <div class="Post" *ngFor="let post of getPost">
                 <mat-card class="example-card">
                 <mat-card-header>
-                  <img mat-card-avatar class="example-header-image" src="https://the-social-network1.herokuapp.com/public/upload/{{post.UserAvatar}}"/>
+                  <img mat-card-avatar class="example-header-image" src="http://localhost:8080/public/upload/{{post.UserAvatar}}"/>
                   <mat-card-title>{{post.UserName}}</mat-card-title>
                   <mat-card-subtitle>{{post.date}}</mat-card-subtitle>
                   <button *ngIf="_auth.loggedIn()" mat-button (click)="DeletePost(post.Post_ID)" class="DeleteBtn">X</button>
@@ -185,7 +185,7 @@
                 <mat-card-content>
                   <textarea autosize name="name" class="textAreaPost" disabled>{{post.content}}</textarea>
                 </mat-card-content>
-                <img mat-card-image *ngIf="post.images != null" src="https://the-social-network1.herokuapp.com/public/upload/{{post.images}}" >
+                <img mat-card-image *ngIf="post.images != null" src="http://localhost:8080/public/upload/{{post.images}}" >
                 <mat-card-actions *ngIf="_auth.loggedIn()">
                   <div class="PostLayoutLikeCount">
                     <mat-icon>favorite</mat-icon>{{post.like}}
@@ -201,7 +201,7 @@
                   <div class="comment" *ngFor = "let comment of post.Comments" style="padding: 10px 10px; margin-top:10px; margin-bottom:10px;  ">
                     <div class="row">
                       <div class="col-sm-1">
-                        <img mat-card-avatar src="https://the-social-network1.herokuapp.com/public/upload/{{comment.avatar}}">
+                        <img mat-card-avatar src="http://localhost:8080/public/upload/{{comment.avatar}}">
                       </div>
                       <div class="col-sm-11">
                         <div class="rightCommentLayout">
@@ -216,7 +216,7 @@
                     </div>
                   </div>
                   <form (ngSubmit)="onAddNewComment(post.Post_ID)" name="CommentForm" [formGroup]="CommentForm" *ngIf="_auth.loggedIn()">
-                    <img src="https://the-social-network1.herokuapp.com/public/upload/{{userProfile.avatar}} " mat-card-avatar >
+                    <img src="http://localhost:8080/public/upload/{{userProfile.avatar}} " mat-card-avatar >
                     <mat-form-field class="full-width" style="margin-left:10px; margin-right:10px; width:65%" >
                       <mat-label>Để lại bình luận...</mat-label>
                       <input matInput placeholder="Đợi chút, bức ảnh này..." class="full-width" formControlName="content"/>
@@ -330,7 +330,7 @@
         <div *ngIf="countFriend > 0">
           <mat-card class="FriendListCard" *ngFor="let friend of getProfileFriend">
             <div class="">
-              <img src="https://the-social-network1.herokuapp.com/public/upload/{{friend.avatar}}" routerLink="/profile/{{friend.Friend_ID}}"  mat-card-avatar >
+              <img src="http://localhost:8080/public/upload/{{friend.avatar}}" routerLink="/profile/{{friend.Friend_ID}}"  mat-card-avatar >
               <span routerLink="/profile/{{friend.Friend_ID}}" >{{friend.name}}</span>
               <button mat-button style="float: right;" (click)="UnFriend(friend.Friend_ID)" *ngIf="_auth.loggedIn() && checkPermission"><mat-icon>clear</mat-icon></button>
             </div>

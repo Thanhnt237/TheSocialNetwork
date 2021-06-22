@@ -1,7 +1,7 @@
 <mat-tab-group mat-align-tabs="center" *ngIf="isAdmin">
   <mat-tab label="Đăng bài viết">
     <form class="form-group">
-      <img src="https://the-social-network1.herokuapp.com/public/upload/{{userProfile.avatar}} " mat-card-avatar >
+      <img src="http://localhost:8080/public/upload/{{userProfile.avatar}} " mat-card-avatar >
       <mat-form-field class="full-width" appearance="outline" style="margin-top:10px;margin-left:10px;width:80%">
         <mat-label>Bạn muốn chia sẻ điều gì?</mat-label>
           <textarea
@@ -20,7 +20,7 @@
 
   <mat-tab label="Đăng ảnh">
     <form (ngSubmit)="onAddNewNews()" name="NewsForm" [formGroup]="NewsForm">
-      <img src="https://the-social-network1.herokuapp.com/public/upload/{{userProfile.avatar}} " mat-card-avatar >
+      <img src="http://localhost:8080/public/upload/{{userProfile.avatar}} " mat-card-avatar >
       <mat-form-field class="full-width" appearance="outline" style="margin-top:10px;margin-left:10px;width:75%">
         <mat-label>Bạn muốn chia sẻ điều gì?</mat-label>
           <textarea
@@ -46,14 +46,14 @@
   <div class="Post" *ngFor="let post of getPost">
     <mat-card class="example-card">
     <mat-card-header>
-      <img mat-card-avatar class="example-header-image" src="https://the-social-network1.herokuapp.com/public/upload/{{post.UserAvatar}}"/>
+      <img mat-card-avatar class="example-header-image" src="http://localhost:8080/public/upload/{{post.UserAvatar}}"/>
       <mat-card-title>{{post.UserName}}</mat-card-title>
       <mat-card-subtitle>{{post.date}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <textarea autosize name="name" class="textAreaPost" disabled>{{post.content}}</textarea>
     </mat-card-content>
-    <img mat-card-image *ngIf="post.images != null" src="https://the-social-network1.herokuapp.com/public/upload/{{post.images}}" >
+    <img mat-card-image *ngIf="post.images != null" src="http://localhost:8080/public/upload/{{post.images}}" >
   </mat-card>
   </div>
 </div>

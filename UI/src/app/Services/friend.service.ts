@@ -7,14 +7,14 @@ import { Router } from "@angular/router";
 })
 export class FriendService {
 
-  readonly _getFriendRequestUrl = "https://the-social-network1.herokuapp.com/api/Friend/getAllFriendRequest";
-  readonly _sendFriendRequestUrl = "https://the-social-network1.herokuapp.com/api/Friend/FriendRequest/";
-  readonly _getFriendUrl = "https://the-social-network1.herokuapp.com/api/Friend/getAllFriend";
-  readonly _acceptFriendUrl = "https://the-social-network1.herokuapp.com/api/Friend/AcceptFriend/";
-  readonly _deleteFriendUrl = "https://the-social-network1.herokuapp.com/api/Friend/DeleteFriendRequest/";
+  readonly _getFriendRequestUrl = "http://localhost:8080/api/Friend/getAllFriendRequest";
+  readonly _sendFriendRequestUrl = "http://localhost:8080/api/Friend/FriendRequest/";
+  readonly _getFriendUrl = "http://localhost:8080/api/Friend/getAllFriend";
+  readonly _acceptFriendUrl = "http://localhost:8080/api/Friend/AcceptFriend/";
+  readonly _deleteFriendUrl = "http://localhost:8080/api/Friend/DeleteFriendRequest/";
 
-  readonly _unFriendUrl = "https://the-social-network1.herokuapp.com/api/Friend/DeleteFriend/";
-  readonly _getProfileFriend = "https://the-social-network1.herokuapp.com/api/Friend/getProfileFriend/";
+  readonly _unFriendUrl = "http://localhost:8080/api/Friend/DeleteFriend/";
+  readonly _getProfileFriend = "http://localhost:8080/api/Friend/getProfileFriend/";
 
   constructor(
     private http: HttpClient,
