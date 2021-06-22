@@ -182,14 +182,15 @@
                   <mat-card-subtitle>{{post.date}}</mat-card-subtitle>
                   <button *ngIf="_auth.loggedIn()" mat-button (click)="DeletePost(post.Post_ID)" class="DeleteBtn">X</button>
                 </mat-card-header>
-                <mat-card-content>
+                <mat-card-content style="margin-bottom:0px;">
                   <textarea autosize name="name" class="textAreaPost" disabled>{{post.content}}</textarea>
                 </mat-card-content>
-                <img mat-card-image *ngIf="post.images != null" src="http://localhost:8080/public/upload/{{post.images}}" >
+                <img mat-card-image *ngIf="post.images != null" src="http://localhost:8080/public/upload/{{post.images}}" style="margin-bottom:0px;">
                 <mat-card-actions *ngIf="_auth.loggedIn()">
                   <div class="PostLayoutLikeCount">
-                    <mat-icon>favorite</mat-icon>{{post.like}}
-                    <mat-icon>comment</mat-icon>
+                    <span style="padding:10px 0px; "><mat-icon style="margin-top:3px;">favorite</mat-icon></span>
+                    <span style="font-size:18px; vertical-align: middle;">{{post.like}}</span>
+                    <span><mat-icon>comment</mat-icon></span>
                   </div>
                   <button mat-button style="color:green" *ngIf="post.isLiked" (click)="unLikePost(post)">Thích</button>
                   <button mat-button *ngIf="!post.isLiked" (click)="LikePost(post)">Thích</button>
