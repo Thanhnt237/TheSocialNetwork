@@ -7,10 +7,10 @@ import { Router } from "@angular/router";
 })
 export class NewsService {
 
-  readonly _checkAdminUrl = "http://localhost:8080/api/News/CheckAdmin"
-  readonly _AddNewNewsUrl = "http://localhost:8080/api/News/new"
-  readonly _AddNewNewsNoImageUrl = "http://localhost:8080/api/News/new/newsNoImage"
-  readonly _getAllNewsUrl = "http://localhost:8080/api/News/getAllNews"
+  readonly _checkAdminUrl = "https://the-social-network1.herokuapp.com/api/News/CheckAdmin"
+  readonly _AddNewNewsUrl = "https://the-social-network1.herokuapp.com/api/News/new"
+  readonly _AddNewNewsNoImageUrl = "https://the-social-network1.herokuapp.com/api/News/new/newsNoImage"
+  readonly _getAllNewsUrl = "https://the-social-network1.herokuapp.com/api/News/getAllNews"
 
   constructor(
     private http: HttpClient,

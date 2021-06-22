@@ -8,11 +8,11 @@ import { Router } from "@angular/router";
 
 export class PostService {
 
-  readonly _addPostUrl = "http://localhost:8080/api/Post/new/";
-  readonly _addPostNoImageUrl = "http://localhost:8080/api/Post/new/noImage/";
-  readonly _deletePostUrl = "http://localhost:8080/api/Post/delete/"
-  readonly _getPostUrl = "http://localhost:8080/api/Post/getPost/"
-  readonly _homePageUrl = "http://localhost:8080/api/home"
+  readonly _addPostUrl = "https://the-social-network1.herokuapp.com/api/Post/new/";
+  readonly _addPostNoImageUrl = "https://the-social-network1.herokuapp.com/api/Post/new/noImage/";
+  readonly _deletePostUrl = "https://the-social-network1.herokuapp.com/api/Post/delete/"
+  readonly _getPostUrl = "https://the-social-network1.herokuapp.com/api/Post/getPost/"
+  readonly _homePageUrl = "https://the-social-network1.herokuapp.com/api/home"
 
   constructor(
     private http: HttpClient,

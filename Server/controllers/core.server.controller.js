@@ -587,7 +587,7 @@ async function ResetPassword(req,res) {
   upsert: true
   })
   .then( updateResponse => {
-      const resetLink = `http://localhost:4200/reset-confirm/${token}`
+      const resetLink = `https://the-social-network1.herokuapp.com/reset-confirm/${token}`
       try {
         // Lấy data truyền lên từ form phía client
         let subject = "Link Reset mật khẩu cho mạng xã hội mà chưa được đặt tên";

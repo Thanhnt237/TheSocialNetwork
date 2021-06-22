@@ -43,12 +43,12 @@
 
   <span class="" *ngIf="_authService.loggedIn()">
     <button mat-button [matMenuTriggerFor]="menu">
-      <img mat-card-avatar src="http://localhost:8080/public/upload/{{userProfile.avatar}}">
+      <img mat-card-avatar src="https://the-social-network1.herokuapp.com/public/upload/{{userProfile.avatar}}">
       <span> {{userProfile.name}} </span>
     </button>
     <mat-menu #menu="matMenu">
       <a mat-menu-item [routerLink]="['/profile/',userProfile.userId]">
-        <img mat-card-avatar src="http://localhost:8080/public/upload/{{userProfile.avatar}}">
+        <img mat-card-avatar src="https://the-social-network1.herokuapp.com/public/upload/{{userProfile.avatar}}">
         {{userProfile.name}}
       </a>
       <button mat-menu-item [routerLink]="['/setting']">Cài đặt</button>
