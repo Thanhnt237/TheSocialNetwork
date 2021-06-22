@@ -56,7 +56,7 @@ module.exports = function(io) {
   });
 
   io.of('/api/chat-room').on('connection', function(socket,res) {
-    /*
+
     listSocket.push(socket.id)
     socket.join("Global")
     io.to("Global").emit("Client-Join", ()=>{
@@ -67,7 +67,7 @@ module.exports = function(io) {
         console.log("Socket" + socket.id + "disconnected!")
       })
     })
-    */
+    
   })
 
   //Left Navbar

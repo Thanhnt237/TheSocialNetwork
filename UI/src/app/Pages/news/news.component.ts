@@ -67,8 +67,25 @@ export class NewsComponent implements OnInit {
   }
 
   onAddNewNews(){
-
+    if (!this.NewsForm.valid) {
+      return;
+    }
+    this.AddNewNews();
   }
+
+  AddNewNews(){
+    const NewsFormData = new FormData();
+    NewsFormData.append('images',this.NewsForm.value.images);
+    NewsFormData.append('content',this.NewsForm.value.content);
+    if(this.isAdmin){
+      this._news.AddNewNews(NewsFormData)
+        .subscribe(
+          res => this.ngOnInit(),
+          err => this.ngOnInit()
+        )
+    }
+  }
+
 
   getAllNews(){
     this._news.getAllNews()
@@ -111,6 +128,9 @@ export class NewsComponent implements OnInit {
   }
 
   UploadImages(event: any){
-
+    const file = event.target.files[0];
+      this.NewsForm.patchValue({
+        images: file
+      })
   }
 }

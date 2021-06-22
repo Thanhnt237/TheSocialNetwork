@@ -21,7 +21,9 @@
 .right{
 
 }
-
+.b{
+  font-size: 12pt;
+}
 .searchBox{
   background-color: none;
 }

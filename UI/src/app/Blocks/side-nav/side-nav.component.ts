@@ -21,7 +21,7 @@ export class SideNavComponent implements OnInit {
   humidity:any = '0';
   rainState: any = '0';
   UVLevel: any = '0';
-  plasticBottle: any = '0';
+  plasticBottle: any = '5';
 
   alertError: boolean = false;
   errCatching = '';
@@ -68,8 +68,8 @@ export class SideNavComponent implements OnInit {
     this.UVLevel = data;
     })
 
-    this._websocketService.listenLeftNav("Server-Sent-Value").subscribe((data:any)=>{
-    this.plasticBottle = data;
+    //this._websocketService.listenLeftNav("Server-Sent-Value").subscribe((data:any)=>{
+    //this.plasticBottle = data;
     })
 
     this.getAllFriend();
