@@ -8,9 +8,9 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SearchService {
 
-  readonly _searchUrl = "http://localhost:8080/api/SearchBarLoggedIn";
-  readonly _searchNoLoginUrl = "http://localhost:8080/api/SearchBarNoLogin";
-  readonly _searchHistoriesUrl = "http://localhost:8080/api/getSearchHistories";
+  readonly _searchUrl = "https://the-social-network1.herokuapp.com/api/SearchBarLoggedIn";
+  readonly _searchNoLoginUrl = "https://the-social-network1.herokuapp.com/api/SearchBarNoLogin";
+  readonly _searchHistoriesUrl = "https://the-social-network1.herokuapp.com/api/getSearchHistories";
 
   private searchInput = new BehaviorSubject(['Default message']);
   searchResult = this.searchInput.asObservable();

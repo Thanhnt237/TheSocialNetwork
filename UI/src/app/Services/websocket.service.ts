@@ -14,9 +14,9 @@ export class WebsocketService {
   leftSocket: any;
   rightSocket: any;
 
-  readonly _rightNavUrl: string = "localhost:8080/api/right-nav"
-  readonly _leftNavUrl: string = "localhost:8080"
-  readonly _chatUrl: string = "localhost:8080/api/chat"
+  readonly _rightNavUrl: string = "https://the-social-network1.herokuapp.com/api/right-nav"
+  readonly _leftNavUrl: string = "https://the-social-network1.herokuapp.com/"
+  readonly _chatUrl: string = "https://the-social-network1.herokuapp.com/api/chat"
 
   constructor(){
     this.leftSocket = io(this._leftNavUrl);

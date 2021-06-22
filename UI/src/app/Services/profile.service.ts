@@ -7,20 +7,20 @@ import { Router } from "@angular/router";
 })
 export class ProfileService {
 
-    readonly _baseToolbarUrl = "http://localhost:8080/api/toolbar-profile";
-    readonly _baseProfileUrl = "http://localhost:8080/api/profile/";
-    readonly _editProfileUrl = "http://localhost:8080/api/edit-profile";
-    readonly _changeAvatarUrl = "http://localhost:8080/api/change-avatar";
-    readonly _changeCoverUrl = "http://localhost:8080/api/change-cover";
+    readonly _baseToolbarUrl = "https://the-social-network1.herokuapp.com/api/toolbar-profile";
+    readonly _baseProfileUrl = "https://the-social-network1.herokuapp.com/api/profile/";
+    readonly _editProfileUrl = "https://the-social-network1.herokuapp.com/api/edit-profile";
+    readonly _changeAvatarUrl = "https://the-social-network1.herokuapp.com/api/change-avatar";
+    readonly _changeCoverUrl = "https://the-social-network1.herokuapp.com/api/change-cover";
 
-    readonly _editDescriptionUrl = "http://localhost:8080/api/edit-profile/description";
-    readonly _editNameUrl = "http://localhost:8080/api/edit-profile/name";
-    readonly _editGenderUrl = "http://localhost:8080/api/edit-profile/gender";
-    readonly _editDoBUrl = "http://localhost:8080/api/edit-profile/DoB";
-    readonly _editAddressUrl = "http://localhost:8080/api/edit-profile/address";
-    readonly _editPhoneUrl = "http://localhost:8080/api/edit-profile/phone";
+    readonly _editDescriptionUrl = "https://the-social-network1.herokuapp.com/api/edit-profile/description";
+    readonly _editNameUrl = "https://the-social-network1.herokuapp.com/api/edit-profile/name";
+    readonly _editGenderUrl = "https://the-social-network1.herokuapp.com/api/edit-profile/gender";
+    readonly _editDoBUrl = "https://the-social-network1.herokuapp.com/api/edit-profile/DoB";
+    readonly _editAddressUrl = "https://the-social-network1.herokuapp.com/api/edit-profile/address";
+    readonly _editPhoneUrl = "https://the-social-network1.herokuapp.com/api/edit-profile/phone";
 
-    readonly _checkPermissionUrl = "http://localhost:8080/api/profile/checkPermission/";
+    readonly _checkPermissionUrl = "https://the-social-network1.herokuapp.com/api/profile/checkPermission/";
 
     constructor(
       private http: HttpClient,

@@ -69,12 +69,28 @@ export class HomeComponent implements OnInit {
     this._post.RenderHomePage().subscribe(
       res=>{
         this.getPost = res;
-        console.log(this.getPost)
+        this.getPost.forEach(post => {
+          this._reaction.CheckLiked(post.Post_ID).subscribe(
+            res => post.isLiked = res,
+            err => console.log(err)
+          )
+          this._reaction.CountLike(post.Post_ID).subscribe(
+            res => post.like = res,
+            err => console.log(err)
+          )
+          this._comment.getAllComment(post.Post_ID).subscribe(
+            res => post.Comments =res,
+            err => console.log(err)
+          )
+        });
+        //console.log(this.getPost)
       },
       err=>{
         console.log(err)
       }
     )
+
+
 
     this.refreshToolbar();
   }

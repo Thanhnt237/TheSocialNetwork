@@ -19,6 +19,7 @@ app.use(bodyParser.json({extended: true}));
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/public', express.static('public'));
+app.use(express.static(__dirname + '/UI'));
 app.use(cors());
 
 app.set('view engine', 'ejs');
@@ -28,43 +29,9 @@ app.set('views', './views');
 app.use('/', routes);
 
 
-app.get('/', function(req, res) {
-   res.sendFile(__dirname + '/index.html');
+app.all('/*', function(req, res) {
+   res.sendFile('index.html', { root: __dirname });
 });
-io.on('connection', function(socket) {
-   console.log('A user connected');
-
-   //Whenever someone disconnects this piece of code executed
-   socket.on('disconnect', function () {
-      console.log('A user disconnected');
-   });
-   socket.on('ESP-SENT-Temperature', function (msg) {
-   console.log("Temperature: "+msg+" *C");
-   });
-
-socket.on('ESP-SENT-Humidity', function (msg1) {
-   console.log("Humidity: "+msg1+" %");
-   });
-
-socket.on('ESP-SENT-RainState', function (msg2) {
-   console.log("RainState: "+msg2);
-   });
-
-socket.on('ESP-SENT-UVLevel', function (msg3) {
-   console.log("UV Level: "+msg3);
-   });
-
-socket.on('ESP-SENT-Value', function (msg4) {
-   console.log("Value: "+msg4);
-   });
-   timeout();
-});
-function timeout() {
-  setTimeout(function () {
-   io.emit("reply","A message from server");
-    timeout();
-  }, 5000);
-}
 
 server.listen(PORT, () => {
   console.log("Server running on PORT -> " + PORT);

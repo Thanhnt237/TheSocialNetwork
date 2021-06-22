@@ -7,7 +7,7 @@ import { Router } from "@angular/router";
 })
 export class ChatService {
 
-  readonly _getChatForClient = "http://localhost:8080/api/Chat/";
+  readonly _getChatForClient = "https://the-social-network1.herokuapp.com/api/Chat/";
 
   constructor(
     private http: HttpClient,

@@ -7,8 +7,8 @@ import { Router } from "@angular/router";
 })
 export class CommentService {
 
-  readonly _addCommentUrl = "http://localhost:8080/api/Comments/new/";
-  readonly _getCommentUrl = "http://localhost:8080/api/Comment/getComment/";
+  readonly _addCommentUrl = "https://the-social-network1.herokuapp.com/api/Comments/new/";
+  readonly _getCommentUrl = "https://the-social-network1.herokuapp.com/api/Comment/getComment/";
 
   constructor(
     private http: HttpClient,

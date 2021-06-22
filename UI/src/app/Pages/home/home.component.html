@@ -2,7 +2,7 @@
 <div class="Post" *ngFor="let post of getPost">
   <mat-card class="example-card">
   <mat-card-header>
-    <img mat-card-avatar class="example-header-image" src="http://localhost:8080/public/upload/{{post.UserAvatar}}"/>
+    <img mat-card-avatar class="example-header-image" src="https://the-social-network1.herokuapp.com/public/upload/{{post.UserAvatar}}"/>
     <mat-card-title>{{post.UserName}}</mat-card-title>
     <mat-card-subtitle>{{post.date}}</mat-card-subtitle>
     <button mat-button (click)="DeletePost(post.Post_ID)" class="DeleteBtn">X</button>
@@ -10,7 +10,7 @@
   <mat-card-content>
     <textarea autosize disabled cols="80">{{post.content}}</textarea>
   </mat-card-content>
-  <img mat-card-image *ngIf="post.images != null" src="http://localhost:8080/public/upload/{{post.images}}" >
+  <img mat-card-image *ngIf="post.images != null" src="https://the-social-network1.herokuapp.com/public/upload/{{post.images}}" >
   <mat-card-actions>
     <div class="PostLayoutLikeCount">
       <mat-icon>favorite</mat-icon>{{post.like}}
@@ -26,7 +26,7 @@
     <div class="comment" *ngFor = "let comment of post.Comments" style="padding: 10px 10px; margin-top:10px; margin-bottom:10px;  ">
       <div class="row">
         <div class="col-sm-1">
-          <img mat-card-avatar src="http://localhost:8080/public/upload/{{comment.avatar}}">
+          <img mat-card-avatar src="https://the-social-network1.herokuapp.com/public/upload/{{comment.avatar}}">
         </div>
         <div class="col-sm-11">
           <div class="rightCommentLayout">
@@ -41,7 +41,7 @@
       </div>
     </div>
     <form (ngSubmit)="onAddNewComment(post.Post_ID)" name="CommentForm" [formGroup]="CommentForm">
-      <img src="http://localhost:8080/public/upload/{{userProfile.avatar}} " mat-card-avatar >
+      <img src="https://the-social-network1.herokuapp.com/public/upload/{{userProfile.avatar}} " mat-card-avatar >
       <mat-form-field class="full-width" style="margin-left:10px; margin-right:10px; width:65%" >
         <mat-label>Để lại bình luận...</mat-label>
         <input matInput placeholder="Đợi chút, bức ảnh này..." class="full-width" formControlName="content"/>
