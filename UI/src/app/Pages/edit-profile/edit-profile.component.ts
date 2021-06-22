@@ -52,11 +52,11 @@ export class EditProfileComponent implements OnInit {
             this._auth.changePassword(this.UserData)
             .subscribe(
               res => {
-                console.log(res);
+                //console.log(res);
                 this._router.navigate(['/']);
               },
               err => {
-                console.log(err);
+                //console.log(err);
                 this._router.navigate(['/']);
             }
             )

@@ -66,7 +66,9 @@ export class ToolbarComponent implements OnInit {
     this._search.getSearchHistories()
       .subscribe(
         res => this.options = res,
-        err => console.log(err)
+        err => {
+          //console.log(err)
+        }
       )
   }
 
@@ -77,7 +79,7 @@ export class ToolbarComponent implements OnInit {
           this.userProfile = res;
         },
         err=>{
-          console.log(err);
+          //console.log(err);
         }
       )
   }
@@ -91,7 +93,7 @@ export class ToolbarComponent implements OnInit {
         err=>{
           this.noFriendQueue = true;
           this.noFriendQueueCatching = err.error;
-          console.log(this.noFriendQueueCatching)
+          //console.log(this.noFriendQueueCatching)
         }
       )
   }
@@ -142,9 +144,12 @@ export class ToolbarComponent implements OnInit {
   Logout(){
     this._authService.setOfflineState()
       .subscribe(
-        res => console.log(res),
-        err => console.log(err)
-      )
+        res => {
+          //console.log(res)
+        },
+        err => {
+          //console.log(err)
+        })
 
     this._authService.logoutUser();
   }

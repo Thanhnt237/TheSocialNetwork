@@ -56,15 +56,15 @@ export class RegisterComponent implements OnInit {
           this._auth.registerUser(this.registerUserData)
           .subscribe(
             res => {
-              console.log(res);
+              //console.log(res);
               localStorage.setItem('token', res.token);
               window.location.replace('/')
             },
             err => {
-            console.log(err);
+            //console.log(err);
             this.alertError = true;
             this.errCatching = err.error;
-            console.log(this.errCatching);
+            //console.log(this.errCatching);
           }
           )
         }

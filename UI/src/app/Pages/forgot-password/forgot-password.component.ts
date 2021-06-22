@@ -46,16 +46,16 @@ export class ForgotPasswordComponent implements OnInit {
         this._reset.resetPassword(this.UserData)
         .subscribe(
           res => {
-            console.log(res);
+            //console.log(res);
             this.alertError = true;
             this.errCatching = res;
-            console.log(this.errCatching);
+            //console.log(this.errCatching);
           },
           err => {
-            console.log(err);
+            //console.log(err);
             this.alertError = true;
             this.errCatching = err.error;
-            console.log(this.errCatching);
+            //console.log(this.errCatching);
           }
         )
       }

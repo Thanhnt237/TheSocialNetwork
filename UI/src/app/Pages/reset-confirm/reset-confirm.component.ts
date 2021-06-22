@@ -33,15 +33,15 @@ export class ResetConfirmComponent implements OnInit {
     ngOnInit() {
       this._activatedRoute.paramMap.subscribe(params => {
       this.token = params.get('token');
-      console.log(this.token);
+      //console.log(this.token);
 
        this._rsCf.getResetConfirm(this.token)
         .subscribe(
           res => {
-          console.log(res);
+          //console.log(res);
         },
           err => {
-            console.log(err);
+            //console.log(err);
           }
         )
       });
@@ -60,15 +60,15 @@ export class ResetConfirmComponent implements OnInit {
     this._rsCf.PostNewPassword(this.token, this.userData)
     .subscribe(
       res => {
-        console.log(res);
+        //console.log(res);
         this.alertError = true;
         this.errCatching = res;
       },
       err => {
-        console.log(err);
+        //console.log(err);
         this.alertError = true;
         this.errCatching = err.error;
-        console.log(this.errCatching);
+        //console.log(this.errCatching);
       }
     )
   }

@@ -55,7 +55,7 @@ export class ChatComponent implements OnInit {
             this.friend = res;
           },
           err=>{
-            console.log(err)
+            //console.log(err)
           }
         )
     })
@@ -66,7 +66,7 @@ export class ChatComponent implements OnInit {
           this.you = res;
         },
         err=>{
-          console.log(err);
+          //console.log(err);
         }
       )
 
@@ -76,10 +76,10 @@ export class ChatComponent implements OnInit {
           .subscribe(
             res=>{
               this.listMessages = res;
-              console.log(this.listMessages)
+              //console.log(this.listMessages)
             },
             err=>{
-              console.log(err)
+              //console.log(err)
             }
           )
       })

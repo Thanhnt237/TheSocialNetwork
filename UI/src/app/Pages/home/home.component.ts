@@ -72,21 +72,25 @@ export class HomeComponent implements OnInit {
         this.getPost.forEach(post => {
           this._reaction.CheckLiked(post.Post_ID).subscribe(
             res => post.isLiked = res,
-            err => console.log(err)
+            err => {
+              //console.log(err)
+            }
           )
           this._reaction.CountLike(post.Post_ID).subscribe(
             res => post.like = res,
-            err => console.log(err)
-          )
+            err => {
+              //console.log(err)
+            })
           this._comment.getAllComment(post.Post_ID).subscribe(
             res => post.Comments =res,
-            err => console.log(err)
-          )
+            err => {
+              //console.log(err)
+            })
         });
         //console.log(this.getPost)
       },
       err=>{
-        console.log(err)
+        //console.log(err)
       }
     )
 
@@ -102,7 +106,7 @@ export class HomeComponent implements OnInit {
           this.userProfile = res;
         },
         err=>{
-          console.log(err);
+          //console.log(err);
         }
       )
   }
@@ -121,10 +125,10 @@ export class HomeComponent implements OnInit {
     this._post.DeletePost(postId)
       .subscribe(
         res => {
-          console.log(res);
+          //console.log(res);
         },
         err => {
-          console.log(err);
+          //console.log(err);
         }
       )
   }
@@ -140,13 +144,13 @@ export class HomeComponent implements OnInit {
     this._comment.AddNewComment(PostId, this.CommentForm.value)
     .subscribe(
       res => {
-        console.log(res);
+        //console.log(res);
       },
       err => {
-        console.log(err);
+        //console.log(err);
         this.alertError = true;
         this.errCatching = err.error;
-        console.log(this.errCatching);
+        //console.log(this.errCatching);
       }
     )
   }
@@ -155,18 +159,24 @@ export class HomeComponent implements OnInit {
     post.isLiked = !post.isLiked;
     post.like += 1;
     this._reaction.Like(post.Post_ID).subscribe(
-      res => console.log(res),
-      err => console.log(err)
-    )
+      res => {
+        //console.log(res)
+      },
+      err => {
+        //console.log(err)
+      })
   }
 
   unLikePost(post: any){
     post.isLiked = !post.isLiked;
     post.like -= 1;
     this._reaction.unLike(post.Post_ID).subscribe(
-      res => console.log(res),
-      err => console.log(err)
-    )
+      res => {
+        //console.log(res)
+      },
+      err => {
+        //console.log(err)
+      })
   }
 
 }

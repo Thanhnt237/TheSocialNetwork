@@ -135,7 +135,7 @@ export class ProfileComponent implements OnInit {
             //console.log(this.userProfile)
           },
           err=>{
-            console.log(err);
+            //console.log(err);
           }
         )
       this._post.GetPost(this.userId)
@@ -145,44 +145,52 @@ export class ProfileComponent implements OnInit {
             this.getPost.forEach(post => {
               this._reaction.CheckLiked(post.Post_ID).subscribe(
                 res => post.isLiked = res,
-                err => console.log(err)
-              )
+                err => {
+                  //console.log(err)
+                })
               this._reaction.CountLike(post.Post_ID).subscribe(
                 res => post.like = res,
-                err => console.log(err)
-              )
+                err => {
+                  //console.log(err)
+                })
               this._comment.getAllComment(post.Post_ID).subscribe(
                 res => post.Comments =res,
-                err => console.log(err)
-              )
+                err => {
+                  //console.log(err)
+                })
             });
-            console.log(res);
+            //console.log(res);
           },
-          err=>{
-            console.log(err);
+          err =>{
+            //console.log(err);
           }
         )
 
       this._count.CountPost(this.userId).subscribe(
         res => this.countPost = res,
-        err => console.log(err)
-      )
+        err => {
+          //console.log(err)
+        })
       this._count.CountLike(this.userId).subscribe(
         res => this.countLike = res,
-        err => console.log(err)
-      )
+        err => {
+          //console.log(err)
+        })
       this._count.CountFriend(this.userId).subscribe(
         res => this.countFriend = res,
-        err => console.log(err)
-      )
+        err => {
+          //console.log(err)
+        })
       this._friend.GetProfileFriend(this.userId).subscribe(
         res => this.getProfileFriend = res,
-        err => console.log(err)
-      )
+        err => {
+          //console.log(err)
+        })
       this._profile.CheckPermission(this.userId).subscribe(
         res => this.checkPermission = res,
-        err => console.log(err)
-      )
+        err => {
+          //console.log(err)
+        })
     });
   }
 
@@ -201,10 +209,10 @@ export class ProfileComponent implements OnInit {
         this._friend.SendFriendRequest(params.get('userId'),"anything")
           .subscribe(
             res=>{
-              console.log(res)
+              //console.log(res)
             },
             err=>{
-              console.log(err)
+              //console.log(err)
             }
           )
       })
@@ -233,7 +241,7 @@ export class ProfileComponent implements OnInit {
       err => {
         this.alertError = true;
         this.errCatching = err.error;
-        console.log(this.errCatching);
+        //console.log(this.errCatching);
         this.ngOnInit()
         this.CommentForm.reset()
       }
@@ -256,7 +264,7 @@ export class ProfileComponent implements OnInit {
     this._profile.ChangeAvatar(formdata)
       .subscribe(
         res => {
-          console.log(res);
+          //console.log(res);
           let userId = this._activatedRoute.snapshot.paramMap.get('userId')
           this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
               this._router.navigate([`/profile/${userId}`]);
@@ -278,7 +286,7 @@ export class ProfileComponent implements OnInit {
     this._profile.ChangeCover(formdata)
       .subscribe(
         res => {
-          console.log(res);
+          //console.log(res);
           let userId = this._activatedRoute.snapshot.paramMap.get('userId')
           this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
               this._router.navigate([`/profile/${userId}`]);
@@ -295,7 +303,7 @@ export class ProfileComponent implements OnInit {
     this._post.DeletePost(postId)
       .subscribe(
         res => {
-          console.log(res);
+          //console.log(res);
           let userId = this._activatedRoute.snapshot.paramMap.get('userId')
           this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
               this._router.navigate([`/profile/${userId}`]);
@@ -311,12 +319,12 @@ export class ProfileComponent implements OnInit {
     const PostFormData = new FormData();
     PostFormData.append('images',this.PostForm.value.images);
     PostFormData.append('content',this.PostForm.value.content);
-    console.log(PostFormData);
+    //console.log(PostFormData);
     this._activatedRoute.paramMap.subscribe(params=>{
       this._post.AddNewPost(params.get('userId'), PostFormData)
       .subscribe(
         res => {
-          console.log(res);
+          //console.log(res);
           let userId = this._activatedRoute.snapshot.paramMap.get('userId')
           this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
               this._router.navigate([`/profile/${userId}`]);
@@ -335,7 +343,7 @@ export class ProfileComponent implements OnInit {
       this._post.AddNewPostNoImage(params.get('userId'), this.postNoImage)
         .subscribe(
           res =>{
-            console.log(res);
+            //console.log(res);
             let userId = this._activatedRoute.snapshot.paramMap.get('userId')
             this._router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
                 this._router.navigate([`/profile/${userId}`]);
@@ -354,7 +362,9 @@ export class ProfileComponent implements OnInit {
     if(this._auth.loggedIn()){
       this._profile.EditDescription(this.editProfile)
       .subscribe(
-        res=> console.log(res),
+        res=> {
+          //console.log(res)
+        },
         err => {
           this.ngOnInit();
           this.editProfile.description = ''
@@ -368,7 +378,9 @@ export class ProfileComponent implements OnInit {
     if(this._auth.loggedIn()){
       this._profile.EditName({"name": this.editProfile.name})
       .subscribe(
-        res=> console.log(res),
+        res=> {
+          //console.log(res)
+        },
         err => {
           this.ngOnInit();
           this.editProfile.name = ''
@@ -381,7 +393,9 @@ export class ProfileComponent implements OnInit {
     if(this._auth.loggedIn()){
       this._profile.EditGender({"gender": this.editProfile.gender})
       .subscribe(
-        res=> console.log(res),
+        res=> {
+          //console.log(res)
+        },
         err => {
           this.ngOnInit();
           this.editProfile.gender = ''
@@ -394,7 +408,9 @@ export class ProfileComponent implements OnInit {
     if(this._auth.loggedIn()){
       this._profile.EditDoB({"DoB": this.date.value})
       .subscribe(
-        res=> console.log(res),
+        res=> {
+          //console.log(res)
+        },
         err => {
           this.ngOnInit();
           this.date.reset();
@@ -407,7 +423,9 @@ export class ProfileComponent implements OnInit {
     if(this._auth.loggedIn()){
       this._profile.EditAddress({"address": this.editProfile.address})
       .subscribe(
-        res=> console.log(res),
+        res=> {
+          //console.log(res)
+        },
         err => {
           this.ngOnInit();
           this.editProfile.address = ''
@@ -420,7 +438,9 @@ export class ProfileComponent implements OnInit {
     if(this._auth.loggedIn()){
       this._profile.EditPhone({"phone": this.editProfile.phone})
       .subscribe(
-        res=> console.log(res),
+        res=> {
+          //console.log(res)
+        },
         err => {
           this.ngOnInit();
           this.editProfile.phone = ''

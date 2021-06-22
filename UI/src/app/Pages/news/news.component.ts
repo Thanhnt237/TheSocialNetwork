@@ -91,16 +91,18 @@ export class NewsComponent implements OnInit {
     this._news.getAllNews()
       .subscribe(
         res => this.getPost = res,
-        err => console.log(err)
-      )
+        err => {
+          //console.log(err)
+        })
   }
 
   getAdminProfile(){
     this._profile.getToolbarProfile()
       .subscribe(
         res => this.userProfile = res,
-        err => console.log(err)
-      )
+        err => {
+          //console.log(err)
+        })
   }
 
   CheckAdmin(){
@@ -108,8 +110,9 @@ export class NewsComponent implements OnInit {
       this._news.CheckAdmin()
       .subscribe(
         res => this.isAdmin = res,
-        err => console.log(err)
-      )
+        err => {
+          //console.log(err)
+        })
     }
   }
 
