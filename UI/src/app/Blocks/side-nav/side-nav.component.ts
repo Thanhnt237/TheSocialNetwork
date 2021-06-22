@@ -68,9 +68,12 @@ export class SideNavComponent implements OnInit {
     this.UVLevel = data;
     })
 
+    this._websocketService.listenLeftNav("Server-Sent-Value").subscribe((data:any)=>{
+    this.plasticBottle = data;
+    })
+
     //this._websocketService.listenLeftNav("Server-Sent-Value").subscribe((data:any)=>{
     //this.plasticBottle = data;
-    })
 
     this.getAllFriend();
   }
