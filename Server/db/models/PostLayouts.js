@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const moment = require('moment');
+const moment = require('moment-timezone');
 const PostLayoutsSchema = new mongoose.Schema({
     Post_ID:{
         type: mongoose.Schema.Types.ObjectId,
@@ -33,7 +33,7 @@ const PostLayoutsSchema = new mongoose.Schema({
     },
     date:{
         type: String,
-        default: moment().format('dddd, DD-MM-YYYY LTS'),
+        default: moment().tz("Asia/Ho_Chi_Minh").format('dddd, DD-MM-YYYY LTS'),
         required:true
     },
     Comments: []

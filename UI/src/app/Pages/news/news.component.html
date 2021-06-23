@@ -1,53 +1,55 @@
-<mat-tab-group mat-align-tabs="center" *ngIf="isAdmin">
-  <mat-tab label="Đăng bài viết">
-    <form class="form-group">
-      <img src="https://the-social-network1.herokuapp.com/public/upload/{{userProfile.avatar}} " mat-card-avatar >
-      <mat-form-field class="full-width" appearance="outline" style="margin-top:10px;margin-left:10px;width:80%">
-        <mat-label>Bạn muốn chia sẻ điều gì?</mat-label>
-          <textarea
-              class="CreatePost"
-              matInput
-              name="content"
-              placeholder="Bạn muốn chia sẻ điều gì?"
-              [(ngModel)]="newsNoImage.content" rows="2" cols="80">
-          </textarea>
-      </mat-form-field>
-      <a mat-raised-button class="UploadImages"></a>
-      <br />
-      <button mat-flat-button class="submitPostBtn" (click)="NewsNoImage()"> Chia sẻ </button>
-    </form>
-  </mat-tab>
+<div class="container" style="width:55%">
+  <mat-tab-group mat-align-tabs="center" *ngIf="isAdmin">
+    <mat-tab label="Đăng bài viết">
+      <form class="form-group">
+        <img src="https://the-social-network1.herokuapp.com/public/upload/{{userProfile.avatar}} " mat-card-avatar >
+        <mat-form-field class="full-width" appearance="outline" style="margin-top:10px;margin-left:10px;width:80%">
+          <mat-label>Bạn muốn chia sẻ điều gì?</mat-label>
+            <textarea
+                class="CreatePost"
+                matInput
+                name="content"
+                placeholder="Bạn muốn chia sẻ điều gì?"
+                [(ngModel)]="newsNoImage.content" rows="2" cols="80">
+            </textarea>
+        </mat-form-field>
+        <a mat-raised-button class="UploadImages"></a>
+        <br />
+        <button mat-flat-button class="submitPostBtn" (click)="NewsNoImage()"> Chia sẻ </button>
+      </form>
+    </mat-tab>
 
-  <mat-tab label="Đăng ảnh">
-    <form (ngSubmit)="onAddNewNews()" name="NewsForm" [formGroup]="NewsForm">
-      <img src="https://the-social-network1.herokuapp.com/public/upload/{{userProfile.avatar}} " mat-card-avatar >
-      <mat-form-field class="full-width" appearance="outline" style="margin-top:10px;margin-left:10px;width:75%">
-        <mat-label>Bạn muốn chia sẻ điều gì?</mat-label>
-          <textarea
-            class="CreatePost"
-            formControlName="content"
-            matInput
-            placeholder="Bạn muốn chia sẻ điều gì?">
-          </textarea>
-      </mat-form-field>
-      <a mat-raised-button class="UploadImages">
-        <label mat-button for="UploadImages" ><mat-icon style="margin: 5px 5px; size:50px 50px; " >image</mat-icon></label>
-        <input
-          id="UploadImages" type="file" (change)= "UploadImages($event)" hidden=true;
-        />
-      </a>
-      <br />
-      <button mat-flat-button type="submit" [disabled]="!NewsForm.valid" class="submitPostBtn"> Chia sẻ </button>
-    </form>
-  </mat-tab>
-</mat-tab-group>
+    <mat-tab label="Đăng ảnh">
+      <form (ngSubmit)="onAddNewNews()" name="NewsForm" [formGroup]="NewsForm">
+        <img src="https://the-social-network1.herokuapp.com/public/upload/{{userProfile.avatar}} " mat-card-avatar >
+        <mat-form-field class="full-width" appearance="outline" style="margin-top:10px;margin-left:10px;width:75%">
+          <mat-label>Bạn muốn chia sẻ điều gì?</mat-label>
+            <textarea
+              class="CreatePost"
+              formControlName="content"
+              matInput
+              placeholder="Bạn muốn chia sẻ điều gì?">
+            </textarea>
+        </mat-form-field>
+        <a mat-raised-button class="UploadImages">
+          <label mat-button for="UploadImages" ><mat-icon style="margin: 5px 5px; size:50px 50px; " >image</mat-icon></label>
+          <input
+            id="UploadImages" type="file" (change)= "UploadImages($event)" hidden=true;
+          />
+        </a>
+        <br />
+        <button mat-flat-button type="submit" [disabled]="!NewsForm.valid" class="submitPostBtn"> Chia sẻ </button>
+      </form>
+    </mat-tab>
+  </mat-tab-group>
+</div>
 
 <div class="container">
   <div class="Post" *ngFor="let post of getPost">
     <mat-card class="example-card">
     <mat-card-header>
-      <img mat-card-avatar class="example-header-image" src="https://the-social-network1.herokuapp.com/public/upload/{{post.UserAvatar}}"/>
-      <mat-card-title>{{post.UserName}}</mat-card-title>
+      <img mat-card-avatar routerLink="/profile/{{post.User_ID}}" class="example-header-image" src="https://the-social-network1.herokuapp.com/public/upload/{{post.UserAvatar}}"/>
+      <mat-card-title routerLink="/profile/{{post.User_ID}}">{{post.UserName}}</mat-card-title>
       <mat-card-subtitle>{{post.date}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>

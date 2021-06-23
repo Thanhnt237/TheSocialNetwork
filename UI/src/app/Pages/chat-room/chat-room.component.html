@@ -1,6 +1,6 @@
 <mat-card class="example-card">
-  <mat-card-header>
-    <mat-card-title>TRẠM CỨU HỘ ĐỘNG VẬT</mat-card-title>
+  <mat-card-header class="header">
+    <p class="header" style="font-size: 19pt; font-weight:bold; "><mat-icon>error</mat-icon><mat-icon>error</mat-icon><mat-icon>error</mat-icon>  TRẠM CỨU HỘ ĐỘNG VẬT  <mat-icon>error</mat-icon><mat-icon>error</mat-icon><mat-icon>error</mat-icon></p>
   </mat-card-header>
   <mat-card-content style="min-height: 400px; border: 1px green solid; margin: 10px auto;">
     <div class="comment" [hidden] = false>
@@ -20,26 +20,11 @@
 
           </div>
         </div>
-        <div class="row">
-          <div class="col-sm-6">
-
-          </div>
-          <div class="col-sm-5">
-            <div class="rightCommentLayout">
-              <div class="rightBottomCommentLayout">
-                <span style="font-size: 13px;font-weight: normal; padding: 10px 10px; margin-top:0px; margin-bottom:10px;">CONTENT</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-1">
-            AVATAR
-          </div>
-        </div>
       </div>
       </div>
   </mat-card-content>
   <mat-card-actions>
-    AVATAR
+    <img mat-card-avatar src="https://the-social-network1.herokuapp.com/public/upload/{{you.avatar}}" alt="">
     <input matInput type="text" name="" value="" style="width: 75%; height: 35px; border: 1px green solid; margin-left:10px;">
     <button mat-button style="color: white; background-color:green;">Gửi</button>
   </mat-card-actions>

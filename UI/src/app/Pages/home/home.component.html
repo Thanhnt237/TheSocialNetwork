@@ -2,8 +2,8 @@
 <div class="Post" *ngFor="let post of getPost">
   <mat-card class="example-card">
   <mat-card-header>
-    <img mat-card-avatar class="example-header-image" src="https://the-social-network1.herokuapp.com/public/upload/{{post.UserAvatar}}"/>
-    <mat-card-title>{{post.UserName}}</mat-card-title>
+    <img mat-card-avatar routerLink="/profile/{{post.User_ID}}" class="example-header-image" src="https://the-social-network1.herokuapp.com/public/upload/{{post.UserAvatar}}"/>
+    <mat-card-title routerLink="/profile/{{post.User_ID}}">{{post.UserName}}</mat-card-title>
     <mat-card-subtitle>{{post.date}}</mat-card-subtitle>
     <button mat-button (click)="DeletePost(post.Post_ID)" class="DeleteBtn">X</button>
   </mat-card-header>

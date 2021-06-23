@@ -73,6 +73,7 @@ export class ProfileComponent implements OnInit {
   getPost = [{
     UserName: String,
     Post_ID: String,
+    User_ID: String,
     UserAvatar: String,
     title: String,
     content: String,

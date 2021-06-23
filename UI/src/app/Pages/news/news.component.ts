@@ -23,6 +23,7 @@ export class NewsComponent implements OnInit {
 
   getPost = [{
     UserName: String,
+    User_ID: String,
     Post_ID: String,
     UserAvatar: String,
     title: String,

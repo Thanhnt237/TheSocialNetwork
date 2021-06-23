@@ -53,6 +53,7 @@ export class ChatComponent implements OnInit {
         .subscribe(
           res=>{
             this.friend = res;
+            console.log(res)
           },
           err=>{
             //console.log(err)

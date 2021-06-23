@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const moment = require('moment');
+const moment = require('moment-timezone');
 
 const Authentication = require('../db/models/Authentication');
 const User = require('../db/models/User');
@@ -75,10 +75,10 @@ module.exports = function(io) {
     //Non MiddleWare
     //console.log(socket.id)
       //Sent Time And Date
-      io.emit("Server-Sent-Date", moment().format('MMM DD, YYYY'));
+      io.emit("Server-Sent-Date", moment().tz("Asia/Ho_Chi_Minh").format('MMM DD, YYYY'));
 
       setInterval(()=>{
-        io.emit("Server-Sent-Time",moment().format('h:mm:ss'));
+        io.emit("Server-Sent-Time",moment().tz("Asia/Ho_Chi_Minh").format('h:mm:ss'));
       }, 1000);
 
       //Send ESP Data+

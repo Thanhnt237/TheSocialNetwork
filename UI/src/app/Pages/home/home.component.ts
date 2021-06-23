@@ -34,6 +34,7 @@ export class HomeComponent implements OnInit {
 
   getPost = [{
     UserName: String,
+    User_ID: String,
     Post_ID: String,
     UserAvatar: String,
     title: String,
