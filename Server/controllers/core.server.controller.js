@@ -378,11 +378,21 @@ async function EditName(req,res) {
               await Comments.updateMany(
                 {User_ID: req.userId},
                 {$set:{UserName: user.name}},
-                (err)=>{
+                async (err)=>{
                   if(err){
                     console.log(err)
                   }else{
-                    res.status(200).send("Đổi tên thành công")
+                    await FriendList.updateMany(
+                      {Friend_ID: req.userId},
+                      {$set:{ name: user.name}},
+                      (err) =>{
+                        if(err){
+                          console.log(err)
+                        }else{
+                          res.status(200).send("Đổi tên thành công")
+                        }
+                      }
+                    )
                   }
                 }
               )
@@ -503,6 +513,12 @@ await multerUpload.upload(req,res, (err)=>{
               {$set: {avatar: req.file.filename}}, (err) => {
                 if(err){console.log(err)}
               })
+            await FriendList.updateMany(
+              {Friend_ID: req.userId},
+              {$set: {avatar: req.file.filename}}, (err) => {
+                if(err){console.log(err)}
+              }
+            )
             res.status(200).send("Đổi ảnh đại diện thành công");
           }
         });

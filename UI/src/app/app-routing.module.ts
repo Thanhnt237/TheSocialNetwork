@@ -144,7 +144,9 @@ const routes: Routes = [
     ChatRoomComponent
   ],
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {
+      useHash: true,
+    }),
     FormsModule,
     CommonModule,
     HttpClientModule,

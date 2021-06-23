@@ -18,7 +18,6 @@ import { Router } from "@angular/router";
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent implements OnInit {
-
   options: any = [{
     "content": ""
   }];

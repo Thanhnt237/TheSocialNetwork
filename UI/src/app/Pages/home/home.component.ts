@@ -125,9 +125,11 @@ export class HomeComponent implements OnInit {
     this._post.DeletePost(postId)
       .subscribe(
         res => {
+          this.ngOnInit()
           //console.log(res);
         },
         err => {
+          this.ngOnInit()
           //console.log(err);
         }
       )
@@ -145,11 +147,13 @@ export class HomeComponent implements OnInit {
     .subscribe(
       res => {
         //console.log(res);
+        this.ngOnInit()
       },
       err => {
         //console.log(err);
         this.alertError = true;
         this.errCatching = err.error;
+        this.ngOnInit()
         //console.log(this.errCatching);
       }
     )

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from "@angular/router";
 
+import { MatSidenav  } from '@angular/material/sidenav';
 import { AuthService } from "../../Services/auth.service";
 import { FriendService } from "../../Services/friend.service";
 import { WebsocketService } from "../../Services/websocket.service";
@@ -11,6 +12,7 @@ import { WebsocketService } from "../../Services/websocket.service";
   styleUrls: ['./side-nav.component.css']
 })
 export class SideNavComponent implements OnInit {
+
   rightOpened = true;
   leftOpened = true;
 
@@ -40,7 +42,9 @@ export class SideNavComponent implements OnInit {
       public _authService: AuthService,
       private _friend: FriendService,
       private _websocketService: WebsocketService
-  ) { }
+  ) {
+
+  }
 
   ngOnInit(): void {
 

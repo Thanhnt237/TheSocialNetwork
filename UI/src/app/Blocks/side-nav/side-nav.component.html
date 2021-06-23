@@ -31,12 +31,19 @@
     </mat-card>
   </mat-sidenav>
   <mat-sidenav-content>
+    <button mat-icon-button style="margin-left: -47px; margin-top: 300px;background-color:green;color:white;position:absolute;" (click)="leftOpened = !leftOpened">
+      <mat-icon style="margin-left:15px" *ngIf="leftOpened">chevron_left</mat-icon>
+      <mat-icon style="margin-left:15px" *ngIf="!leftOpened">chevron_right</mat-icon>
+    </button>
+    <button mat-icon-button style="margin-top: 300px;right: -22px; background-color:green;color:white;position:absolute;" (click)="rightOpened = !rightOpened">
+      <mat-icon style="margin-left:-17px" *ngIf="!rightOpened">chevron_left</mat-icon>
+      <mat-icon style="margin-left:-17px" *ngIf="rightOpened">chevron_right</mat-icon>
+    </button>
     <div id="main-content">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
   <!--Right menu -->
-
   <mat-sidenav #left position="end" #sidenav mode = "side" [(opened)] = "rightOpened" style="width:350px;" *ngIf="_authService.loggedIn()">
     <a mat-button *ngIf="alertError">{{errCatching}}</a>
     <div class="GetAllFriend" *ngIf="!alertError">
