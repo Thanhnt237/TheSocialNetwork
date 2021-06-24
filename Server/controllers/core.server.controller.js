@@ -603,10 +603,10 @@ async function ResetPassword(req,res) {
   upsert: true
   })
   .then( updateResponse => {
-      const resetLink = `https://the-social-network1.herokuapp.com/reset-confirm/${token}`
+      const resetLink = `http://localhost:8080/reset-confirm/${token}`
       try {
         // Lấy data truyền lên từ form phía client
-        let subject = "Link Reset mật khẩu cho mạng xã hội mà chưa được đặt tên";
+        let subject = "Đường dẫn lấy lại mật khẩu cho Mạng xã hội The Social Network ";
         let body = resetLink;
         // Thực hiện gửi email
         mailer.sendMail(req.body.email, subject, body)

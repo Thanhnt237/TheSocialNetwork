@@ -71,7 +71,7 @@ const coreCtrl = require('../controllers').Core;
   router.route("/send-email").post(coreCtrl.SendMail);
   router.route("/api/reset").post(coreCtrl.ResetPassword);
   router.route('/reset-confirm/:token').get(coreCtrl.GetResetConfirm);
-  router.route('/reset-confirm/:token').post(coreCtrl.PostResetConfirm);
+  router.route('/reset-confirm/').post(coreCtrl.PostResetConfirm);
 
   router.route("/fortest").post(coreCtrl.GetTest);
 

@@ -7,7 +7,7 @@ import { Router } from "@angular/router";
 })
 export class TestService {
 
-  readonly _PostTestUrl = "https://the-social-network1.herokuapp.com/fortest";
+  readonly _PostTestUrl = "http://localhost:8080/fortest";
 
   constructor(
     private http: HttpClient,

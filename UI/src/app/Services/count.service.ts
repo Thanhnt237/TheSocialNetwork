@@ -5,9 +5,9 @@ import { Router } from "@angular/router";
   providedIn: 'root'
 })
 export class CountService {
-  readonly _countPostUrl = "https://the-social-network1.herokuapp.com/api/Count/CountPost/";
-  readonly _countLikeUrl = "https://the-social-network1.herokuapp.com/api/Count/CountLike/";
-  readonly _countFriendUrl = "https://the-social-network1.herokuapp.com/api/Count/CountFriend/";
+  readonly _countPostUrl = "http://localhost:8080/api/Count/CountPost/";
+  readonly _countLikeUrl = "http://localhost:8080/api/Count/CountLike/";
+  readonly _countFriendUrl = "http://localhost:8080/api/Count/CountFriend/";
 
   constructor(
     private http: HttpClient,

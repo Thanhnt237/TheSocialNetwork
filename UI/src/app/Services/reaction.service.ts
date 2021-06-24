@@ -6,10 +6,10 @@ import { Router } from "@angular/router";
   providedIn: 'root'
 })
 export class ReactionService {
-  readonly _likeUrl = "https://the-social-network1.herokuapp.com/api/Like/like/";
-  readonly _unLikeUrl = "https://the-social-network1.herokuapp.com/api/Like/unLike/";
-  readonly _checkLikedUrl = "https://the-social-network1.herokuapp.com/api/Like/CheckLiked/";
-  readonly _countLikedUrl = "https://the-social-network1.herokuapp.com/api/Like/CountLike/";
+  readonly _likeUrl = "http://localhost:8080/api/Like/like/";
+  readonly _unLikeUrl = "http://localhost:8080/api/Like/unLike/";
+  readonly _checkLikedUrl = "http://localhost:8080/api/Like/CheckLiked/";
+  readonly _countLikedUrl = "http://localhost:8080/api/Like/CountLike/";
 
   constructor(
     private http: HttpClient,

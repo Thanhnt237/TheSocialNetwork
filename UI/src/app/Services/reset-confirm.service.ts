@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ResetConfirmService {
 
-  readonly _baseResetConfirmUrl = "https://the-social-network1.herokuapp.com/reset-confirm/";
+  readonly _baseResetConfirmUrl = "http://localhost:8080/reset-confirm/";
 
   constructor(
     private http: HttpClient

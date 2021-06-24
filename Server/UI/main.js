@@ -177,13 +177,13 @@ class FriendService {
     constructor(http, _router) {
         this.http = http;
         this._router = _router;
-        this._getFriendRequestUrl = "https://the-social-network1.herokuapp.com/api/Friend/getAllFriendRequest";
-        this._sendFriendRequestUrl = "https://the-social-network1.herokuapp.com/api/Friend/FriendRequest/";
-        this._getFriendUrl = "https://the-social-network1.herokuapp.com/api/Friend/getAllFriend";
-        this._acceptFriendUrl = "https://the-social-network1.herokuapp.com/api/Friend/AcceptFriend/";
-        this._deleteFriendUrl = "https://the-social-network1.herokuapp.com/api/Friend/DeleteFriendRequest/";
-        this._unFriendUrl = "https://the-social-network1.herokuapp.com/api/Friend/DeleteFriend/";
-        this._getProfileFriend = "https://the-social-network1.herokuapp.com/api/Friend/getProfileFriend/";
+        this._getFriendRequestUrl = "http://localhost:8080/api/Friend/getAllFriendRequest";
+        this._sendFriendRequestUrl = "http://localhost:8080/api/Friend/FriendRequest/";
+        this._getFriendUrl = "http://localhost:8080/api/Friend/getAllFriend";
+        this._acceptFriendUrl = "http://localhost:8080/api/Friend/AcceptFriend/";
+        this._deleteFriendUrl = "http://localhost:8080/api/Friend/DeleteFriendRequest/";
+        this._unFriendUrl = "http://localhost:8080/api/Friend/DeleteFriend/";
+        this._getProfileFriend = "http://localhost:8080/api/Friend/getProfileFriend/";
     }
     GetAllFriendRequest() {
         return this.http.get(this._getFriendRequestUrl);
@@ -332,7 +332,7 @@ function SearchComponent_div_2_mat_card_header_1_Template(rf, ctx) { if (rf & 1)
     const user_r3 = ctx.$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("routerLink", "/profile/", user_r3.User_ID, "");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", user_r3.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", user_r3.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](user_r3.name);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
@@ -475,9 +475,9 @@ class SearchService {
     constructor(http, _router) {
         this.http = http;
         this._router = _router;
-        this._searchUrl = "https://the-social-network1.herokuapp.com/api/SearchBarLoggedIn";
-        this._searchNoLoginUrl = "https://the-social-network1.herokuapp.com/api/SearchBarNoLogin";
-        this._searchHistoriesUrl = "https://the-social-network1.herokuapp.com/api/getSearchHistories";
+        this._searchUrl = "http://localhost:8080/api/SearchBarLoggedIn";
+        this._searchNoLoginUrl = "http://localhost:8080/api/SearchBarNoLogin";
+        this._searchHistoriesUrl = "http://localhost:8080/api/getSearchHistories";
         this.searchInput = new rxjs__WEBPACK_IMPORTED_MODULE_0__["BehaviorSubject"](['Default message']);
         this.searchResult = this.searchInput.asObservable();
     }
@@ -594,13 +594,13 @@ function NewsComponent_mat_tab_group_1_Template(rf, ctx) { if (rf & 1) {
 } if (rf & 2) {
     const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", ctx_r0.userProfile.avatar, " ", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", ctx_r0.userProfile.avatar, " ", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](4);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngModel", ctx_r0.newsNoImage.content);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](7);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("formGroup", ctx_r0.NewsForm);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", ctx_r0.userProfile.avatar, " ", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", ctx_r0.userProfile.avatar, " ", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](12);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("disabled", !ctx_r0.NewsForm.valid);
 } }
@@ -608,7 +608,7 @@ function NewsComponent_div_3_img_11_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](0, "img", 26);
 } if (rf & 2) {
     const post_r7 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]().$implicit;
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", post_r7.images, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", post_r7.images, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
 } }
 function NewsComponent_div_3_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 20);
@@ -634,7 +634,7 @@ function NewsComponent_div_3_Template(rf, ctx) { if (rf & 1) {
     const post_r7 = ctx.$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("routerLink", "/profile/", post_r7.User_ID, "");
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", post_r7.UserAvatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", post_r7.UserAvatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("routerLink", "/profile/", post_r7.User_ID, "");
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
@@ -948,7 +948,7 @@ __webpack_require__.r(__webpack_exports__);
 class ResetConfirmService {
     constructor(http) {
         this.http = http;
-        this._baseResetConfirmUrl = "https://the-social-network1.herokuapp.com/reset-confirm/";
+        this._baseResetConfirmUrl = "http://localhost:8080/reset-confirm/";
     }
     getResetConfirm(token) {
         return this.http.get(this._baseResetConfirmUrl + token);
@@ -983,7 +983,7 @@ class TestService {
     constructor(http, _router) {
         this.http = http;
         this._router = _router;
-        this._PostTestUrl = "https://the-social-network1.herokuapp.com/fortest";
+        this._PostTestUrl = "http://localhost:8080/fortest";
     }
     PostTest(nature) {
         return this.http.post(this._PostTestUrl, nature);
@@ -1042,7 +1042,7 @@ function HomeComponent_div_0_img_13_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](0, "img", 19);
 } if (rf & 2) {
     const post_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]().$implicit;
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", post_r1.images, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", post_r1.images, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
 } }
 function HomeComponent_div_0_button_21_Template(rf, ctx) { if (rf & 1) {
     const _r9 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
@@ -1084,7 +1084,7 @@ function HomeComponent_div_0_div_27_Template(rf, ctx) { if (rf & 1) {
 } if (rf & 2) {
     const comment_r13 = ctx.$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", comment_r13.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", comment_r13.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](5);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate"](comment_r13.UserName);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](4);
@@ -1156,7 +1156,7 @@ function HomeComponent_div_0_Template(rf, ctx) { if (rf & 1) {
     const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("routerLink", "/profile/", post_r1.User_ID, "");
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", post_r1.UserAvatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", post_r1.UserAvatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("routerLink", "/profile/", post_r1.User_ID, "");
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
@@ -1180,7 +1180,7 @@ function HomeComponent_div_0_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("formGroup", ctx_r0.CommentForm);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", ctx_r0.userProfile.avatar, " ", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", ctx_r0.userProfile.avatar, " ", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](5);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("disabled", !ctx_r0.CommentForm.valid);
 } }
@@ -1371,10 +1371,10 @@ class ReactionService {
     constructor(http, _router) {
         this.http = http;
         this._router = _router;
-        this._likeUrl = "https://the-social-network1.herokuapp.com/api/Like/like/";
-        this._unLikeUrl = "https://the-social-network1.herokuapp.com/api/Like/unLike/";
-        this._checkLikedUrl = "https://the-social-network1.herokuapp.com/api/Like/CheckLiked/";
-        this._countLikedUrl = "https://the-social-network1.herokuapp.com/api/Like/CountLike/";
+        this._likeUrl = "http://localhost:8080/api/Like/like/";
+        this._unLikeUrl = "http://localhost:8080/api/Like/unLike/";
+        this._checkLikedUrl = "http://localhost:8080/api/Like/CheckLiked/";
+        this._countLikedUrl = "http://localhost:8080/api/Like/CountLike/";
     }
     CountLike(postId) {
         return this.http.get(this._countLikedUrl + postId);
@@ -1415,11 +1415,11 @@ class PostService {
     constructor(http, _router) {
         this.http = http;
         this._router = _router;
-        this._addPostUrl = "https://the-social-network1.herokuapp.com/api/Post/new/";
-        this._addPostNoImageUrl = "https://the-social-network1.herokuapp.com/api/Post/new/noImage/";
-        this._deletePostUrl = "https://the-social-network1.herokuapp.com/api/Post/delete/";
-        this._getPostUrl = "https://the-social-network1.herokuapp.com/api/Post/getPost/";
-        this._homePageUrl = "https://the-social-network1.herokuapp.com/api/home";
+        this._addPostUrl = "http://localhost:8080/api/Post/new/";
+        this._addPostNoImageUrl = "http://localhost:8080/api/Post/new/noImage/";
+        this._deletePostUrl = "http://localhost:8080/api/Post/delete/";
+        this._getPostUrl = "http://localhost:8080/api/Post/getPost/";
+        this._homePageUrl = "http://localhost:8080/api/home";
     }
     AddNewPost(userId, post) {
         return this.http.post(this._addPostUrl + userId, post);
@@ -1835,9 +1835,9 @@ __webpack_require__.r(__webpack_exports__);
 class WebsocketService {
     constructor() {
         this.token = localStorage.getItem("token");
-        this._rightNavUrl = "https://the-social-network1.herokuapp.com/api/right-nav";
-        this._leftNavUrl = "https://the-social-network1.herokuapp.com/";
-        this._chatUrl = "https://the-social-network1.herokuapp.com/api/chat";
+        this._rightNavUrl = "http://localhost:8080/api/right-nav";
+        this._leftNavUrl = "http://localhost:8080/";
+        this._chatUrl = "http://localhost:8080/api/chat";
         this.leftSocket = socket_io_client__WEBPACK_IMPORTED_MODULE_0__(this._leftNavUrl);
         this.rightSocket = socket_io_client__WEBPACK_IMPORTED_MODULE_0__(this._rightNavUrl, {
             query: {
@@ -1895,9 +1895,9 @@ class CountService {
     constructor(http, _router) {
         this.http = http;
         this._router = _router;
-        this._countPostUrl = "https://the-social-network1.herokuapp.com/api/Count/CountPost/";
-        this._countLikeUrl = "https://the-social-network1.herokuapp.com/api/Count/CountLike/";
-        this._countFriendUrl = "https://the-social-network1.herokuapp.com/api/Count/CountFriend/";
+        this._countPostUrl = "http://localhost:8080/api/Count/CountPost/";
+        this._countLikeUrl = "http://localhost:8080/api/Count/CountLike/";
+        this._countFriendUrl = "http://localhost:8080/api/Count/CountFriend/";
     }
     CountPost(userId) {
         return this.http.get(this._countPostUrl + userId);
@@ -1935,10 +1935,10 @@ class AuthService {
     constructor(http, _router) {
         this.http = http;
         this._router = _router;
-        this._registerUrl = "https://the-social-network1.herokuapp.com/api/register";
-        this._loginUrl = "https://the-social-network1.herokuapp.com/api/login";
-        this._logoutUrl = "https://the-social-network1.herokuapp.com/api/logout";
-        this._changePasswordUrl = "https://the-social-network1.herokuapp.com/api/change-password";
+        this._registerUrl = "http://localhost:8080/api/register";
+        this._loginUrl = "http://localhost:8080/api/login";
+        this._logoutUrl = "http://localhost:8080/api/logout";
+        this._changePasswordUrl = "http://localhost:8080/api/change-password";
     }
     changePassword(password) {
         return this.http.post(this._changePasswordUrl, password);
@@ -2195,7 +2195,7 @@ class AboutService {
     constructor(http, _router) {
         this.http = http;
         this._router = _router;
-        this._editProfileUrl = "https://the-social-network1.herokuapp.com//api/edit-profile";
+        this._editProfileUrl = "http://localhost:8080/api/edit-profile";
     }
     EditProfile(information) {
         return this.http.post(this._editProfileUrl, information);
@@ -2258,7 +2258,7 @@ function ChatComponent_div_7_div_1_Template(rf, ctx) { if (rf & 1) {
     const message_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]().$implicit;
     const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", ctx_r2.friend.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", ctx_r2.friend.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](5);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate"](message_r1.content);
 } }
@@ -2284,7 +2284,7 @@ function ChatComponent_div_7_div_2_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](6);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate"](message_r1.content);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", ctx_r3.you.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", ctx_r3.you.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
 } }
 function ChatComponent_div_7_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 7);
@@ -2411,7 +2411,7 @@ ChatComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComp
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", ctx.friend.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", ctx.friend.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate"](ctx.friend.name);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
@@ -2419,7 +2419,7 @@ ChatComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComp
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngForOf", ctx.listMessages.content);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", ctx.you.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", ctx.you.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("formControl", ctx.message);
     } }, directives: [_angular_material_card__WEBPACK_IMPORTED_MODULE_6__["MatCard"], _angular_material_card__WEBPACK_IMPORTED_MODULE_6__["MatCardHeader"], _angular_material_card__WEBPACK_IMPORTED_MODULE_6__["MatCardAvatar"], _angular_material_card__WEBPACK_IMPORTED_MODULE_6__["MatCardTitle"], _angular_material_card__WEBPACK_IMPORTED_MODULE_6__["MatCardContent"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["NgForOf"], _angular_material_card__WEBPACK_IMPORTED_MODULE_6__["MatCardActions"], _angular_material_input__WEBPACK_IMPORTED_MODULE_8__["MatInput"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControlDirective"], _angular_material_button__WEBPACK_IMPORTED_MODULE_9__["MatButton"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["NgIf"]], styles: ["#chatForm[_ngcontent-%COMP%]{background-color: #f0f2d0}\r\n\r\n#left[_ngcontent-%COMP%], #right[_ngcontent-%COMP%]: {min-height: 300px}\r\n\r\n#left[_ngcontent-%COMP%]{width:30%; float:left; overflow:auto; background-color: #f0f2d0}\r\n\r\n#right[_ngcontent-%COMP%]{width:100%; float:left; background-color: #d4f9f8}\r\n\r\n#boxTitle[_ngcontent-%COMP%]{border: solid 1px black; padding:5px; text-align: center; font-weight: bold}\r\n\r\n#boxContent[_ngcontent-%COMP%]{border: solid 1px black; border-top:none; padding:5px; text-align: center}\r\n\r\n#listMessages[_ngcontent-%COMP%]{height:300px; width:100%; overflow:auto; background-color: #fcead4}\r\n\r\n.rightCommentLayout[_ngcontent-%COMP%]{\r\n  background-color: #f5f5f5;\r\n  margin-left: 0px;\r\n  width: 100%;\r\n}\r\n\r\n.rightTopCommentLayout[_ngcontent-%COMP%]{\r\n  margin-top: 0px;\r\n  margin-bottom: 10px;\r\n  padding: 5px 0px;\r\n}\r\n\r\n.rightBottomCommentLayout[_ngcontent-%COMP%]{\r\n  margin-top: 0px;\r\n  margin-bottom: 10px;\r\n  padding: 5px 0px;\r\n}\r\n\r\n.commentSubmitBtn[_ngcontent-%COMP%]{\r\n  background-color: green;\r\n  color: white;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNoYXQuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxVQUFVLHlCQUF5Qjs7QUFFbkMsZ0JBQWdCLGlCQUFpQjs7QUFDakMsTUFBTSxTQUFTLEVBQUUsVUFBVSxFQUFFLGFBQWEsRUFBRSx5QkFBeUI7O0FBQ3JFLE9BQU8sVUFBVSxFQUFFLFVBQVUsRUFBRSx5QkFBeUI7O0FBRXhELFVBQVUsdUJBQXVCLEVBQUUsV0FBVyxFQUFFLGtCQUFrQixFQUFFLGlCQUFpQjs7QUFDckYsWUFBWSx1QkFBdUIsRUFBRSxlQUFlLEVBQUUsV0FBVyxFQUFFLGtCQUFrQjs7QUFFckYsY0FBYyxZQUFZLEVBQUUsVUFBVSxFQUFFLGFBQWEsRUFBRSx5QkFBeUI7O0FBRWhGO0VBQ0UseUJBQXlCO0VBQ3pCLGdCQUFnQjtFQUNoQixXQUFXO0FBQ2I7O0FBQ0E7RUFDRSxlQUFlO0VBQ2YsbUJBQW1CO0VBQ25CLGdCQUFnQjtBQUNsQjs7QUFDQTtFQUNFLGVBQWU7RUFDZixtQkFBbUI7RUFDbkIsZ0JBQWdCO0FBQ2xCOztBQUNBO0VBQ0UsdUJBQXVCO0VBQ3ZCLFlBQVk7QUFDZCIsImZpbGUiOiJjaGF0LmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIjY2hhdEZvcm17YmFja2dyb3VuZC1jb2xvcjogI2YwZjJkMH1cclxuXHJcbiNsZWZ0LCAjcmlnaHQ6IHttaW4taGVpZ2h0OiAzMDBweH1cclxuI2xlZnR7d2lkdGg6MzAlOyBmbG9hdDpsZWZ0OyBvdmVyZmxvdzphdXRvOyBiYWNrZ3JvdW5kLWNvbG9yOiAjZjBmMmQwfVxyXG4jcmlnaHR7d2lkdGg6MTAwJTsgZmxvYXQ6bGVmdDsgYmFja2dyb3VuZC1jb2xvcjogI2Q0ZjlmOH1cclxuXHJcbiNib3hUaXRsZXtib3JkZXI6IHNvbGlkIDFweCBibGFjazsgcGFkZGluZzo1cHg7IHRleHQtYWxpZ246IGNlbnRlcjsgZm9udC13ZWlnaHQ6IGJvbGR9XHJcbiNib3hDb250ZW50e2JvcmRlcjogc29saWQgMXB4IGJsYWNrOyBib3JkZXItdG9wOm5vbmU7IHBhZGRpbmc6NXB4OyB0ZXh0LWFsaWduOiBjZW50ZXJ9XHJcblxyXG4jbGlzdE1lc3NhZ2Vze2hlaWdodDozMDBweDsgd2lkdGg6MTAwJTsgb3ZlcmZsb3c6YXV0bzsgYmFja2dyb3VuZC1jb2xvcjogI2ZjZWFkNH1cclxuXHJcbi5yaWdodENvbW1lbnRMYXlvdXR7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2Y1ZjVmNTtcclxuICBtYXJnaW4tbGVmdDogMHB4O1xyXG4gIHdpZHRoOiAxMDAlO1xyXG59XHJcbi5yaWdodFRvcENvbW1lbnRMYXlvdXR7XHJcbiAgbWFyZ2luLXRvcDogMHB4O1xyXG4gIG1hcmdpbi1ib3R0b206IDEwcHg7XHJcbiAgcGFkZGluZzogNXB4IDBweDtcclxufVxyXG4ucmlnaHRCb3R0b21Db21tZW50TGF5b3V0e1xyXG4gIG1hcmdpbi10b3A6IDBweDtcclxuICBtYXJnaW4tYm90dG9tOiAxMHB4O1xyXG4gIHBhZGRpbmc6IDVweCAwcHg7XHJcbn1cclxuLmNvbW1lbnRTdWJtaXRCdG57XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogZ3JlZW47XHJcbiAgY29sb3I6IHdoaXRlO1xyXG59XHJcbiJdfQ== */"] });
@@ -2447,18 +2447,18 @@ class ProfileService {
     constructor(http, _router) {
         this.http = http;
         this._router = _router;
-        this._baseToolbarUrl = "https://the-social-network1.herokuapp.com/api/toolbar-profile";
-        this._baseProfileUrl = "https://the-social-network1.herokuapp.com/api/profile/";
-        this._editProfileUrl = "https://the-social-network1.herokuapp.com/api/edit-profile";
-        this._changeAvatarUrl = "https://the-social-network1.herokuapp.com/api/change-avatar";
-        this._changeCoverUrl = "https://the-social-network1.herokuapp.com/api/change-cover";
-        this._editDescriptionUrl = "https://the-social-network1.herokuapp.com/api/edit-profile/description";
-        this._editNameUrl = "https://the-social-network1.herokuapp.com/api/edit-profile/name";
-        this._editGenderUrl = "https://the-social-network1.herokuapp.com/api/edit-profile/gender";
-        this._editDoBUrl = "https://the-social-network1.herokuapp.com/api/edit-profile/DoB";
-        this._editAddressUrl = "https://the-social-network1.herokuapp.com/api/edit-profile/address";
-        this._editPhoneUrl = "https://the-social-network1.herokuapp.com/api/edit-profile/phone";
-        this._checkPermissionUrl = "https://the-social-network1.herokuapp.com/api/profile/checkPermission/";
+        this._baseToolbarUrl = "http://localhost:8080/api/toolbar-profile";
+        this._baseProfileUrl = "http://localhost:8080/api/profile/";
+        this._editProfileUrl = "http://localhost:8080/api/edit-profile";
+        this._changeAvatarUrl = "http://localhost:8080/api/change-avatar";
+        this._changeCoverUrl = "http://localhost:8080/api/change-cover";
+        this._editDescriptionUrl = "http://localhost:8080/api/edit-profile/description";
+        this._editNameUrl = "http://localhost:8080/api/edit-profile/name";
+        this._editGenderUrl = "http://localhost:8080/api/edit-profile/gender";
+        this._editDoBUrl = "http://localhost:8080/api/edit-profile/DoB";
+        this._editAddressUrl = "http://localhost:8080/api/edit-profile/address";
+        this._editPhoneUrl = "http://localhost:8080/api/edit-profile/phone";
+        this._checkPermissionUrl = "http://localhost:8080/api/profile/checkPermission/";
     }
     CheckPermission(userId) {
         return this.http.get(this._checkPermissionUrl + userId);
@@ -2648,7 +2648,7 @@ class ForgotPasswordService {
     constructor(http, _router) {
         this.http = http;
         this._router = _router;
-        this._resetPasswordUrl = "https://the-social-network1.herokuapp.com/api/reset";
+        this._resetPasswordUrl = "http://localhost:8080/api/reset";
     }
     resetPassword(user) {
         return this.http.post(this._resetPasswordUrl, user);
@@ -2768,7 +2768,7 @@ ChatRoomComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefine
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](17);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("hidden", false);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](12);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", ctx.you.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", ctx.you.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
     } }, directives: [_angular_material_card__WEBPACK_IMPORTED_MODULE_5__["MatCard"], _angular_material_card__WEBPACK_IMPORTED_MODULE_5__["MatCardHeader"], _angular_material_icon__WEBPACK_IMPORTED_MODULE_6__["MatIcon"], _angular_material_card__WEBPACK_IMPORTED_MODULE_5__["MatCardContent"], _angular_material_card__WEBPACK_IMPORTED_MODULE_5__["MatCardActions"], _angular_material_card__WEBPACK_IMPORTED_MODULE_5__["MatCardAvatar"], _angular_material_input__WEBPACK_IMPORTED_MODULE_7__["MatInput"], _angular_material_button__WEBPACK_IMPORTED_MODULE_8__["MatButton"]], styles: [".header[_ngcontent-%COMP%]{\r\n  padding: 10px 10px;\r\n  margin:auto auto;\r\n}\r\n.mat-body[_ngcontent-%COMP%]   p[_ngcontent-%COMP%], .mat-body-1[_ngcontent-%COMP%]   p[_ngcontent-%COMP%], .mat-typography[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{\r\n  margin: 0 10px 10px !important;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNoYXQtcm9vbS5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0Usa0JBQWtCO0VBQ2xCLGdCQUFnQjtBQUNsQjtBQUNBO0VBQ0UsOEJBQThCO0FBQ2hDIiwiZmlsZSI6ImNoYXQtcm9vbS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmhlYWRlcntcclxuICBwYWRkaW5nOiAxMHB4IDEwcHg7XHJcbiAgbWFyZ2luOmF1dG8gYXV0bztcclxufVxyXG4ubWF0LWJvZHkgcCwgLm1hdC1ib2R5LTEgcCwgLm1hdC10eXBvZ3JhcGh5IHB7XHJcbiAgbWFyZ2luOiAwIDEwcHggMTBweCAhaW1wb3J0YW50O1xyXG59XHJcbiJdfQ== */"] });
 
 
@@ -2848,7 +2848,7 @@ function SideNavComponent_mat_sidenav_41_div_4_div_8_Template(rf, ctx) { if (rf 
     const friend_r13 = ctx.$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("routerLink", "/chat/", friend_r13.Friend_ID, "");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", friend_r13.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", friend_r13.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](friend_r13.name);
 } }
@@ -2884,7 +2884,7 @@ function SideNavComponent_mat_sidenav_41_div_13_div_1_Template(rf, ctx) { if (rf
     const friend_r15 = ctx.$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("routerLink", "/chat/", friend_r15.Friend_ID, "");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", friend_r15.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", friend_r15.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](friend_r15.name);
 } }
@@ -3297,13 +3297,13 @@ function ToolbarComponent_span_29_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("matMenuTriggerFor", _r20);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", ctx_r3.userProfile.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", ctx_r3.userProfile.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate1"](" ", ctx_r3.userProfile.name, " ");
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("routerLink", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpureFunction1"](8, _c0, ctx_r3.userProfile.userId));
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", ctx_r3.userProfile.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", ctx_r3.userProfile.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate1"](" ", ctx_r3.userProfile.name, " ");
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
@@ -3527,8 +3527,8 @@ class CommentService {
     constructor(http, _router) {
         this.http = http;
         this._router = _router;
-        this._addCommentUrl = "https://the-social-network1.herokuapp.com/api/Comments/new/";
-        this._getCommentUrl = "https://the-social-network1.herokuapp.com/api/Comment/getComment/";
+        this._addCommentUrl = "http://localhost:8080/api/Comments/new/";
+        this._getCommentUrl = "http://localhost:8080/api/Comment/getComment/";
     }
     getAllComment(postId) {
         return this.http.get(this._getCommentUrl + postId);
@@ -3729,7 +3729,7 @@ function ProfileComponent_div_87_mat_card_1_Template(rf, ctx) { if (rf & 1) {
 } if (rf & 2) {
     const friend_r37 = ctx.$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", friend_r37.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", friend_r37.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("routerLink", "/profile/", friend_r37.Friend_ID, "");
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("routerLink", "/profile/", friend_r37.Friend_ID, "");
@@ -3809,13 +3809,13 @@ function ProfileComponent_mat_accordion_90_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate1"](" Ch\u00E0o ", ctx_r9.userProfile.name, ", ng\u00E0y h\u00F4m nay c\u1EE7a b\u1EA1n th\u1EBF n\u00E0o? ");
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](4);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", ctx_r9.userProfile.avatar, " ", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", ctx_r9.userProfile.avatar, " ", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](4);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngModel", ctx_r9.postNoImage.content);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](7);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("formGroup", ctx_r9.PostForm);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", ctx_r9.userProfile.avatar, " ", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", ctx_r9.userProfile.avatar, " ", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](12);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("disabled", !ctx_r9.PostForm.valid);
 } }
@@ -3830,7 +3830,7 @@ function ProfileComponent_div_91_img_12_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](0, "img", 98);
 } if (rf & 2) {
     const post_r43 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]().$implicit;
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", post_r43.images, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", post_r43.images, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
 } }
 function ProfileComponent_div_91_mat_card_actions_13_button_10_Template(rf, ctx) { if (rf & 1) {
     const _r57 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
@@ -3906,7 +3906,7 @@ function ProfileComponent_div_91_div_16_Template(rf, ctx) { if (rf & 1) {
 } if (rf & 2) {
     const comment_r64 = ctx.$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", comment_r64.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", comment_r64.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](5);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate"](comment_r64.UserName);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](4);
@@ -3931,7 +3931,7 @@ function ProfileComponent_div_91_form_17_Template(rf, ctx) { if (rf & 1) {
     const ctx_r48 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("formGroup", ctx_r48.CommentForm);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", ctx_r48.userProfile.avatar, " ", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", ctx_r48.userProfile.avatar, " ", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](5);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("disabled", !ctx_r48.CommentForm.valid);
 } }
@@ -3969,7 +3969,7 @@ function ProfileComponent_div_91_Template(rf, ctx) { if (rf & 1) {
     const ctx_r10 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("routerLink", "/profile/", post_r43.User_ID, "");
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", post_r43.UserAvatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", post_r43.UserAvatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("routerLink", "/profile/", post_r43.User_ID, "");
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
@@ -4240,7 +4240,7 @@ function ProfileComponent_div_157_mat_card_1_Template(rf, ctx) { if (rf & 1) {
     const friend_r99 = ctx.$implicit;
     const ctx_r98 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", friend_r99.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", friend_r99.avatar, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("routerLink", "/profile/", friend_r99.Friend_ID, "");
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("routerLink", "/profile/", friend_r99.Friend_ID, "");
@@ -4864,11 +4864,11 @@ ProfileComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineC
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", ctx.userProfile.cover, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", ctx.userProfile.cover, "", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", ctx._auth.loggedIn() && ctx.checkPermission);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "https://the-social-network1.herokuapp.com/public/upload/", ctx.userProfile.avatar, " ", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "http://localhost:8080/public/upload/", ctx.userProfile.avatar, " ", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", ctx._auth.loggedIn() && ctx.checkPermission);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](4);
@@ -5212,10 +5212,10 @@ class NewsService {
     constructor(http, _router) {
         this.http = http;
         this._router = _router;
-        this._checkAdminUrl = "https://the-social-network1.herokuapp.com/api/News/CheckAdmin";
-        this._AddNewNewsUrl = "https://the-social-network1.herokuapp.com/api/News/new";
-        this._AddNewNewsNoImageUrl = "https://the-social-network1.herokuapp.com/api/News/new/newsNoImage";
-        this._getAllNewsUrl = "https://the-social-network1.herokuapp.com/api/News/getAllNews";
+        this._checkAdminUrl = "http://localhost:8080/api/News/CheckAdmin";
+        this._AddNewNewsUrl = "http://localhost:8080/api/News/new";
+        this._AddNewNewsNoImageUrl = "http://localhost:8080/api/News/new/newsNoImage";
+        this._getAllNewsUrl = "http://localhost:8080/api/News/getAllNews";
     }
     CheckAdmin() {
         return this.http.get(this._checkAdminUrl);
@@ -5256,8 +5256,8 @@ class ChatService {
     constructor(http, _router) {
         this.http = http;
         this._router = _router;
-        this._getChatForClient = "https://the-social-network1.herokuapp.com/api/Chat/";
-        this._sendChatMessage = "https://the-social-network1.herokuapp.com/api/Chat/send-message/";
+        this._getChatForClient = "http://localhost:8080/api/Chat/";
+        this._sendChatMessage = "http://localhost:8080/api/Chat/send-message/";
     }
     GetChatForClient(userId) {
         return this.http.get(this._getChatForClient + userId);

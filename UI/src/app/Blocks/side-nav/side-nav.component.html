@@ -54,7 +54,7 @@
         </mat-panel-title>
         </mat-expansion-panel-header>
         <div *ngFor="let friend of friendList" routerLink="/chat/{{friend.Friend_ID}}">
-          <img mat-card-avatar src="https://the-social-network1.herokuapp.com/public/upload/{{friend.avatar}}" alt="">
+          <img mat-card-avatar src="http://localhost:8080/public/upload/{{friend.avatar}}" alt="">
           <a mat-button>{{friend.name}}</a>
         </div>
       </mat-expansion-panel>
@@ -68,7 +68,7 @@
     </mat-expansion-panel-header>
     <div class="getOnlineFriendOnly" *ngIf="!alertError">
       <div *ngFor="let friend of listUser" routerLink="/chat/{{friend.Friend_ID}}">
-        <img mat-card-avatar src="https://the-social-network1.herokuapp.com/public/upload/{{friend.avatar}}" alt="">
+        <img mat-card-avatar src="http://localhost:8080/public/upload/{{friend.avatar}}" alt="">
         <a mat-button>{{friend.name}}</a>
       </div>
     </div>
