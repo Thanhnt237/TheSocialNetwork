@@ -5,19 +5,16 @@
   <mat-card-content style="min-height: 400px; border: 1px green solid; margin: 10px auto;">
     <div class="comment" [hidden] = false>
       <div class="comment" style="padding: 10px 10px; margin-top:10px; margin-bottom:10px;">
-        <div class="row">
-          <div class="col-sm-1">
-            AVATAR
+        <div class="row" *ngFor="let avatar of avatar; index as i">
+          <div class="col-sm-1" style="float:right;">
+            <img mat-card-avatar src="http://localhost:8080/public/upload/{{avatar}}" alt="">
           </div>
           <div class="col-sm-5">
             <div class="rightCommentLayout">
               <div class="rightBottomCommentLayout">
-                <span style="font-size: 13px;font-weight: normal; padding: 10px 10px; margin-top:0px; margin-bottom:10px;">CONTENT</span>
+                <span style="font-size: 13px;font-weight: normal; padding: 10px 10px; margin-top:0px; margin-bottom:10px;">{{message[i]}}</span>
               </div>
             </div>
-          </div>
-          <div class="rol-sm-6">
-
           </div>
         </div>
       </div>
@@ -25,7 +22,7 @@
   </mat-card-content>
   <mat-card-actions>
     <img mat-card-avatar src="http://localhost:8080/public/upload/{{you.avatar}}" alt="">
-    <input matInput type="text" name="" value="" style="width: 75%; height: 35px; border: 1px green solid; margin-left:10px;">
-    <button mat-button style="color: white; background-color:green;">Gửi</button>
+    <input matInput type="text" name="" value="" style="width: 75%; height: 35px; border: 1px green solid; margin-left:10px;" [(ngModel)] = "clientMessage">
+    <button mat-button style="color: white; background-color:green;" (click) = "SendMessage()">Gửi</button>
   </mat-card-actions>
 </mat-card>

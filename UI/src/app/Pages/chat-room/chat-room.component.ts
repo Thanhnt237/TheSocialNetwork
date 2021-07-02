@@ -20,6 +20,11 @@ export class ChatRoomComponent implements OnInit {
     avatar: String
   };
 
+  avatar: any = []
+  message: any = [];
+
+  clientMessage: any = [];
+
   constructor(
     private _socket: WebsocketService,
     private _profile: ProfileService,
@@ -37,6 +42,25 @@ export class ChatRoomComponent implements OnInit {
           //console.log(err);
         }
       )
+
+    this._socket.listen("Server-Reply-Avatar").subscribe((data:any)=>{
+      this.avatar = data
+    })
+
+    this._socket.listen("Server-Reply-Message").subscribe((data:any)=>{
+      this.message = data
+    })
+
   }
+
+  SendMessage(){
+    if(this.clientMessage != ""){
+      this._socket.emit("CLIENT-SENT-avatar",this.you.avatar)
+      this._socket.emit("CLIENT-SENT-message",this.clientMessage)
+      this.clientMessage = ""
+    }
+  }
+
+
 
 }

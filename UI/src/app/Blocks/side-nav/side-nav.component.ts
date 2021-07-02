@@ -13,8 +13,8 @@ import { WebsocketService } from "../../Services/websocket.service";
 })
 export class SideNavComponent implements OnInit {
 
-  rightOpened = false;
-  leftOpened = false;
+  rightOpened = true;
+  leftOpened = true;
 
   time: any;
   date:any;

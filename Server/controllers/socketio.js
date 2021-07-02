@@ -67,12 +67,17 @@ module.exports = function(io) {
         console.log("Socket" + socket.id + "disconnected!")
       })
     })
-    
+
   })
 
+
+  let avatar = [];
+  let message = [];
   //Left Navbar
   io.of('/').on('connection', function(socket){
     //Non MiddleWare
+    socket.emit("Server-Reply-Avatar", avatar)
+    socket.emit("Server-Reply-Message", message)
     //console.log(socket.id)
       //Sent Time And Date
       io.emit("Server-Sent-Date", moment().tz("Asia/Ho_Chi_Minh").format('MMM DD, YYYY'));
@@ -101,6 +106,17 @@ module.exports = function(io) {
       socket.on("ESP-SENT-Value", (data)=>{
         io.emit("Server-Sent-Value", data)
       })
+
+      socket.on("CLIENT-SENT-avatar", (data)=>{
+        avatar.push(data)
+        io.emit("Server-Reply-Avatar", avatar)
+      })
+
+      socket.on("CLIENT-SENT-message", (data)=>{
+        message.push(data)
+        io.emit("Server-Reply-Message", message)
+      })
+
     })
 
 };

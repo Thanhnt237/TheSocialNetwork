@@ -55,5 +55,19 @@ export class WebsocketService {
     this.chatSocket.emit(eventName, data);
   }
 
+  listen(eventName: string){
+    return Rx.Observable.create((subscriber:any)=>{
+      this.leftSocket.on(eventName, (data: any)=>{
+        subscriber.next(data);
+      })
+    });
+  }
+
+  emit(eventName: string, data: any){
+    this.leftSocket.emit(eventName, data);
+  }
+
+
+
 
 }
