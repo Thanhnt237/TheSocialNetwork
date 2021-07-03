@@ -12,7 +12,7 @@ import { TestService } from "../../Services/test.service";
   styleUrls: ['./test.component.css']
 })
 export class TestComponent implements OnInit {
-
+  
   constructor(
     private _router: Router,
     private _test: TestService,

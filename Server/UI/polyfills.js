@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\tuant\Desktop\TheSocialNetwork\ui\src\polyfills.ts */"hN/g");
+module.exports = __webpack_require__(/*! C:\Users\Dell\Desktop\TheSocialNetwork-master\TheSocialNetwork\ui\src\polyfills.ts */"hN/g");
 
 
 /***/ }),

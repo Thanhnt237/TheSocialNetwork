@@ -13,6 +13,8 @@ import { WebsocketService } from "../../Services/websocket.service";
 })
 export class SideNavComponent implements OnInit {
 
+  isRain = true;
+
   rightOpened = true;
   leftOpened = true;
 
@@ -66,6 +68,15 @@ export class SideNavComponent implements OnInit {
 
     this._websocketService.listenLeftNav("Server-Sent-Humidity").subscribe((data:any)=>{
     this.humidity = data;
+    })
+
+    this._websocketService.listenLeftNav("Server-Sent-RainState").subscribe((data:any)=>{
+    this.rainState = data;
+    if(this.rainState == "It isn't raining"){
+      this.isRain = false
+    }else{
+      this.isRain = true;
+    }
     })
 
     this._websocketService.listenLeftNav("Server-Sent-UVLevel").subscribe((data:any)=>{

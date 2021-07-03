@@ -18,8 +18,9 @@
                   <span>UV: {{UVLevel}}</span>
                 </div>
                 <div class="outlook">
-                  <img src="http://openweathermap.org/img/wn/02d@2x.png" />
-                  <span>Few Clouds {{rainState}}</span>
+                  <img *ngIf="!isRain" src="http://openweathermap.org/img/wn/02d@2x.png" />
+                  <img *ngIf="isRain" src="http://openweathermap.org/img/wn/09d@2x.png" />
+                  <span>{{rainState}}</span>
                 </div>
           </div>
         </mat-card-content>

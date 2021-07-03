@@ -16,7 +16,7 @@ const coreCtrl = require('../controllers').Core;
   router.route('/api/change-password').post(coreCtrl.ChangePassword);
 
   router.route('/api/profile/:userId').get(coreCtrl.GetUserProfile);
-  router.route('/api/profile/checkPermission/:userId').get(coreCtrl.verifyToken,coreCtrl.CheckPermission)
+  router.route('/api/profile/checkPermission/:userId').get(coreCtrl.verifyToken,coreCtrl.CheckPermission);
   router.route('/api/toolbar-profile').get(coreCtrl.verifyToken,coreCtrl.ToolbarProfile);
   router.route('/api/edit-profile').post(coreCtrl.verifyToken,coreCtrl.EditProfile);
   router.route('/api/edit-profile/description').post(coreCtrl.verifyToken,coreCtrl.EditDescription);
